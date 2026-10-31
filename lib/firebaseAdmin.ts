@@ -32,6 +32,7 @@ export function isFirebaseReady(): boolean {
           privateKey,
         }),
         storageBucket: process.env.FIREBASE_STORAGE_BUCKET || undefined,
+        databaseURL: process.env.FIREBASE_DATABASE_URL || undefined,
       })
     }
     isConfigured = true

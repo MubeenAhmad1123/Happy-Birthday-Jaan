@@ -15,10 +15,10 @@ import bcrypt from 'bcryptjs'
 import { readFileSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { config } from 'dotenv'
+import { loadEnvConfig } from '@next/env'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-config({ path: resolve(__dirname, '../.env.local') })
+loadEnvConfig(resolve(__dirname, '..'))
 
 const password = process.argv[2]
 if (!password) {
