@@ -11,6 +11,7 @@ export type CharacterType =
   | 'dudu-bubu-bday'
   | 'dudu-bubu-flowers'
   | 'panda-peek'
+  | 'panda-lawyer'
 
 interface CharacterStickerProps {
   type: CharacterType
@@ -282,6 +283,56 @@ export default function CharacterSticker({
           <path d="M56 73 Q60 76 64 73" stroke="#3A3036" strokeWidth="2" strokeLinecap="round" fill="none" />
           <ellipse cx="42" cy="71" rx="6" ry="4" fill="#F9D5DE" />
           <ellipse cx="78" cy="71" rx="6" ry="4" fill="#F9D5DE" />
+        </svg>
+      )}
+
+      {type === 'panda-lawyer' && (
+        <svg viewBox="0 0 160 160" width={size} height={size} fill="none">
+          {/* Scales of Justice or legal sparkles */}
+          <circle cx="28" cy="40" r="3" fill="#FFB703" />
+          <circle cx="132" cy="40" r="3" fill="#FFB703" />
+          <path d="M76 18 L84 18 M80 18 L80 32" stroke="#D4A373" strokeWidth="2" strokeLinecap="round" />
+          <path d="M70 24 L90 24" stroke="#D4A373" strokeWidth="2" strokeLinecap="round" />
+          <path d="M68 24 L64 34 M72 24 L76 34" stroke="#D4A373" strokeWidth="1.2" />
+          <path d="M88 24 L84 34 M92 24 L96 34" stroke="#D4A373" strokeWidth="1.2" />
+          <path d="M63 34 Q70 38 77 34 Z" fill="#FFB703" />
+          <path d="M83 34 Q90 38 97 34 Z" fill="#FFB703" />
+
+          {/* Law Books Stack on right */}
+          <rect x="110" y="112" width="34" height="10" rx="2" fill="#B8405E" stroke="#3A3036" strokeWidth="1.5" />
+          <rect x="112" y="103" width="30" height="9" rx="2" fill="#3A3036" stroke="#3A3036" strokeWidth="1.5" />
+          <rect x="114" y="95" width="26" height="8" rx="2" fill="#E56B8A" stroke="#3A3036" strokeWidth="1.5" />
+          <text x="127" y="119" fontSize="6" fill="white" fontWeight="bold" textAnchor="middle">LAW</text>
+
+          {/* Wooden Gavel on left */}
+          <rect x="22" y="116" width="18" height="8" rx="2" fill="#8C5338" stroke="#3A3036" strokeWidth="1.5" transform="rotate(-25 22 116)" />
+          <line x1="26" y1="118" x2="38" y2="134" stroke="#8C5338" strokeWidth="3" strokeLinecap="round" />
+
+          {/* Panda Head (Maria the Lawyer) */}
+          <circle cx="56" cy="46" r="11" fill="#3A3036" />
+          <circle cx="56" cy="46" r="5" fill="#F9D5DE" />
+          <circle cx="104" cy="46" r="11" fill="#3A3036" />
+          <circle cx="104" cy="46" r="5" fill="#F9D5DE" />
+          <circle cx="80" cy="70" r="32" fill="#FFFFFF" stroke="#3A3036" strokeWidth="3" />
+          {/* Eye patches */}
+          <ellipse cx="68" cy="68" rx="8" ry="10" fill="#3A3036" transform="rotate(-15 68 68)" />
+          <circle cx="69" cy="66" r="3" fill="#FFFFFF" />
+          <ellipse cx="92" cy="68" rx="8" ry="10" fill="#3A3036" transform="rotate(15 92 68)" />
+          <circle cx="91" cy="66" r="3" fill="#FFFFFF" />
+          {/* Nose & Smile */}
+          <ellipse cx="80" cy="76" rx="4" ry="2.5" fill="#3A3036" />
+          <path d="M76 80 Q80 84 84 80" stroke="#3A3036" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+          <ellipse cx="60" cy="78" rx="5" ry="3" fill="#F9D5DE" />
+          <ellipse cx="100" cy="78" rx="5" ry="3" fill="#F9D5DE" />
+
+          {/* Black Lawyer Coat & Advocate Collar Bands */}
+          <path d="M52 102 C52 94 62 92 72 94 L80 102 L88 94 C98 92 108 94 108 102 L106 138 C106 142 94 144 80 144 C66 144 54 142 54 138 Z" fill="#2A2026" stroke="#3A3036" strokeWidth="2.5" />
+          {/* White advocate collar bands */}
+          <rect x="74" y="96" width="5" height="18" rx="1" fill="#FFFFFF" stroke="#3A3036" strokeWidth="1" />
+          <rect x="81" y="96" width="5" height="18" rx="1" fill="#FFFFFF" stroke="#3A3036" strokeWidth="1" />
+          {/* Lapel folds */}
+          <path d="M60 94 L74 116" stroke="#3A3036" strokeWidth="2" />
+          <path d="M100 94 L86 116" stroke="#3A3036" strokeWidth="2" />
         </svg>
       )}
     </div>

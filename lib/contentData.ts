@@ -8,6 +8,7 @@ export interface ReasonItem {
   id: string
   order: number
   text: string
+  photoUrl?: string
 }
 
 export interface TimelineItem {

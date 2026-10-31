@@ -8,6 +8,7 @@ import BirthdayScreen from '@/components/screens/BirthdayScreen'
 import CrystalHeartScreen from '@/components/screens/CrystalHeartScreen'
 import HubScreen from '@/components/screens/HubScreen'
 import ReasonsScreen from '@/components/screens/ReasonsScreen'
+import LawyerDreamScreen from '@/components/screens/LawyerDreamScreen'
 import TimelineScreen from '@/components/screens/TimelineScreen'
 import FinaleScreen from '@/components/screens/FinaleScreen'
 import { SiteContent, DEFAULT_CONTENT } from '@/lib/contentData'
@@ -24,7 +25,7 @@ export default function StoryApp({
   bypassDate,
 }: StoryAppProps) {
   const [unlocked, setUnlocked] = useState(initiallyUnlocked)
-  const [currentScreen, setCurrentScreen] = useState<number>(1) // 1 to 7
+  const [currentScreen, setCurrentScreen] = useState<number>(1) // 1 to 8
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT)
   const [loadingContent, setLoadingContent] = useState(false)
 
@@ -62,6 +63,7 @@ export default function StoryApp({
   return (
     <div className="w-full min-h-[100dvh] relative overflow-hidden max-w-[430px] mx-auto shadow-2xl bg-white">
       <AnimatePresence mode="wait">
+        {/* Screen 1: Opener */}
         {currentScreen === 1 && (
           <motion.div
             key="screen-1"
@@ -74,6 +76,7 @@ export default function StoryApp({
           </motion.div>
         )}
 
+        {/* Screen 2: Happy Birthday */}
         {currentScreen === 2 && (
           <motion.div
             key="screen-2"
@@ -86,6 +89,7 @@ export default function StoryApp({
           </motion.div>
         )}
 
+        {/* Screen 3: 3D Crystal Heart */}
         {currentScreen === 3 && (
           <motion.div
             key="screen-3"
@@ -98,6 +102,7 @@ export default function StoryApp({
           </motion.div>
         )}
 
+        {/* Screen 4: Hub ("Kuch cheezein khol ke dekho") */}
         {currentScreen === 4 && (
           <motion.div
             key="screen-4"
@@ -113,6 +118,7 @@ export default function StoryApp({
           </motion.div>
         )}
 
+        {/* Screen 5: 25 Reasons (25 photos, 25 reasons) */}
         {currentScreen === 5 && (
           <motion.div
             key="screen-5"
@@ -128,7 +134,24 @@ export default function StoryApp({
           </motion.div>
         )}
 
+        {/* Screen 5b: Tumhara Khwab ⚖️ (her lawyer dream) */}
         {currentScreen === 6 && (
+          <motion.div
+            key="screen-5b"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.04 }}
+            transition={{ duration: 0.35 }}
+          >
+            <LawyerDreamScreen
+              onNext={() => setCurrentScreen(7)}
+              onBack={() => setCurrentScreen(5)}
+            />
+          </motion.div>
+        )}
+
+        {/* Screen 6: Hamari Kahani (Timeline) */}
+        {currentScreen === 7 && (
           <motion.div
             key="screen-6"
             initial={{ opacity: 0, y: 20 }}
@@ -138,12 +161,13 @@ export default function StoryApp({
           >
             <TimelineScreen
               timeline={content.timeline}
-              onNext={() => setCurrentScreen(7)}
+              onNext={() => setCurrentScreen(8)}
             />
           </motion.div>
         )}
 
-        {currentScreen === 7 && (
+        {/* Screen 7: Finale */}
+        {currentScreen === 8 && (
           <motion.div
             key="screen-7"
             initial={{ opacity: 0, scale: 0.95 }}
