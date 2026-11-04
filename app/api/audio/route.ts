@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
 
   let audioPath: string | null = null
   for (const p of candidatePaths) {
-    if (existsSync(/* turbopackIgnore: true */ p)) {
+    if (existsSync(p)) {
       audioPath = p
       break
     }
@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const stat = statSync(/* turbopackIgnore: true */ audioPath)
+    const stat = statSync(audioPath)
     const fileSize = stat.size
     const range = req.headers.get('range')
 
@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
       const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1
       const chunkSize = end - start + 1
 
-      const fileHandle = await fs.open(/* turbopackIgnore: true */ audioPath, 'r')
+      const fileHandle = await fs.open(audioPath, 'r')
       const buffer = Buffer.alloc(chunkSize)
       await fileHandle.read(buffer, 0, chunkSize, start)
       await fileHandle.close()
@@ -72,7 +72,7 @@ export async function GET(req: NextRequest) {
         },
       })
     } else {
-      const fileBuffer = await fs.readFile(/* turbopackIgnore: true */ audioPath)
+      const fileBuffer = await fs.readFile(audioPath)
       return new NextResponse(new Uint8Array(fileBuffer), {
         status: 200,
         headers: {

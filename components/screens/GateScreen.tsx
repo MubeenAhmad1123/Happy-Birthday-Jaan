@@ -51,6 +51,57 @@ function useCountdown(unlockAt: string): { remaining: CountdownState; isUnlocked
   return { remaining, isUnlocked }
 }
 
+function ChaiCup() {
+  return (
+    <div className="relative flex flex-col items-center select-none" aria-hidden>
+      <div className="flex gap-2.5 mb-1 h-9">
+        {[0, 1, 2].map((i) => (
+          <svg
+            key={i}
+            width="12"
+            height="32"
+            viewBox="0 0 12 32"
+            className="steam-puff"
+            style={{ animationDelay: `${i * 0.55}s` }}
+          >
+            <path
+              d="M6 30 Q10 22 6 16 Q2 10 6 2"
+              stroke="#E56B8A"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              fill="none"
+              opacity="0.8"
+            />
+          </svg>
+        ))}
+      </div>
+      <svg width="86" height="74" viewBox="0 0 90 80" fill="none">
+        <ellipse cx="45" cy="73" rx="38" ry="6" fill="#F9D5DE" opacity="0.6" />
+        <path
+          d="M15 20 Q14 65 45 68 Q76 65 75 20 Z"
+          fill="#FFFDF9"
+          stroke="#E56B8A"
+          strokeWidth="2.5"
+        />
+        <path
+          d="M18 36 Q18 64 45 66 Q72 64 72 36 Z"
+          fill="#FDE8ED"
+          opacity="0.8"
+        />
+        <path
+          d="M75 28 Q92 28 92 42 Q92 56 75 56"
+          stroke="#E56B8A"
+          strokeWidth="3"
+          strokeLinecap="round"
+          fill="none"
+        />
+        <ellipse cx="45" cy="20" rx="30" ry="5" fill="#FFFFFF" stroke="#E56B8A" strokeWidth="2" />
+        <ellipse cx="30" cy="50" rx="4" ry="9" fill="white" opacity="0.5" transform="rotate(-15 30 50)" />
+      </svg>
+    </div>
+  )
+}
+
 function CountdownTile({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
