@@ -197,8 +197,9 @@ export default function HubScreen({
 
   return (
     <ScreenShell
-      theme="blush"
+      theme="dark"
       showAmbient={true}
+      ambientVariant="dark"
       contentClassName="justify-between py-2"
     >
       {/* Top Header with Talking Bubu Character */}
@@ -217,7 +218,7 @@ export default function HubScreen({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.88, y: 4 }}
                 transition={{ duration: 0.2 }}
-                className="relative max-w-[85%] px-4 py-2 rounded-[20px] bg-[#FFFDFB] border border-rose-300 shadow-lg text-center"
+                className="relative max-w-[85%] px-4 py-2 rounded-[20px] bg-[#FFFDFB] border border-rose-300 shadow-xl text-center"
               >
                 <p
                   className="text-base sm:text-lg font-bold text-[#1E1A20] leading-snug"
@@ -228,7 +229,7 @@ export default function HubScreen({
                 {/* Speech Bubble Arrow Tail pointing down */}
                 <div
                   className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-t-[8px] border-t-[#FFFDFB]"
-                  style={{ filter: 'drop-shadow(0 1px 1px rgba(229,107,138,0.3))' }}
+                  style={{ filter: 'drop-shadow(0 2px 3px rgba(0,0,0,0.3))' }}
                 />
               </motion.div>
             )}
@@ -263,89 +264,112 @@ export default function HubScreen({
             <AnimatedSticker
               name="dudu-bubu-chai"
               fallbackType="dudu-bubu-chai"
-              size={96}
+              size={92}
               priority={true}
               animation="float"
             />
           </motion.div>
         </div>
 
-        <span
-          className="text-xs uppercase tracking-widest font-bold text-rose-500 mt-1"
-          style={{ fontFamily: 'var(--font-baloo)' }}
-        >
-          Special Surprises
-        </span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/10 border border-[#D4AF37]/35 mt-1">
+          <SparkleIcon size={11} color="#D4AF37" />
+          <span
+            className="text-[11px] uppercase tracking-widest font-bold text-[#D4AF37]"
+            style={{ fontFamily: 'var(--font-baloo)' }}
+          >
+            Special Surprises
+          </span>
+          <SparkleIcon size={11} color="#D4AF37" />
+        </div>
+
         <h1
-          className="heading-fluid leading-tight text-deep-rose mt-0.5"
+          className="heading-fluid leading-tight text-white mt-1"
           style={{
             fontFamily: 'var(--font-dancing)',
-            color: 'var(--deep-rose)',
-            textShadow: '0 2px 10px rgba(229,107,138,0.2)',
+            textShadow: '0 2px 14px rgba(229,107,138,0.4)',
           }}
         >
           Kuch cheezein khol ke dekho
         </h1>
         <p
-          className="text-sm text-charcoal/80 mt-0.5"
+          className="text-sm text-rose-200/80 mt-0.5"
           style={{ fontFamily: 'var(--font-caveat)' }}
         >
           Teeno cheezon ko ek ek karke tap karo:
         </p>
       </motion.div>
 
-      {/* 3 Big Full-Width Stacked Cards */}
+      {/* 3 Unified Luxury Stacked Cards with Mathematical Alignment */}
       <div className="w-full flex flex-col gap-3.5 my-auto z-10 px-1">
         {/* Card 1: Photo Memories */}
         <motion.button
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.35 }}
-          whileTap={{ scale: 0.97 }}
+          whileTap={{ scale: 0.98 }}
           whileHover={{ scale: 1.01 }}
           onClick={() => openItem('camera')}
-          className="relative w-full min-h-[140px] p-4 rounded-3xl flex items-center gap-4 cursor-pointer text-left transition-all select-none shadow-xl border overflow-hidden"
+          className="group relative w-full min-h-[114px] sm:min-h-[120px] p-3.5 sm:p-4 rounded-[24px] flex items-center gap-3.5 sm:gap-4 cursor-pointer text-left transition-all select-none border overflow-hidden backdrop-blur-md"
           style={{
-            background: 'linear-gradient(135deg, #1E1A20 0%, #121014 100%)',
-            borderColor: 'rgba(212, 175, 55, 0.45)',
-            boxShadow: '0 12px 30px rgba(0, 0, 0, 0.35)',
+            background: 'linear-gradient(135deg, rgba(32, 26, 36, 0.92) 0%, rgba(18, 14, 20, 0.96) 100%)',
+            borderColor: openedItems.camera ? 'rgba(212, 175, 55, 0.7)' : 'rgba(212, 175, 55, 0.35)',
+            boxShadow: '0 12px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.08)',
           }}
           aria-label="Open Photo Memories"
         >
-          {openedItems.camera && (
-            <div className="absolute top-3.5 right-3.5 w-6 h-6 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center">
-              <CheckIcon size={13} color="#D4AF37" />
-            </div>
-          )}
-
-          <div className="shrink-0 flex items-center justify-center w-[96px] h-[96px]">
+          {/* Card left sticker frame */}
+          <div
+            className="w-[76px] h-[76px] sm:w-[82px] sm:h-[82px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
+            style={{
+              background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.03) 100%)',
+              borderColor: 'rgba(212, 175, 55, 0.3)',
+            }}
+          >
             <AnimatedSticker
-              name="dudu-bubu-box"
-              fallbackType="dudu-bubu-box"
-              size={96}
+              name="hub-camera"
+              fallbackType="hub-camera"
+              size={72}
               animation="bounce"
             />
           </div>
 
-          <div className="flex flex-col justify-center flex-1 pr-4 min-w-0">
+          {/* Card text content */}
+          <div className="flex flex-col justify-center flex-1 min-w-0 pr-1">
             <span
-              className="text-xs uppercase tracking-wider font-bold text-[#D4AF37]"
+              className="text-[11px] uppercase tracking-widest font-bold text-[#E8C27A] flex items-center gap-1"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Yaadein
+              <span>Yaadein</span>
+              <span className="opacity-50">•</span>
+              <span className="text-white/60">25 Photos</span>
             </span>
             <h3
-              className="text-xl sm:text-2xl font-bold text-rose-300 leading-snug"
+              className="text-xl sm:text-2xl font-bold text-white leading-tight tracking-wide truncate mt-0.5"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
               Photo Memories
             </h3>
             <p
-              className="text-sm sm:text-base text-rose-100/80 mt-1 leading-tight break-words"
+              className="text-xs sm:text-sm text-rose-100/75 mt-0.5 leading-snug line-clamp-1"
               style={{ fontFamily: 'var(--font-caveat)' }}
             >
               Hamari 25 pyari tasveerein aur yaadein
             </p>
+          </div>
+
+          {/* Status badge / Chevron */}
+          <div
+            className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center border transition-all ${
+              openedItems.camera
+                ? 'bg-[#D4AF37]/25 border-[#D4AF37] text-[#D4AF37] shadow-md shadow-[#D4AF37]/25'
+                : 'bg-white/[0.08] border-white/15 text-white/70 group-hover:bg-white/[0.16] group-hover:text-white'
+            }`}
+          >
+            {openedItems.camera ? (
+              <CheckIcon size={15} color="#D4AF37" />
+            ) : (
+              <ArrowRightIcon size={14} color="currentColor" />
+            )}
           </div>
         </motion.button>
 
@@ -354,51 +378,70 @@ export default function HubScreen({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.35 }}
-          whileTap={{ scale: 0.97 }}
+          whileTap={{ scale: 0.98 }}
           whileHover={{ scale: 1.01 }}
           onClick={() => openItem('letter')}
-          className="relative w-full min-h-[140px] p-4 rounded-3xl flex items-center gap-4 cursor-pointer text-left transition-all select-none shadow-xl border overflow-hidden text-white"
+          className="group relative w-full min-h-[114px] sm:min-h-[120px] p-3.5 sm:p-4 rounded-[24px] flex items-center gap-3.5 sm:gap-4 cursor-pointer text-left transition-all select-none border overflow-hidden backdrop-blur-md"
           style={{
-            background: 'linear-gradient(135deg, #FF6B8B 0%, #E56B8A 50%, #B8405E 100%)',
-            borderColor: 'rgba(255, 255, 255, 0.4)',
-            boxShadow: '0 12px 30px rgba(184, 64, 94, 0.3)',
+            background: 'linear-gradient(135deg, rgba(36, 24, 32, 0.92) 0%, rgba(20, 14, 18, 0.96) 100%)',
+            borderColor: openedItems.letter ? 'rgba(255, 117, 151, 0.7)' : 'rgba(255, 117, 151, 0.35)',
+            boxShadow: '0 12px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.08)',
           }}
           aria-label="Open The Letter"
         >
-          {openedItems.letter && (
-            <div className="absolute top-3.5 right-3.5 w-6 h-6 rounded-full bg-white/25 border border-white flex items-center justify-center">
-              <CheckIcon size={13} color="#FFFFFF" />
-            </div>
-          )}
-
-          <div className="shrink-0 flex items-center justify-center w-[96px] h-[96px]">
+          {/* Card left sticker frame */}
+          <div
+            className="w-[76px] h-[76px] sm:w-[82px] sm:h-[82px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
+            style={{
+              background: 'linear-gradient(135deg, rgba(229, 107, 138, 0.18) 0%, rgba(229, 107, 138, 0.03) 100%)',
+              borderColor: 'rgba(229, 107, 138, 0.35)',
+            }}
+          >
             <AnimatedSticker
-              name="dudu-bubu-flowers"
-              fallbackType="dudu-bubu-flowers"
-              size={96}
+              name="hub-letter"
+              fallbackType="hub-letter"
+              size={72}
               animation="float"
             />
           </div>
 
-          <div className="flex flex-col justify-center flex-1 pr-4 min-w-0">
+          {/* Card text content */}
+          <div className="flex flex-col justify-center flex-1 min-w-0 pr-1">
             <span
-              className="text-xs uppercase tracking-wider font-bold text-white/80"
+              className="text-[11px] uppercase tracking-widest font-bold text-[#FF7597] flex items-center gap-1"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Dil Se
+              <span>Dil Se</span>
+              <span className="opacity-50">•</span>
+              <span className="text-white/60">Khat</span>
             </span>
             <h3
-              className="text-xl sm:text-2xl font-bold text-white leading-snug"
+              className="text-xl sm:text-2xl font-bold text-white leading-tight tracking-wide truncate mt-0.5"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
               The Letter
             </h3>
             <p
-              className="text-sm sm:text-base text-white/90 mt-1 leading-tight break-words"
+              className="text-xs sm:text-sm text-rose-100/75 mt-0.5 leading-snug line-clamp-1"
               style={{ fontFamily: 'var(--font-caveat)' }}
             >
               Mera dil ki baat, sirf tumhare liye
             </p>
+          </div>
+
+          {/* Status badge / Chevron */}
+          <div
+            className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center border transition-all ${
+              openedItems.letter
+                ? 'bg-rose-500/25 border-rose-400 text-rose-300 shadow-md shadow-rose-500/25'
+                : 'bg-white/[0.08] border-white/15 text-white/70 group-hover:bg-white/[0.16] group-hover:text-white'
+            }`}
+          >
+            {openedItems.letter ? (
+              <CheckIcon size={15} color="#FF7597" />
+            ) : (
+              <ArrowRightIcon size={14} color="currentColor" />
+            )}
           </div>
         </motion.button>
 
@@ -407,51 +450,70 @@ export default function HubScreen({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.35 }}
-          whileTap={{ scale: 0.97 }}
+          whileTap={{ scale: 0.98 }}
           whileHover={{ scale: 1.01 }}
           onClick={() => openItem('cassette')}
-          className="relative w-full min-h-[140px] p-4 rounded-3xl flex items-center gap-4 cursor-pointer text-left transition-all select-none shadow-xl border overflow-hidden"
+          className="group relative w-full min-h-[114px] sm:min-h-[120px] p-3.5 sm:p-4 rounded-[24px] flex items-center gap-3.5 sm:gap-4 cursor-pointer text-left transition-all select-none border overflow-hidden backdrop-blur-md"
           style={{
-            background: 'linear-gradient(135deg, #FFFDFB 0%, #FFF3F6 60%, #F9D5DE 100%)',
-            borderColor: 'rgba(229, 107, 138, 0.4)',
-            boxShadow: '0 10px 28px rgba(229, 107, 138, 0.15)',
+            background: 'linear-gradient(135deg, rgba(30, 24, 34, 0.92) 0%, rgba(16, 13, 20, 0.96) 100%)',
+            borderColor: openedItems.cassette ? 'rgba(249, 213, 222, 0.7)' : 'rgba(249, 213, 222, 0.35)',
+            boxShadow: '0 12px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.08)',
           }}
           aria-label="Open Our Song"
         >
-          {openedItems.cassette && (
-            <div className="absolute top-3.5 right-3.5 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500 flex items-center justify-center">
-              <CheckIcon size={13} color="#B8405E" />
-            </div>
-          )}
-
-          <div className="shrink-0 flex items-center justify-center w-[96px] h-[96px]">
+          {/* Card left sticker frame */}
+          <div
+            className="w-[76px] h-[76px] sm:w-[82px] sm:h-[82px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
+            style={{
+              background: 'linear-gradient(135deg, rgba(249, 213, 222, 0.16) 0%, rgba(249, 213, 222, 0.03) 100%)',
+              borderColor: 'rgba(249, 213, 222, 0.3)',
+            }}
+          >
             <AnimatedSticker
-              name="dudu-bubu-chai"
-              fallbackType="dudu-bubu-chai"
-              size={96}
+              name="hub-cassette"
+              fallbackType="hub-cassette"
+              size={72}
               animation="float"
             />
           </div>
 
-          <div className="flex flex-col justify-center flex-1 pr-4 min-w-0">
+          {/* Card text content */}
+          <div className="flex flex-col justify-center flex-1 min-w-0 pr-1">
             <span
-              className="text-xs uppercase tracking-wider font-bold text-rose-500"
+              className="text-[11px] uppercase tracking-widest font-bold text-[#F9D5DE] flex items-center gap-1"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Naghma
+              <span>Hamara Gana</span>
+              <span className="opacity-50">•</span>
+              <span className="text-white/60">Music</span>
             </span>
             <h3
-              className="text-xl sm:text-2xl font-bold text-[#1E1A20] leading-snug"
+              className="text-xl sm:text-2xl font-bold text-white leading-tight tracking-wide truncate mt-0.5"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
               Our Song
             </h3>
             <p
-              className="text-sm sm:text-base text-charcoal/80 mt-1 leading-tight break-words truncate"
+              className="text-xs sm:text-sm text-rose-100/75 mt-0.5 leading-snug line-clamp-1"
               style={{ fontFamily: 'var(--font-caveat)' }}
             >
               {content.songTitle || 'Dil Ibadat Kar Raha Hai'}
             </p>
+          </div>
+
+          {/* Status badge / Chevron */}
+          <div
+            className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center border transition-all ${
+              openedItems.cassette
+                ? 'bg-pink-400/25 border-pink-300 text-pink-200 shadow-md shadow-pink-400/25'
+                : 'bg-white/[0.08] border-white/15 text-white/70 group-hover:bg-white/[0.16] group-hover:text-white'
+            }`}
+          >
+            {openedItems.cassette ? (
+              <CheckIcon size={15} color="#F9D5DE" />
+            ) : (
+              <ArrowRightIcon size={14} color="currentColor" />
+            )}
           </div>
         </motion.button>
       </div>
@@ -484,7 +546,7 @@ export default function HubScreen({
               className="flex flex-col items-center gap-1 text-center"
             >
               <p
-                className="text-xs text-charcoal/80 font-medium"
+                className="text-xs text-rose-200/80 font-medium"
                 style={{ fontFamily: 'var(--font-caveat)' }}
               >
                 Teeno surprises kholo toh aage ka rasta khulega ✨
@@ -494,7 +556,7 @@ export default function HubScreen({
                   buzz(10)
                   onProceedToReasons()
                 }}
-                className="text-[11px] text-rose-500/80 hover:text-rose-600 underline font-medium cursor-pointer"
+                className="text-[11px] text-[#E8C27A] hover:text-[#F5E6BE] underline font-medium cursor-pointer"
                 style={{ fontFamily: 'var(--font-baloo)' }}
               >
                 (Ya seedha 25 Reasons dekho)

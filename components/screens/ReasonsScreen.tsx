@@ -305,19 +305,36 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
                 >
                   {/* Top 62%: Maria's Photo (object-cover, top-aligned) */}
                   <div className="relative w-full h-[62%] bg-neutral-900 overflow-hidden border-b border-rose-200">
+                    {/* Shimmer pulse loading indicator */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-900 to-[#121014] animate-pulse" />
+
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={photoUrl}
                       alt={item.text}
-                      className="w-full h-full object-cover object-top select-none pointer-events-none"
-                      loading="lazy"
+                      className="relative z-10 w-full h-full object-cover object-top select-none pointer-events-none"
+                      loading={isCenter ? 'eager' : 'lazy'}
+                      onError={(e) => {
+                        const target = e.currentTarget
+                        target.style.opacity = '0'
+                      }}
                     />
 
+                    {/* Fallback romantic graphic if image is loading or fails */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center pointer-events-none">
+                      <div className="w-12 h-12 rounded-full bg-rose-500/20 border border-rose-400/40 flex items-center justify-center mb-1">
+                        <HeartIcon size={22} color="#E56B8A" />
+                      </div>
+                      <span className="text-[11px] text-rose-200/90 font-bold" style={{ fontFamily: 'var(--font-baloo)' }}>
+                        Maria 🤍
+                      </span>
+                    </div>
+
                     {/* Subtle top gold gradient overlay */}
-                    <div className="absolute top-0 inset-x-0 h-10 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
+                    <div className="absolute top-0 inset-x-0 h-10 bg-gradient-to-b from-black/50 to-transparent pointer-events-none z-20" />
 
                     {/* Small Reason Number Badge at top right */}
-                    <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/30 text-white text-[11px] font-bold">
+                    <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/30 text-white text-[11px] font-bold z-20">
                       #{reasonNum}
                     </div>
                   </div>
@@ -368,18 +385,12 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
             </span>
           </div>
 
-          {/* Mini progress dots */}
-          <div className="flex items-center gap-1 max-w-[280px] overflow-x-hidden py-1 justify-center">
-            {safeReasons.slice(0, 15).map((_, i) => (
-              <div
-                key={i}
-                className={`rounded-full transition-all duration-300 ${
-                  activeIndex % 15 === i
-                    ? 'w-4 h-1.5 bg-[#D4AF37]'
-                    : 'w-1.5 h-1.5 bg-white/30'
-                }`}
-              />
-            ))}
+          {/* Sleek continuous progress bar */}
+          <div className="w-48 h-1.5 rounded-full bg-white/20 overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-rose-400 via-[#D4AF37] to-rose-300 transition-all duration-300 rounded-full"
+              style={{ width: `${((activeIndex + 1) / total) * 100}%` }}
+            />
           </div>
         </div>
 

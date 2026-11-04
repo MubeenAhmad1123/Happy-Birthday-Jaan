@@ -76,8 +76,9 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
 
   return (
     <ScreenShell
-      theme="blush"
+      theme="dark"
       showAmbient={true}
+      ambientVariant="dark"
       contentClassName="justify-between py-2"
     >
       {/* Top Header */}
@@ -88,7 +89,7 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
             buzz(10)
             onBack()
           }}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 shadow-sm text-white border border-white/20 hover:bg-white/20 transition-all cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas Hub"
         >
@@ -97,9 +98,9 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
         </motion.button>
 
         <div className="flex items-center gap-1.5">
-          <LetterIcon size={18} color="var(--rose)" />
+          <LetterIcon size={18} color="#FF7597" />
           <span
-            className="text-base font-bold text-deep-rose tracking-wide"
+            className="text-base font-bold text-white tracking-wide"
             style={{ fontFamily: 'var(--font-baloo)' }}
           >
             The Letter
@@ -174,17 +175,16 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
 
             <div className="flex flex-col items-center gap-1.5 px-2">
               <h2
-                className="text-2xl sm:text-3xl font-bold text-deep-rose"
+                className="text-2xl sm:text-3xl font-bold text-white"
                 style={{
                   fontFamily: 'var(--font-dancing)',
-                  color: 'var(--deep-rose)',
-                  textShadow: '0 2px 10px rgba(229,107,138,0.2)',
+                  textShadow: '0 2px 14px rgba(229,107,138,0.4)',
                 }}
               >
                 Maria ke naam… 🤍
               </h2>
               <p
-                className="text-sm text-rose-600 font-bold tracking-wide"
+                className="text-sm text-rose-200/90 font-bold tracking-wide"
                 style={{ fontFamily: 'var(--font-caveat)' }}
               >
                 (Khat kholne ke liye tap karo)

@@ -26,15 +26,10 @@ async function signedUrl(filePath: string): Promise<string> {
 }
 
 export async function GET(req: NextRequest) {
-  // 1. Session verification
+  // 1. Session verification - required to access any content
   const hasSession = await verifySession(req)
   if (!hasSession) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
-  // 2. Unlock date guard (checked strictly on server)
-  if (!isContentUnlocked()) {
-    return NextResponse.json({ error: 'Not yet unlocked', locked: true }, { status: 403 })
   }
 
   const db = getDb()

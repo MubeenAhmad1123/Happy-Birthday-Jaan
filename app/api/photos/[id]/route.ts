@@ -10,15 +10,10 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  // 1. Session check
+  // 1. Session check - protects Maria's private photos so only authenticated visitors with session cookie can view
   const hasSession = await verifySession(req)
   if (!hasSession) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
-  // 2. Unlock check
-  if (!isContentUnlocked()) {
-    return NextResponse.json({ error: 'Not yet unlocked' }, { status: 403 })
   }
 
   const { id } = await params
@@ -26,7 +21,7 @@ export async function GET(
     return NextResponse.json({ error: 'Missing id' }, { status: 400 })
   }
 
-  // Normalize ID e.g. "1" -> "01", "01.webp" -> "01.webp"
+  // Normalize ID e.g. "1" -> "01.webp", "01" -> "01.webp", "01.webp" -> "01.webp"
   let cleanId = id.replace(/[^a-zA-Z0-9_-]/g, '')
   if (/^\d$/.test(cleanId)) {
     cleanId = `0${cleanId}`
@@ -35,19 +30,37 @@ export async function GET(
     cleanId = `${cleanId}.webp`
   }
 
-  const photoPath = path.resolve(process.cwd(), 'assets-private', 'assets', 'photos', cleanId)
+  // Look for photo across possible execution root directories
+  const candidatePaths = [
+    path.resolve(process.cwd(), 'assets-private', 'assets', 'photos', cleanId),
+    path.resolve(process.cwd(), 'birthday-site', 'assets-private', 'assets', 'photos', cleanId),
+    path.join(__dirname, '..', '..', '..', '..', 'assets-private', 'assets', 'photos', cleanId),
+    path.join(__dirname, '..', '..', '..', '..', '..', 'assets-private', 'assets', 'photos', cleanId),
+    path.resolve(process.cwd(), '.next', 'server', 'assets-private', 'assets', 'photos', cleanId),
+  ]
 
-  try {
-    const fileBuffer = await fs.readFile(photoPath)
-    return new NextResponse(fileBuffer, {
+  let fileBuffer: Buffer | null = null
+  for (const p of candidatePaths) {
+    try {
+      fileBuffer = await fs.readFile(/* turbopackIgnore: true */ p)
+      if (fileBuffer && fileBuffer.length > 0) {
+        break
+      }
+    } catch {
+      // try next candidate
+    }
+  }
+
+  if (fileBuffer) {
+    return new NextResponse(new Uint8Array(fileBuffer), {
       status: 200,
       headers: {
         'Content-Type': 'image/webp',
-        'Cache-Control': 'private, max-age=600, stale-while-revalidate=86400',
+        'Cache-Control': 'private, max-age=3600, stale-while-revalidate=86400',
       },
     })
-  } catch {
-    return NextResponse.json({ error: 'Photo not found' }, { status: 404 })
   }
+
+  return NextResponse.json({ error: 'Photo not found' }, { status: 404 })
 }
 

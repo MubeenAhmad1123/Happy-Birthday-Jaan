@@ -5,9 +5,10 @@
  */
 export function isContentUnlocked(): boolean {
   if (process.env.UNLOCK_NOW === 'true') return true
+  if (process.env.NODE_ENV !== 'production' && process.env.UNLOCK_NOW !== 'false') return true
 
   const unlockAt = process.env.UNLOCK_AT
-  if (!unlockAt) return false
+  if (!unlockAt) return true
 
   const unlockDate = new Date(unlockAt)
   return Date.now() >= unlockDate.getTime()

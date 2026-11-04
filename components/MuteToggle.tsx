@@ -67,3 +67,4 @@ export default function MuteToggle({ className = '' }: { className?: string }) {
     </motion.button>
   )
 }
+

@@ -41,9 +41,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# private media assets
-/assets-private
-assets-private/
+# private media assets - only allow the 25 optimized webp site photos
+/assets-private/*
+!/assets-private/assets
+/assets-private/assets/*
+!/assets-private/assets/photos
+/assets-private/assets/photos/*
+!/assets-private/assets/photos/*.webp
 *serviceAccount*.json
 *firebase-adminsdk*.json
 *adminsdk*.json

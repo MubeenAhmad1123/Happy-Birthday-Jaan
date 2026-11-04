@@ -21,6 +21,13 @@ export type CharacterType =
   | 'dudu-bubu-cake'
   | 'dudu-bubu-call'
   | 'dudu-bubu-desk'
+  | 'hub-camera'
+  | 'hub-letter'
+  | 'hub-cassette'
+  | 'dudu-bubu-camera'
+  | 'dudu-bubu-letter'
+  | 'dudu-bubu-cassette'
+  | 'dudu-bubu-music'
 
 interface CharacterStickerProps {
   type: CharacterType
@@ -355,6 +362,198 @@ function renderSvgFallback(type: string, size: number) {
           <ellipse cx="116" cy="85" rx="7" ry="12" fill="#FFFFFF" stroke="#3A3036" strokeWidth="2.5" transform="rotate(35 116 85)" />
           {/* Body */}
           <ellipse cx="80" cy="115" rx="28" ry="24" fill="#FFFFFF" stroke="#3A3036" strokeWidth="3" />
+        </svg>
+      )
+
+    case 'hub-camera':
+    case 'dudu-bubu-camera':
+      return (
+        <svg viewBox="0 0 160 160" width={size} height={size} fill="none">
+          {/* Sparkles & Hearts */}
+          <circle cx="26" cy="32" r="3" fill="#D4AF37" opacity="0.8" />
+          <path d="M136 28 L138 34 L144 36 L138 38 L136 44 L134 38 L128 36 L134 34 Z" fill="#D4AF37" />
+          <path d="M142 56 C140 52 135 52 133 56 C131 60 142 66 142 66 C142 66 153 60 151 56 C149 52 144 52 142 56 Z" fill="#E56B8A" opacity="0.85" />
+          
+          {/* Dudu peeking out from behind with thumbs-up */}
+          <circle cx="106" cy="52" r="9" fill="#C88D6A" />
+          <circle cx="106" cy="52" r="4.5" fill="#F3D1BC" />
+          <circle cx="134" cy="56" r="9" fill="#C88D6A" />
+          <circle cx="134" cy="56" r="4.5" fill="#F3D1BC" />
+          <circle cx="118" cy="74" r="24" fill="#C88D6A" stroke="#3A3036" strokeWidth="2.5" />
+          <path d="M110 70 Q114 66 118 70" stroke="#3A3036" strokeWidth="2" strokeLinecap="round" />
+          <ellipse cx="128" cy="69" rx="3.5" ry="4" fill="#3A3036" />
+          <circle cx="129" cy="68" r="1.2" fill="#FFFFFF" />
+          <ellipse cx="120" cy="77" rx="6" ry="4.5" fill="#F3D1BC" />
+          <ellipse cx="120" cy="76" rx="3" ry="2" fill="#3A3036" />
+          <path d="M118 80 Q120 83 123 80" stroke="#3A3036" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+          <ellipse cx="110" cy="77" rx="4" ry="2.5" fill="#F9D5DE" />
+          <ellipse cx="130" cy="77" rx="4" ry="2.5" fill="#F9D5DE" />
+          {/* Dudu's Thumbs Up Paw */}
+          <ellipse cx="140" cy="80" rx="6" ry="7" fill="#C88D6A" stroke="#3A3036" strokeWidth="2" />
+          <circle cx="140" cy="73" r="3.5" fill="#C88D6A" stroke="#3A3036" strokeWidth="2" />
+
+          {/* Bubu (Maria) in center */}
+          <circle cx="42" cy="50" r="11" fill="#3A3036" />
+          <circle cx="42" cy="50" r="5" fill="#F9D5DE" />
+          <circle cx="86" cy="50" r="11" fill="#3A3036" />
+          <circle cx="86" cy="50" r="5" fill="#F9D5DE" />
+          <circle cx="64" cy="74" r="30" fill="#FFFFFF" stroke="#3A3036" strokeWidth="3" />
+          <ellipse cx="53" cy="72" rx="7" ry="9" fill="#3A3036" transform="rotate(-12 53 72)" />
+          <circle cx="54" cy="70" r="2.5" fill="#FFFFFF" />
+          <ellipse cx="75" cy="72" rx="7" ry="9" fill="#3A3036" transform="rotate(12 75 72)" />
+          <circle cx="74" cy="70" r="2.5" fill="#FFFFFF" />
+          <ellipse cx="64" cy="78" rx="3.5" ry="2.5" fill="#3A3036" />
+          <path d="M60 82 Q64 86 68 82" stroke="#3A3036" strokeWidth="2" strokeLinecap="round" fill="none" />
+          <ellipse cx="46" cy="80" rx="6" ry="3.5" fill="#FF8DA1" />
+          <ellipse cx="82" cy="80" rx="6" ry="3.5" fill="#FF8DA1" />
+
+          {/* Retro Film Camera in Bubu's paws */}
+          <rect x="36" y="94" width="56" height="38" rx="8" fill="#FFF0F5" stroke="#E56B8A" strokeWidth="2.5" />
+          <rect x="42" y="88" width="44" height="8" rx="3" fill="#E56B8A" />
+          <rect x="44" y="90" width="8" height="4" rx="1.5" fill="#FFD166" />
+          <circle cx="78" cy="86" r="3" fill="#D90429" />
+          {/* Big Vintage Lens with Reflection */}
+          <circle cx="64" cy="113" r="15" fill="#241B21" stroke="#D4AF37" strokeWidth="2" />
+          <circle cx="64" cy="113" r="11" fill="#3B3238" />
+          <circle cx="64" cy="113" r="7" fill="#151216" />
+          <path d="M59 108 Q63 105 67 108" stroke="#93C5FD" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+          {/* Polaroid photo sliding out below */}
+          <g transform="rotate(-6 64 134)">
+            <rect x="52" y="126" width="24" height="26" rx="2" fill="#FFFFFF" stroke="#3A3036" strokeWidth="1.5" />
+            <rect x="55" y="128" width="18" height="16" fill="#FCE7F3" />
+            <path d="M64 135 C62 133 59 133 58 135 C57 137 64 141 64 141 C64 141 71 137 70 135 C69 133 66 133 64 135 Z" fill="#E56B8A" />
+          </g>
+          {/* Paws holding camera */}
+          <ellipse cx="38" cy="108" rx="6" ry="7" fill="#FFFFFF" stroke="#3A3036" strokeWidth="2" />
+          <ellipse cx="90" cy="108" rx="6" ry="7" fill="#FFFFFF" stroke="#3A3036" strokeWidth="2" />
+        </svg>
+      )
+
+    case 'hub-letter':
+    case 'dudu-bubu-letter':
+      return (
+        <svg viewBox="0 0 160 160" width={size} height={size} fill="none">
+          {/* Floating Rose Petals & Sparkles */}
+          <path d="M22 42 Q28 36 32 44 Q26 50 22 42 Z" fill="#FF8DA1" opacity="0.8" />
+          <path d="M138 38 Q144 32 148 40 Q142 46 138 38 Z" fill="#F9D5DE" />
+          <path d="M142 88 Q148 82 152 90 Q146 96 142 88 Z" fill="#FF8DA1" opacity="0.7" />
+          <path d="M18 106 Q24 100 28 108 Q22 114 18 106 Z" fill="#F9D5DE" opacity="0.9" />
+          <path d="M78 20 L80 24 L84 25 L80 26 L78 30 L76 26 L72 25 L76 24 Z" fill="#D4AF37" />
+
+          {/* Dudu (Brown Bear) holding envelope */}
+          <circle cx="36" cy="54" r="9" fill="#C88D6A" />
+          <circle cx="36" cy="54" r="4.5" fill="#F3D1BC" />
+          <circle cx="68" cy="54" r="9" fill="#C88D6A" />
+          <circle cx="68" cy="54" r="4.5" fill="#F3D1BC" />
+          <circle cx="52" cy="74" r="26" fill="#C88D6A" stroke="#3A3036" strokeWidth="2.5" />
+          <path d="M44 72 Q48 68 52 72" stroke="#3A3036" strokeWidth="2" strokeLinecap="round" />
+          <path d="M56 72 Q60 68 64 72" stroke="#3A3036" strokeWidth="2" strokeLinecap="round" />
+          <ellipse cx="52" cy="79" rx="6" ry="4" fill="#F3D1BC" />
+          <ellipse cx="52" cy="78" rx="3" ry="2" fill="#3A3036" />
+          <ellipse cx="42" cy="79" rx="4.5" ry="3" fill="#F9D5DE" />
+          <ellipse cx="62" cy="79" rx="4.5" ry="3" fill="#F9D5DE" />
+
+          {/* Pink Envelope with Heart Wax Seal in Dudu's paws */}
+          <rect x="52" y="90" width="56" height="38" rx="6" fill="#FFF0F5" stroke="#E56B8A" strokeWidth="2.5" />
+          <path d="M52 90 L80 110 L108 90" stroke="#E56B8A" strokeWidth="2" fill="none" />
+          <path d="M52 128 L74 106" stroke="#E56B8A" strokeWidth="1.5" opacity="0.6" />
+          <path d="M108 128 L86 106" stroke="#E56B8A" strokeWidth="1.5" opacity="0.6" />
+          {/* Heart Wax Seal */}
+          <circle cx="80" cy="110" r="9" fill="#E56B8A" stroke="#D4AF37" strokeWidth="1.2" />
+          <path d="M80 108 C78 105 74 105 73 108 C72 111 80 115 80 115 C80 115 88 111 87 108 C86 105 82 105 80 108 Z" fill="#FFFFFF" />
+          {/* Bear Paws holding envelope */}
+          <ellipse cx="50" cy="106" rx="6" ry="7" fill="#C88D6A" stroke="#3A3036" strokeWidth="2" />
+          <ellipse cx="110" cy="106" rx="6" ry="7" fill="#C88D6A" stroke="#3A3036" strokeWidth="2" />
+
+          {/* Bubu (Maria) blushing with paws on cheeks */}
+          <circle cx="94" cy="50" r="11" fill="#3A3036" />
+          <circle cx="94" cy="50" r="5" fill="#F9D5DE" />
+          <circle cx="134" cy="50" r="11" fill="#3A3036" />
+          <circle cx="134" cy="50" r="5" fill="#F9D5DE" />
+          <circle cx="114" cy="74" r="28" fill="#FFFFFF" stroke="#3A3036" strokeWidth="2.5" />
+          <path d="M104 70 Q108 66 112 70" stroke="#3A3036" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M118 70 Q122 66 126 70" stroke="#3A3036" strokeWidth="2.5" strokeLinecap="round" />
+          <ellipse cx="115" cy="77" rx="3.5" ry="2.5" fill="#3A3036" />
+          <path d="M112 81 Q115 84 118 81" stroke="#3A3036" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+          {/* Super blushing cheeks */}
+          <ellipse cx="98" cy="78" rx="8" ry="5" fill="#FF6584" opacity="0.9" />
+          <ellipse cx="130" cy="78" rx="8" ry="5" fill="#FF6584" opacity="0.9" />
+          {/* Bubu's paws on cheeks in adorable shy joy */}
+          <ellipse cx="98" cy="80" rx="6" ry="7" fill="#FFFFFF" stroke="#3A3036" strokeWidth="2" transform="rotate(-15 98 80)" />
+          <ellipse cx="130" cy="80" rx="6" ry="7" fill="#FFFFFF" stroke="#3A3036" strokeWidth="2" transform="rotate(15 130 80)" />
+        </svg>
+      )
+
+    case 'hub-cassette':
+    case 'dudu-bubu-cassette':
+    case 'dudu-bubu-music':
+      return (
+        <svg viewBox="0 0 160 160" width={size} height={size} fill="none">
+          {/* Musical Notes & Hearts floating */}
+          <g fill="#E56B8A">
+            <path d="M26 36 C24 32 20 32 19 36 C18 40 26 44 26 44 C26 44 34 40 33 36 C32 32 28 32 26 36 Z" />
+            <path d="M134 32 C132 28 128 28 127 32 C126 36 134 40 134 40 C134 40 142 36 141 32 C140 28 136 28 134 32 Z" opacity="0.8" />
+          </g>
+          {/* Musical Notes */}
+          <path d="M22 62 L22 50 L34 46 L34 58 M22 55 L34 51" stroke="#D4AF37" strokeWidth="2" strokeLinecap="round" />
+          <circle cx="20" cy="62" r="3.5" fill="#D4AF37" />
+          <circle cx="32" cy="58" r="3.5" fill="#D4AF37" />
+          <path d="M138 58 L138 48 L146 45 L146 55 M138 52 L146 49" stroke="#E56B8A" strokeWidth="1.8" strokeLinecap="round" />
+          <circle cx="136" cy="58" r="3" fill="#E56B8A" />
+          <circle cx="144" cy="55" r="3" fill="#E56B8A" />
+
+          {/* Floating Retro Cassette Tape */}
+          <rect x="44" y="16" width="72" height="42" rx="6" fill="#241B22" stroke="#E56B8A" strokeWidth="2.5" />
+          <rect x="50" y="21" width="60" height="32" rx="4" fill="#FFF5F8" />
+          <rect x="58" y="28" width="44" height="16" rx="3" fill="#1C161B" />
+          {/* Cassette Reels */}
+          <circle cx="68" cy="36" r="6" fill="#FFFFFF" />
+          <circle cx="68" cy="36" r="2.5" fill="#E56B8A" />
+          <circle cx="92" cy="36" r="6" fill="#FFFFFF" />
+          <circle cx="92" cy="36" r="2.5" fill="#E56B8A" />
+          <rect x="74" y="34" width="12" height="4" fill="#6B4B3E" />
+
+          {/* Earbud wires from cassette down to Dudu and Bubu */}
+          <path d="M80 58 Q80 78 58 92" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" fill="none" />
+          <path d="M80 58 Q80 78 102 92" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" fill="none" />
+
+          {/* Left Earbud in Dudu's ear */}
+          <circle cx="58" cy="92" r="4.5" fill="#FFFFFF" stroke="#3A3036" strokeWidth="1.5" />
+          {/* Right Earbud in Bubu's ear */}
+          <circle cx="102" cy="92" r="4.5" fill="#FFFFFF" stroke="#3A3036" strokeWidth="1.5" />
+
+          {/* Dudu (Brown Bear) on left listening peacefully */}
+          <circle cx="34" cy="78" r="8" fill="#C88D6A" />
+          <circle cx="34" cy="78" r="4" fill="#F3D1BC" />
+          <circle cx="64" cy="78" r="8" fill="#C88D6A" />
+          <circle cx="64" cy="78" r="4" fill="#F3D1BC" />
+          <circle cx="50" cy="100" r="24" fill="#C88D6A" stroke="#3A3036" strokeWidth="2.5" />
+          {/* Peaceful closed eyes */}
+          <path d="M42 98 Q46 102 50 98" stroke="#3A3036" strokeWidth="2" strokeLinecap="round" fill="none" />
+          <path d="M54 98 Q58 102 62 98" stroke="#3A3036" strokeWidth="2" strokeLinecap="round" fill="none" />
+          <ellipse cx="51" cy="104" rx="5" ry="3.5" fill="#F3D1BC" />
+          <ellipse cx="51" cy="103" rx="2.5" ry="1.8" fill="#3A3036" />
+          <ellipse cx="40" cy="105" rx="4" ry="2.5" fill="#F9D5DE" />
+          <ellipse cx="60" cy="105" rx="4" ry="2.5" fill="#F9D5DE" />
+
+          {/* Bubu (White Panda) on right listening peacefully */}
+          <circle cx="86" cy="76" r="10" fill="#3A3036" />
+          <circle cx="86" cy="76" r="4.5" fill="#F9D5DE" />
+          <circle cx="122" cy="76" r="10" fill="#3A3036" />
+          <circle cx="122" cy="76" r="4.5" fill="#F9D5DE" />
+          <circle cx="104" cy="100" r="24" fill="#FFFFFF" stroke="#3A3036" strokeWidth="2.5" />
+          {/* Peaceful closed eyes */}
+          <path d="M96 98 Q100 102 104 98" stroke="#3A3036" strokeWidth="2" strokeLinecap="round" fill="none" />
+          <path d="M108 98 Q112 102 116 98" stroke="#3A3036" strokeWidth="2" strokeLinecap="round" fill="none" />
+          <ellipse cx="105" cy="104" rx="3" ry="2" fill="#3A3036" />
+          <ellipse cx="94" cy="105" rx="5" ry="3" fill="#FF8DA1" />
+          <ellipse cx="118" cy="105" rx="5" ry="3" fill="#FF8DA1" />
+
+          {/* Cozy Bodies resting side by side */}
+          <ellipse cx="54" cy="132" rx="20" ry="18" fill="#C88D6A" stroke="#3A3036" strokeWidth="2.5" />
+          <ellipse cx="100" cy="132" rx="20" ry="18" fill="#FFFFFF" stroke="#3A3036" strokeWidth="2.5" />
+          {/* Shared Little Heart between them */}
+          <path d="M78 122 C76 119 72 119 71 122 C70 125 78 129 78 129 C78 129 86 125 85 122 C84 119 80 119 78 122 Z" fill="#E56B8A" />
         </svg>
       )
 

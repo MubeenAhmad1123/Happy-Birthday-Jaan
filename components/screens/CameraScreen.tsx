@@ -105,8 +105,9 @@ export default function CameraScreen({
 
   return (
     <ScreenShell
-      theme="blush"
+      theme="dark"
       showAmbient={true}
+      ambientVariant="dark"
       className="p-0"
       contentClassName="h-full justify-between max-w-[430px] px-3 py-2"
     >
@@ -118,7 +119,7 @@ export default function CameraScreen({
             buzz(10)
             onBack()
           }}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 shadow-sm text-white border border-white/20 hover:bg-white/20 transition-all cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas Hub jao"
         >
@@ -127,9 +128,9 @@ export default function CameraScreen({
         </motion.button>
 
         <div className="flex items-center gap-1.5">
-          <CameraIcon size={18} color="var(--rose)" />
+          <CameraIcon size={18} color="#E8C27A" />
           <span
-            className="text-base font-bold text-deep-rose tracking-wide"
+            className="text-base font-bold text-white tracking-wide"
             style={{ fontFamily: 'var(--font-baloo)' }}
           >
             Photo Memories ({activeIndex + 1}/{totalPhotos})
@@ -142,20 +143,21 @@ export default function CameraScreen({
       {/* Main Carousel Frame */}
       <div className="w-full flex flex-col items-center z-10 my-auto">
         <div
-          className="relative w-full rounded-3xl p-3 shadow-xl border flex flex-col items-center bg-white"
+          className="relative w-full rounded-3xl p-3 shadow-2xl border flex flex-col items-center backdrop-blur-md"
           style={{
-            borderColor: 'rgba(229, 107, 138, 0.28)',
-            boxShadow: '0 14px 36px rgba(229, 107, 138, 0.16)',
+            background: 'linear-gradient(135deg, rgba(30, 24, 34, 0.95) 0%, rgba(18, 14, 20, 0.98) 100%)',
+            borderColor: 'rgba(212, 175, 55, 0.35)',
+            boxShadow: '0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.08)',
           }}
         >
           {/* Carousel Viewport (Aspect 3:4 for portrait mobile photos) */}
           <div
-            className="relative w-full aspect-[3/4] max-h-[50dvh] rounded-2xl overflow-hidden bg-rose-50/70 flex items-center justify-center border border-rose-100 select-none shadow-inner"
+            className="relative w-full aspect-[3/4] max-h-[50dvh] rounded-2xl overflow-hidden bg-black/70 flex items-center justify-center border border-white/10 select-none shadow-inner"
             style={{ touchAction: 'pan-y' }}
           >
             {/* Soft blurred background of same photo */}
             {currentPhoto.url && (
-              <div className="absolute inset-0 pointer-events-none opacity-25 filter blur-xl scale-110">
+              <div className="absolute inset-0 pointer-events-none opacity-30 filter blur-xl scale-110">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={currentPhoto.url}
@@ -200,7 +202,7 @@ export default function CameraScreen({
                     <img
                       src={currentPhoto.url}
                       alt={currentPhoto.caption || 'Maria Memory'}
-                      loading="lazy"
+                      loading="eager"
                       decoding="async"
                       onError={() => handleImageError(activeIndex)}
                       className="w-full h-full object-contain pointer-events-none rounded-xl"
@@ -210,7 +212,7 @@ export default function CameraScreen({
                   <div className="flex flex-col items-center justify-center p-4 text-center">
                     <CharacterSticker type="dudu-bubu-hug" size={130} />
                     <span
-                      className="text-sm text-deep-rose mt-2 font-bold"
+                      className="text-sm text-rose-200 mt-2 font-bold"
                       style={{ fontFamily: 'var(--font-caveat)' }}
                     >
                       Hamara sukoon 🤍
@@ -224,19 +226,19 @@ export default function CameraScreen({
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={prevPhoto}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 text-deep-rose shadow-md flex items-center justify-center z-20 border border-rose-200 cursor-pointer"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 text-white backdrop-blur-md shadow-md flex items-center justify-center z-20 border border-white/20 hover:bg-black/80 transition-all cursor-pointer"
               aria-label="Previous photo"
             >
-              <ArrowLeftIcon size={16} color="var(--deep-rose)" />
+              <ArrowLeftIcon size={16} color="#FFFFFF" />
             </motion.button>
 
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={nextPhoto}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 text-deep-rose shadow-md flex items-center justify-center z-20 border border-rose-200 cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 text-white backdrop-blur-md shadow-md flex items-center justify-center z-20 border border-white/20 hover:bg-black/80 transition-all cursor-pointer"
               aria-label="Next photo"
             >
-              <ArrowRightIcon size={16} color="var(--deep-rose)" />
+              <ArrowRightIcon size={16} color="#FFFFFF" />
             </motion.button>
           </div>
 
@@ -244,7 +246,7 @@ export default function CameraScreen({
           <div className="w-full mt-2.5 px-2 py-1 flex items-center justify-between">
             <div className="flex flex-col text-left flex-1 min-w-0 pr-2">
               <span
-                className="text-[11px] font-bold text-rose-500 uppercase tracking-wider"
+                className="text-[11px] font-bold text-[#E8C27A] uppercase tracking-wider"
                 style={{ fontFamily: 'var(--font-baloo)' }}
               >
                 Photo {String(activeIndex + 1).padStart(2, '0')} / {totalPhotos}
@@ -257,7 +259,7 @@ export default function CameraScreen({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -3 }}
                   transition={{ duration: 0.2 }}
-                  className="text-base sm:text-lg font-bold leading-tight text-deep-rose truncate"
+                  className="text-base sm:text-lg font-bold leading-tight text-white truncate"
                   style={{ fontFamily: 'var(--font-dancing)' }}
                 >
                   {currentPhoto.caption}
@@ -285,10 +287,10 @@ export default function CameraScreen({
               <motion.button
                 whileTap={{ scale: 0.86 }}
                 onClick={handleHeartReaction}
-                className="w-10 h-10 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-500 shadow-sm cursor-pointer hover:bg-rose-100 transition-colors"
+                className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-rose-300 shadow-sm cursor-pointer hover:bg-white/20 transition-colors"
                 aria-label="Love this photo"
               >
-                <HeartIcon size={18} color="#E56B8A" />
+                <HeartIcon size={18} color="#FF7597" />
               </motion.button>
             </div>
           </div>
@@ -305,10 +307,10 @@ export default function CameraScreen({
               key={idx}
               whileTap={{ scale: 0.9 }}
               onClick={() => setActiveIndex(idx)}
-              className={`relative flex-shrink-0 w-13 h-13 rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-white snap-center cursor-pointer ${
+              className={`relative flex-shrink-0 w-13 h-13 rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-neutral-900 snap-center cursor-pointer ${
                 activeIndex === idx
-                  ? 'border-rose-500 scale-105 shadow-md shadow-rose-500/30'
-                  : 'border-rose-200/70 opacity-60 hover:opacity-90'
+                  ? 'border-[#D4AF37] scale-105 shadow-md shadow-[#D4AF37]/40 ring-1 ring-[#D4AF37]'
+                  : 'border-white/20 opacity-50 hover:opacity-90'
               }`}
               style={{ width: '52px', height: '52px' }}
               aria-label={`Photo ${idx + 1}`}
