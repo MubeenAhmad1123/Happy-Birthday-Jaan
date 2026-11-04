@@ -228,6 +228,16 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
                 maxHeight: 'calc(78dvh - 50px)',
               }}
             >
+              {/* Romantic Bubu & Dudu Letter Card Image */}
+              <div className="w-full mb-3 rounded-2xl overflow-hidden border border-rose-200/90 shadow-md">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/characters/hub-letter-card.jpg"
+                  alt="Bubu my love"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+
               <div
                 className="whitespace-pre-wrap text-[#2D2329]"
                 style={{

@@ -7,26 +7,38 @@ import path from 'path'
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
-  // 1. Session verification
+  // 1. Session verification - only authenticated visitors can stream the private song
   const hasSession = await verifySession(req)
   if (!hasSession) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  // 2. Unlock date guard
-  if (!isContentUnlocked()) {
-    return NextResponse.json({ error: 'Not yet unlocked' }, { status: 403 })
+  // Look for our-song.mp3 across candidate directories
+  const candidatePaths = [
+    path.resolve(process.cwd(), 'assets-private', 'audio', 'our-song.mp3'),
+    path.resolve(process.cwd(), 'assets-private', 'our-song.mp3'),
+    path.resolve(process.cwd(), 'public', 'audio', 'our-song.mp3'),
+    path.resolve(process.cwd(), 'birthday-site', 'assets-private', 'audio', 'our-song.mp3'),
+    path.resolve(process.cwd(), 'birthday-site', 'assets-private', 'our-song.mp3'),
+    path.join(__dirname, '..', '..', '..', '..', 'assets-private', 'audio', 'our-song.mp3'),
+    path.join(__dirname, '..', '..', '..', '..', 'assets-private', 'our-song.mp3'),
+    path.join(__dirname, '..', '..', '..', '..', '..', 'assets-private', 'our-song.mp3'),
+  ]
+
+  let audioPath: string | null = null
+  for (const p of candidatePaths) {
+    if (existsSync(/* turbopackIgnore: true */ p)) {
+      audioPath = p
+      break
+    }
   }
 
-  // Path to private audio file
-  const audioPath = path.resolve(process.cwd(), 'assets-private', 'audio', 'our-song.mp3')
-
-  if (!existsSync(audioPath)) {
+  if (!audioPath) {
     const isDev = process.env.NODE_ENV !== 'production'
     return NextResponse.json(
       {
         error: isDev
-          ? 'Song file nahi mila. Place our-song.mp3 in /assets-private/audio/'
+          ? 'Song file nahi mila. Place our-song.mp3 in /assets-private/'
           : 'Audio currently unavailable',
       },
       { status: 404 }
@@ -34,7 +46,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const stat = statSync(audioPath)
+    const stat = statSync(/* turbopackIgnore: true */ audioPath)
     const fileSize = stat.size
     const range = req.headers.get('range')
 
@@ -44,12 +56,12 @@ export async function GET(req: NextRequest) {
       const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1
       const chunkSize = end - start + 1
 
-      const fileHandle = await fs.open(audioPath, 'r')
+      const fileHandle = await fs.open(/* turbopackIgnore: true */ audioPath, 'r')
       const buffer = Buffer.alloc(chunkSize)
       await fileHandle.read(buffer, 0, chunkSize, start)
       await fileHandle.close()
 
-      return new NextResponse(buffer, {
+      return new NextResponse(new Uint8Array(buffer), {
         status: 206,
         headers: {
           'Content-Range': `bytes ${start}-${end}/${fileSize}`,
@@ -60,8 +72,8 @@ export async function GET(req: NextRequest) {
         },
       })
     } else {
-      const fileBuffer = await fs.readFile(audioPath)
-      return new NextResponse(fileBuffer, {
+      const fileBuffer = await fs.readFile(/* turbopackIgnore: true */ audioPath)
+      return new NextResponse(new Uint8Array(fileBuffer), {
         status: 200,
         headers: {
           'Content-Length': String(fileSize),

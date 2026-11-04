@@ -29,10 +29,10 @@ const DEFAULT_BUBU_LINES = [
   'Aaj sirf tumhara din hai, Maria!',
   'Mujhe pata hai tum muskura rahi ho 🤍',
   'Dudu ne kaha hai ke tum duniya ki sab se pyari ho.',
-  'Chai bani hai, aa jao, thandi ho jayegi!',
+  'Maine tumhare liye ek pyara sa surprise banaya hai!',
   'Tum thak gayi ho? Chalo, thori der ruk jao, main yahin hoon.',
   'Meri taraf se ek bara sa hug 🤗',
-  'Tum jitni pyari ho na, utni to meri chai bhi meethi nahi.',
+  'Tum jitni pyari ho na, utna to koi phool bhi khushnuma nahi.',
   'Aaj koi tension nahi, sirf khushi.',
   'Dudu thora sharmila hai, par dil se tumse bohot pyaar karta hai.',
   'Sab kuch dekh lo, phir mujhe batana kya pasand aya.',
@@ -262,11 +262,11 @@ export default function HubScreen({
             tabIndex={0}
           >
             <AnimatedSticker
-              name="dudu-bubu-chai"
-              fallbackType="dudu-bubu-chai"
+              name="dudu-bubu-hug"
+              fallbackType="dudu-bubu-hug"
               size={92}
               priority={true}
-              animation="float"
+              animation="bounce"
             />
           </motion.div>
         </div>
@@ -318,19 +318,19 @@ export default function HubScreen({
           }}
           aria-label="Open Photo Memories"
         >
-          {/* Card left sticker frame */}
+          {/* Card left sticker frame: Dudu photographing Bubu */}
           <div
-            className="w-[78px] h-[78px] sm:w-[84px] sm:h-[84px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
+            className="w-[78px] h-[78px] sm:w-[84px] sm:h-[84px] rounded-2xl shrink-0 flex items-center justify-center p-0.5 relative overflow-hidden border shadow-inner"
             style={{
               background: 'linear-gradient(135deg, rgba(232, 194, 122, 0.22) 0%, rgba(232, 194, 122, 0.05) 100%)',
               borderColor: 'rgba(232, 194, 122, 0.5)',
             }}
           >
-            <AnimatedSticker
-              name="hub-camera"
-              fallbackType="hub-camera"
-              size={74}
-              animation="bounce"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/hub-camera-photo.jpg"
+              alt="Photo Memories"
+              className="w-full h-full object-cover rounded-xl"
             />
           </div>
 
@@ -400,19 +400,19 @@ export default function HubScreen({
           }}
           aria-label="Open The Letter"
         >
-          {/* Card left sticker frame */}
+          {/* Card left sticker frame: Bubu My Love Card */}
           <div
-            className="w-[78px] h-[78px] sm:w-[84px] sm:h-[84px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
+            className="w-[78px] h-[78px] sm:w-[84px] sm:h-[84px] rounded-2xl shrink-0 flex items-center justify-center p-0.5 relative overflow-hidden border shadow-inner"
             style={{
               background: 'linear-gradient(135deg, rgba(255, 117, 151, 0.22) 0%, rgba(255, 117, 151, 0.05) 100%)',
               borderColor: 'rgba(255, 117, 151, 0.5)',
             }}
           >
-            <AnimatedSticker
-              name="hub-letter"
-              fallbackType="hub-letter"
-              size={74}
-              animation="float"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/hub-letter-card.jpg"
+              alt="The Letter"
+              className="w-full h-full object-cover rounded-xl"
             />
           </div>
 
@@ -482,19 +482,19 @@ export default function HubScreen({
           }}
           aria-label="Open Our Song"
         >
-          {/* Card left sticker frame */}
+          {/* Card left sticker frame: Bubu & Dudu Couch Music */}
           <div
-            className="w-[78px] h-[78px] sm:w-[84px] sm:h-[84px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
+            className="w-[78px] h-[78px] sm:w-[84px] sm:h-[84px] rounded-2xl shrink-0 flex items-center justify-center p-0.5 relative overflow-hidden border shadow-inner"
             style={{
               background: 'linear-gradient(135deg, rgba(216, 180, 254, 0.22) 0%, rgba(216, 180, 254, 0.05) 100%)',
               borderColor: 'rgba(216, 180, 254, 0.5)',
             }}
           >
-            <AnimatedSticker
-              name="hub-cassette"
-              fallbackType="hub-cassette"
-              size={74}
-              animation="float"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/hub-music-couch.jpg"
+              alt="Our Song"
+              className="w-full h-full object-cover rounded-xl"
             />
           </div>
 

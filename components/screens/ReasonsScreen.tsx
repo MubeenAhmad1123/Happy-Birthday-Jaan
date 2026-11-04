@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import ScreenShell from '@/components/ScreenShell'
@@ -23,6 +23,21 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
   const total = safeReasons.length || 25
   const [activeIndex, setActiveIndex] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
+
+  // Preload neighboring photos so back face photos show instantly
+  useEffect(() => {
+    if (total <= 0) return
+    const curNum = String(activeIndex + 1).padStart(2, '0')
+    const nextNum = String(((activeIndex + 1) % total) + 1).padStart(2, '0')
+    const prevNum = String((activeIndex === 0 ? total : activeIndex)).padStart(2, '0')
+
+    const p1 = new Image()
+    p1.src = `/api/photos/${curNum}`
+    const p2 = new Image()
+    p2.src = `/api/photos/${nextNum}`
+    const p3 = new Image()
+    p3.src = `/api/photos/${prevNum}`
+  }, [activeIndex, total])
 
   const goToCard = useCallback(
     (index: number) => {
@@ -277,7 +292,7 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
                     </motion.div>
                   </div>
 
-                  {/* Bottom: "Tap me" */}
+                  {/* Bottom: "Tap to flip" */}
                   <div className="pb-3 z-10 flex items-center gap-1.5 opacity-90">
                     <SparkleIcon size={12} color={front.accentColor} />
                     <span
@@ -287,7 +302,7 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
                         color: front.accentColor,
                       }}
                     >
-                      Tap me
+                      Tap to flip 🤍
                     </span>
                     <SparkleIcon size={12} color={front.accentColor} />
                   </div>
@@ -312,11 +327,15 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
                     <img
                       src={photoUrl}
                       alt={item.text}
-                      className="relative z-10 w-full h-full object-cover object-top select-none pointer-events-none"
+                      className="relative z-10 w-full h-full object-cover object-top select-none pointer-events-none transition-opacity duration-300"
                       loading={isCenter ? 'eager' : 'lazy'}
+                      onLoad={(e) => {
+                        const target = e.currentTarget
+                        target.style.opacity = '1'
+                      }}
                       onError={(e) => {
                         const target = e.currentTarget
-                        target.style.opacity = '0'
+                        target.style.opacity = '0.3'
                       }}
                     />
 

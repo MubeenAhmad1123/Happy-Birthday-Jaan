@@ -64,7 +64,7 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
               : idx === 1
               ? 'dudu-bubu-nashta'
               : idx === 2
-              ? 'dudu-bubu-chai'
+              ? 'dudu-bubu-flowers'
               : idx === 5
               ? 'bubu-sad'
               : idx === 7

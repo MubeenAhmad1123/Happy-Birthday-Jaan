@@ -38,7 +38,7 @@ export const DEFAULT_CONTENT: SiteContent = {
 
 Aaj tum 25 saal ki ho gayi ho, aur main bas yeh chahta tha ke tum jaano ke tum mere liye kya ho.
 
-Subah ki pehli chai se le kar raat ki aakhri baat tak, tum meri zindagi ka sab se khoobsurat hissa ban chuki ho. Tumhari smile meri har thaki hui shaam ka sukoon hai, aur tumhari hansi meri favourite awaaz.
+Subah ki pehli muskurahat se le kar raat ki aakhri baat tak, tum meri zindagi ka sab se khoobsurat hissa ban chuki ho. Tumhari smile meri har thaki hui shaam ka sukoon hai, aur tumhari hansi meri favourite awaaz.
 
 Mujhe pata hai ke humare beech faaslay bhi aate hain, par dil se hum hamesha saath hain. Tumne mujhe himmat di, mujhe behtar banaya, aur mere dil ko ek ghar diya.
 
@@ -53,10 +53,10 @@ Tumhara Ganda Bachha 🤍 (Mera Shehzada)`,
     'Aaj sirf tumhara din hai, Maria!',
     'Mujhe pata hai tum muskura rahi ho 🤍',
     'Dudu ne kaha hai ke tum duniya ki sab se pyari ho.',
-    'Chai bani hai, aa jao, thandi ho jayegi!',
+    'Maine tumhare liye ek pyara sa surprise banaya hai!',
     'Tum thak gayi ho? Chalo, thori der ruk jao, main yahin hoon.',
     'Meri taraf se ek bara sa hug 🤗',
-    'Tum jitni pyari ho na, utni to meri chai bhi meethi nahi.',
+    'Tum jitni pyari ho na, utna to koi phool bhi khushnuma nahi.',
     'Aaj koi tension nahi, sirf khushi.',
     'Dudu thora sharmila hai, par dil se tumse bohot pyaar karta hai.',
     'Sab kuch dekh lo, phir mujhe batana kya pasand aya.',
@@ -71,7 +71,7 @@ Tumhara Ganda Bachha 🤍 (Mera Shehzada)`,
     { url: '/api/photos/04', caption: 'Crisp White Shirt — Noor jaisi, clean and graceful 🤍', placeholderColor: '#FDF2F4' },
     { url: '/api/photos/05', caption: 'Peach Dupatta — Haya aur saadgi ka sab se pyara roop 🌸', placeholderColor: '#FFF1F2' },
     { url: '/api/photos/06', caption: 'Dolphin Ring — Hamara chota sa wada aur tumhara haath 💍', placeholderColor: '#FFE5EC' },
-    { url: '/api/photos/07', caption: 'Sunset Rooftop — Tum, main, aur chai ka pyara ghunt ☕', placeholderColor: '#FFF0F3' },
+    { url: '/api/photos/07', caption: 'Sunset Rooftop — Tum, main, aur shaam ka pyara sukoon 🌅✨', placeholderColor: '#FFF0F3' },
     { url: '/api/photos/08', caption: 'Maroon & Silver Hoops — Meri classy Begum ka andaaz ✨', placeholderColor: '#FFF5F0' },
     { url: '/api/photos/09', caption: 'Phoolon ki Khushboo — Tumhare baalon mein gulab aur chehre pe noor 🌹', placeholderColor: '#FDF2F4' },
     { url: '/api/photos/10', caption: 'Pink Dupatta — Soch mein gum, par dil ke sab se kareeb 🌸', placeholderColor: '#FFF1F2' },
@@ -85,7 +85,7 @@ Tumhara Ganda Bachha 🤍 (Mera Shehzada)`,
     { url: '/api/photos/18', caption: 'Sabz Hawaayein — Azaadi, sukoon aur khuli fizayein 🌾🕊️', placeholderColor: '#FFF5F0' },
     { url: '/api/photos/19', caption: 'Nayi Subah — Tumhara udta dupatta aur khushgawar din 🌅✨', placeholderColor: '#FDF2F4' },
     { url: '/api/photos/20', caption: 'Chhupi hui Jaan — Parde mein bhi roshni nahi chhupti 🤍', placeholderColor: '#FFF1F2' },
-    { url: '/api/photos/21', caption: 'Shaam ki Chai — Do cup, do dil, aur dher saari baatein ☕', placeholderColor: '#FFE5EC' },
+    { url: '/api/photos/21', caption: 'Shaam ki Baatein — Do dil, dher saari baatein, aur hamara saath 🤍', placeholderColor: '#FFE5EC' },
     { url: '/api/photos/22', caption: 'Shehzadi & Shehzada — Hamari pyari daastan-e-ishq 👑✨', placeholderColor: '#FFF0F3' },
     { url: '/api/photos/23', caption: 'Pastel Flowers — Zindagi gulzar hai jab tum muskurao 🌸', placeholderColor: '#FFF5F0' },
     { url: '/api/photos/24', caption: 'Sukoon-e-Jaan — Jab tum mere paas hoti ho toh duniya thehr jaati hai 🤍', placeholderColor: '#FDF2F4' },
@@ -93,7 +93,7 @@ Tumhara Ganda Bachha 🤍 (Mera Shehzada)`,
   ],
   reasons: [
     { id: '1', order: 1, text: 'Tumhari smile meri har thaki hui shaam ka sukoon hai.', photoUrl: '/api/photos/01' },
-    { id: '2', order: 2, text: 'Tum ho to chai bhi zyada meethi lagti hai ☕', photoUrl: '/api/photos/02' },
+    { id: '2', order: 2, text: 'Tum ho to meri poori dunya roshan lagti hai ✨', photoUrl: '/api/photos/02' },
     { id: '3', order: 3, text: 'Tumne mujhe himmat di, Begum.', photoUrl: '/api/photos/03' },
     { id: '4', order: 4, text: 'Tumhari hansi meri favourite awaaz hai.', photoUrl: '/api/photos/04' },
     { id: '5', order: 5, text: 'Tum saath ho to ghar jaisa lagta hai.', photoUrl: '/api/photos/05' },
@@ -138,10 +138,10 @@ Tumhara Ganda Bachha 🤍 (Mera Shehzada)`,
     {
       id: '3',
       order: 3,
-      date: 'Chai',
-      text: 'Tumhare liye chai lana meri favourite aadat ban gayi ☕',
-      icon: '☕',
-      character: 'dudu-bubu-chai',
+      date: 'Shaam',
+      text: 'Tumhare chehre ki muskurahat dekhna meri favourite aadat ban gayi 🤍',
+      icon: '🌸',
+      character: 'dudu-bubu-flowers',
     },
     {
       id: '4',

@@ -63,7 +63,31 @@ export default function CassetteScreen({
         <div className="w-12" />
       </div>
 
-      <div className="w-full max-w-sm flex flex-col items-center gap-6 my-auto z-10 px-1">
+      <div className="w-full max-w-sm flex flex-col items-center gap-4 my-auto z-10 px-1">
+        {/* Bubu & Dudu Cozy Couch Music Visual */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.35 }}
+          className="relative w-full max-w-[280px] aspect-[4/3] rounded-2xl overflow-hidden border-2 border-pink-300/40 shadow-xl"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/characters/hub-music-couch.jpg"
+            alt="Bubu and Dudu listening to music"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+          <div
+            className="absolute bottom-2 inset-x-2 text-center text-xs font-bold text-white drop-shadow flex items-center justify-center gap-1.5"
+            style={{ fontFamily: 'var(--font-baloo)' }}
+          >
+            <span>Hamara Sukoon</span>
+            <span>•</span>
+            <span className="text-[#F9D5DE]">Listening Together 🤍</span>
+          </div>
+        </motion.div>
+
         {/* Retro Cassette Tape SVG with spinning reels */}
         <div
           className="relative w-full aspect-[16/10] rounded-3xl p-3.5 shadow-xl border flex flex-col justify-between"

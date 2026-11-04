@@ -41,8 +41,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# private media assets - only allow the 25 optimized webp site photos
+# private media assets - allow the 25 optimized webp site photos and our-song.mp3
 /assets-private/*
+!/assets-private/our-song.mp3
+!/assets-private/audio
+/assets-private/audio/*
+!/assets-private/audio/our-song.mp3
 !/assets-private/assets
 /assets-private/assets/*
 !/assets-private/assets/photos

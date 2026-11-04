@@ -41,7 +41,8 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/api/photos/[id]': ['./assets-private/assets/photos/**/*'],
     '/api/photos/*': ['./assets-private/assets/photos/**/*'],
-    '/api/**/*': ['./assets-private/assets/photos/**/*'],
+    '/api/audio': ['./assets-private/our-song.mp3', './assets-private/audio/**/*'],
+    '/api/**/*': ['./assets-private/assets/photos/**/*', './assets-private/our-song.mp3', './assets-private/audio/**/*'],
   },
 }
 
