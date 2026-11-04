@@ -271,37 +271,38 @@ export default function HubScreen({
           </motion.div>
         </div>
 
-        <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/10 border border-[#D4AF37]/35 mt-1">
-          <SparkleIcon size={11} color="#D4AF37" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/10 border border-[#D4AF37]/50 mt-1 shadow-sm">
+          <SparkleIcon size={12} color="#FFD97D" />
           <span
-            className="text-[11px] uppercase tracking-widest font-bold text-[#D4AF37]"
-            style={{ fontFamily: 'var(--font-baloo)' }}
+            className="text-[11px] uppercase tracking-widest font-bold"
+            style={{ fontFamily: 'var(--font-baloo)', color: '#FFD97D' }}
           >
             Special Surprises
           </span>
-          <SparkleIcon size={11} color="#D4AF37" />
+          <SparkleIcon size={12} color="#FFD97D" />
         </div>
 
         <h1
-          className="heading-fluid leading-tight text-white mt-1"
+          className="heading-fluid leading-tight mt-1"
           style={{
             fontFamily: 'var(--font-dancing)',
-            textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+            color: '#FFFFFF',
+            textShadow: '0 2px 16px rgba(229,107,138,0.5)',
           }}
         >
           Kuch cheezein khol ke dekho
         </h1>
         <p
-          className="text-sm text-rose-200/80 mt-0.5"
-          style={{ fontFamily: 'var(--font-caveat)' }}
+          className="text-base sm:text-lg mt-0.5"
+          style={{ fontFamily: 'var(--font-caveat)', color: '#FFD9E2' }}
         >
           Teeno cheezon ko ek ek karke tap karo:
         </p>
       </motion.div>
 
-      {/* 3 Unified Luxury Stacked Cards with Mathematical Alignment */}
+      {/* 3 Rich Luxury Jewel-Toned Cards with Vibrant Color & Glowing High-Contrast Text */}
       <div className="w-full flex flex-col gap-3.5 my-auto z-10 px-1">
-        {/* Card 1: Photo Memories */}
+        {/* Card 1: Photo Memories (Warm Royal Plum & Champagne Gold) */}
         <motion.button
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -309,26 +310,26 @@ export default function HubScreen({
           whileTap={{ scale: 0.98 }}
           whileHover={{ scale: 1.01 }}
           onClick={() => openItem('camera')}
-          className="group relative w-full min-h-[114px] sm:min-h-[120px] p-3.5 sm:p-4 rounded-[24px] flex items-center gap-3.5 sm:gap-4 cursor-pointer text-left transition-all select-none border overflow-hidden backdrop-blur-md"
+          className="group relative w-full min-h-[116px] sm:min-h-[122px] p-3.5 sm:p-4 rounded-[26px] flex items-center gap-3.5 sm:gap-4 cursor-pointer text-left transition-all select-none border-2 overflow-hidden shadow-2xl"
           style={{
-            background: 'linear-gradient(135deg, rgba(32, 26, 36, 0.92) 0%, rgba(18, 14, 20, 0.96) 100%)',
-            borderColor: openedItems.camera ? 'rgba(212, 175, 55, 0.7)' : 'rgba(212, 175, 55, 0.35)',
-            boxShadow: '0 12px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.08)',
+            background: 'linear-gradient(135deg, #381A2D 0%, #24111E 50%, #170A13 100%)',
+            borderColor: openedItems.camera ? '#E8C27A' : 'rgba(232, 194, 122, 0.55)',
+            boxShadow: '0 14px 34px rgba(0, 0, 0, 0.55), 0 0 20px rgba(232, 194, 122, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
           }}
           aria-label="Open Photo Memories"
         >
           {/* Card left sticker frame */}
           <div
-            className="w-[76px] h-[76px] sm:w-[82px] sm:h-[82px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
+            className="w-[78px] h-[78px] sm:w-[84px] sm:h-[84px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
             style={{
-              background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.03) 100%)',
-              borderColor: 'rgba(212, 175, 55, 0.3)',
+              background: 'linear-gradient(135deg, rgba(232, 194, 122, 0.22) 0%, rgba(232, 194, 122, 0.05) 100%)',
+              borderColor: 'rgba(232, 194, 122, 0.5)',
             }}
           >
             <AnimatedSticker
               name="hub-camera"
               fallbackType="hub-camera"
-              size={72}
+              size={74}
               animation="bounce"
             />
           </div>
@@ -336,22 +337,29 @@ export default function HubScreen({
           {/* Card text content */}
           <div className="flex flex-col justify-center flex-1 min-w-0 pr-1">
             <span
-              className="text-[11px] uppercase tracking-widest font-bold text-[#E8C27A] flex items-center gap-1"
-              style={{ fontFamily: 'var(--font-baloo)' }}
+              className="text-xs uppercase tracking-widest font-bold flex items-center gap-1.5"
+              style={{ fontFamily: 'var(--font-baloo)', color: '#FFD97D' }}
             >
               <span>Yaadein</span>
-              <span className="opacity-50">•</span>
-              <span className="text-white/60">25 Photos</span>
+              <span className="opacity-60">•</span>
+              <span style={{ color: '#FFF0F5' }}>25 Photos</span>
             </span>
             <h3
-              className="text-xl sm:text-2xl font-bold text-white leading-tight tracking-wide truncate mt-0.5"
-              style={{ fontFamily: 'var(--font-baloo)' }}
+              className="text-xl sm:text-2xl font-bold leading-tight tracking-wide truncate mt-0.5"
+              style={{
+                fontFamily: 'var(--font-baloo)',
+                color: '#FFFFFF',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.7)',
+              }}
             >
               Photo Memories
             </h3>
             <p
-              className="text-xs sm:text-sm text-rose-100/75 mt-0.5 leading-snug line-clamp-1"
-              style={{ fontFamily: 'var(--font-caveat)' }}
+              className="text-sm sm:text-base mt-0.5 leading-snug line-clamp-1 font-medium"
+              style={{
+                fontFamily: 'var(--font-caveat)',
+                color: '#FFE6ED',
+              }}
             >
               Hamari 25 pyari tasveerein aur yaadein
             </p>
@@ -359,21 +367,24 @@ export default function HubScreen({
 
           {/* Status badge / Chevron */}
           <div
-            className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center border transition-all ${
-              openedItems.camera
-                ? 'bg-[#D4AF37]/25 border-[#D4AF37] text-[#D4AF37] shadow-md shadow-[#D4AF37]/25'
-                : 'bg-white/[0.08] border-white/15 text-white/70 group-hover:bg-white/[0.16] group-hover:text-white'
-            }`}
+            className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center border-2 transition-all shadow-md"
+            style={{
+              background: openedItems.camera
+                ? 'rgba(232, 194, 122, 0.3)'
+                : 'rgba(255, 255, 255, 0.12)',
+              borderColor: openedItems.camera ? '#E8C27A' : 'rgba(255, 255, 255, 0.35)',
+              color: openedItems.camera ? '#FFD97D' : '#FFFFFF',
+            }}
           >
             {openedItems.camera ? (
-              <CheckIcon size={15} color="#D4AF37" />
+              <CheckIcon size={16} color="#FFD97D" />
             ) : (
-              <ArrowRightIcon size={14} color="currentColor" />
+              <ArrowRightIcon size={15} color="#FFFFFF" />
             )}
           </div>
         </motion.button>
 
-        {/* Card 2: The Letter */}
+        {/* Card 2: The Letter (Rich Berry Rose & Deep Wine) */}
         <motion.button
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -381,26 +392,26 @@ export default function HubScreen({
           whileTap={{ scale: 0.98 }}
           whileHover={{ scale: 1.01 }}
           onClick={() => openItem('letter')}
-          className="group relative w-full min-h-[114px] sm:min-h-[120px] p-3.5 sm:p-4 rounded-[24px] flex items-center gap-3.5 sm:gap-4 cursor-pointer text-left transition-all select-none border overflow-hidden backdrop-blur-md"
+          className="group relative w-full min-h-[116px] sm:min-h-[122px] p-3.5 sm:p-4 rounded-[26px] flex items-center gap-3.5 sm:gap-4 cursor-pointer text-left transition-all select-none border-2 overflow-hidden shadow-2xl"
           style={{
-            background: 'linear-gradient(135deg, rgba(36, 24, 32, 0.92) 0%, rgba(20, 14, 18, 0.96) 100%)',
-            borderColor: openedItems.letter ? 'rgba(255, 117, 151, 0.7)' : 'rgba(255, 117, 151, 0.35)',
-            boxShadow: '0 12px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.08)',
+            background: 'linear-gradient(135deg, #4D1629 0%, #300C19 50%, #1C060E 100%)',
+            borderColor: openedItems.letter ? '#FF7597' : 'rgba(255, 117, 151, 0.55)',
+            boxShadow: '0 14px 34px rgba(0, 0, 0, 0.55), 0 0 20px rgba(255, 117, 151, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
           }}
           aria-label="Open The Letter"
         >
           {/* Card left sticker frame */}
           <div
-            className="w-[76px] h-[76px] sm:w-[82px] sm:h-[82px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
+            className="w-[78px] h-[78px] sm:w-[84px] sm:h-[84px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
             style={{
-              background: 'linear-gradient(135deg, rgba(229, 107, 138, 0.18) 0%, rgba(229, 107, 138, 0.03) 100%)',
-              borderColor: 'rgba(229, 107, 138, 0.35)',
+              background: 'linear-gradient(135deg, rgba(255, 117, 151, 0.22) 0%, rgba(255, 117, 151, 0.05) 100%)',
+              borderColor: 'rgba(255, 117, 151, 0.5)',
             }}
           >
             <AnimatedSticker
               name="hub-letter"
               fallbackType="hub-letter"
-              size={72}
+              size={74}
               animation="float"
             />
           </div>
@@ -408,22 +419,29 @@ export default function HubScreen({
           {/* Card text content */}
           <div className="flex flex-col justify-center flex-1 min-w-0 pr-1">
             <span
-              className="text-[11px] uppercase tracking-widest font-bold text-[#FF7597] flex items-center gap-1"
-              style={{ fontFamily: 'var(--font-baloo)' }}
+              className="text-xs uppercase tracking-widest font-bold flex items-center gap-1.5"
+              style={{ fontFamily: 'var(--font-baloo)', color: '#FFA8C2' }}
             >
               <span>Dil Se</span>
-              <span className="opacity-50">•</span>
-              <span className="text-white/60">Khat</span>
+              <span className="opacity-60">•</span>
+              <span style={{ color: '#FFF0F5' }}>Khat</span>
             </span>
             <h3
-              className="text-xl sm:text-2xl font-bold text-white leading-tight tracking-wide truncate mt-0.5"
-              style={{ fontFamily: 'var(--font-baloo)' }}
+              className="text-xl sm:text-2xl font-bold leading-tight tracking-wide truncate mt-0.5"
+              style={{
+                fontFamily: 'var(--font-baloo)',
+                color: '#FFFFFF',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.7)',
+              }}
             >
               The Letter
             </h3>
             <p
-              className="text-xs sm:text-sm text-rose-100/75 mt-0.5 leading-snug line-clamp-1"
-              style={{ fontFamily: 'var(--font-caveat)' }}
+              className="text-sm sm:text-base mt-0.5 leading-snug line-clamp-1 font-medium"
+              style={{
+                fontFamily: 'var(--font-caveat)',
+                color: '#FFF0F5',
+              }}
             >
               Mera dil ki baat, sirf tumhare liye
             </p>
@@ -431,21 +449,24 @@ export default function HubScreen({
 
           {/* Status badge / Chevron */}
           <div
-            className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center border transition-all ${
-              openedItems.letter
-                ? 'bg-rose-500/25 border-rose-400 text-rose-300 shadow-md shadow-rose-500/25'
-                : 'bg-white/[0.08] border-white/15 text-white/70 group-hover:bg-white/[0.16] group-hover:text-white'
-            }`}
+            className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center border-2 transition-all shadow-md"
+            style={{
+              background: openedItems.letter
+                ? 'rgba(255, 117, 151, 0.3)'
+                : 'rgba(255, 255, 255, 0.12)',
+              borderColor: openedItems.letter ? '#FF7597' : 'rgba(255, 255, 255, 0.35)',
+              color: openedItems.letter ? '#FFA8C2' : '#FFFFFF',
+            }}
           >
             {openedItems.letter ? (
-              <CheckIcon size={15} color="#FF7597" />
+              <CheckIcon size={16} color="#FFA8C2" />
             ) : (
-              <ArrowRightIcon size={14} color="currentColor" />
+              <ArrowRightIcon size={15} color="#FFFFFF" />
             )}
           </div>
         </motion.button>
 
-        {/* Card 3: Our Song */}
+        {/* Card 3: Our Song (Deep Twilight Amethyst & Violet-Rose) */}
         <motion.button
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -453,26 +474,26 @@ export default function HubScreen({
           whileTap={{ scale: 0.98 }}
           whileHover={{ scale: 1.01 }}
           onClick={() => openItem('cassette')}
-          className="group relative w-full min-h-[114px] sm:min-h-[120px] p-3.5 sm:p-4 rounded-[24px] flex items-center gap-3.5 sm:gap-4 cursor-pointer text-left transition-all select-none border overflow-hidden backdrop-blur-md"
+          className="group relative w-full min-h-[116px] sm:min-h-[122px] p-3.5 sm:p-4 rounded-[26px] flex items-center gap-3.5 sm:gap-4 cursor-pointer text-left transition-all select-none border-2 overflow-hidden shadow-2xl"
           style={{
-            background: 'linear-gradient(135deg, rgba(30, 24, 34, 0.92) 0%, rgba(16, 13, 20, 0.96) 100%)',
-            borderColor: openedItems.cassette ? 'rgba(249, 213, 222, 0.7)' : 'rgba(249, 213, 222, 0.35)',
-            boxShadow: '0 12px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.08)',
+            background: 'linear-gradient(135deg, #2D1B44 0%, #1B102B 50%, #10091B 100%)',
+            borderColor: openedItems.cassette ? '#D8B4FE' : 'rgba(216, 180, 254, 0.55)',
+            boxShadow: '0 14px 34px rgba(0, 0, 0, 0.55), 0 0 20px rgba(216, 180, 254, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
           }}
           aria-label="Open Our Song"
         >
           {/* Card left sticker frame */}
           <div
-            className="w-[76px] h-[76px] sm:w-[82px] sm:h-[82px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
+            className="w-[78px] h-[78px] sm:w-[84px] sm:h-[84px] rounded-2xl shrink-0 flex items-center justify-center p-1 relative overflow-hidden border shadow-inner"
             style={{
-              background: 'linear-gradient(135deg, rgba(249, 213, 222, 0.16) 0%, rgba(249, 213, 222, 0.03) 100%)',
-              borderColor: 'rgba(249, 213, 222, 0.3)',
+              background: 'linear-gradient(135deg, rgba(216, 180, 254, 0.22) 0%, rgba(216, 180, 254, 0.05) 100%)',
+              borderColor: 'rgba(216, 180, 254, 0.5)',
             }}
           >
             <AnimatedSticker
               name="hub-cassette"
               fallbackType="hub-cassette"
-              size={72}
+              size={74}
               animation="float"
             />
           </div>
@@ -480,22 +501,29 @@ export default function HubScreen({
           {/* Card text content */}
           <div className="flex flex-col justify-center flex-1 min-w-0 pr-1">
             <span
-              className="text-[11px] uppercase tracking-widest font-bold text-[#F9D5DE] flex items-center gap-1"
-              style={{ fontFamily: 'var(--font-baloo)' }}
+              className="text-xs uppercase tracking-widest font-bold flex items-center gap-1.5"
+              style={{ fontFamily: 'var(--font-baloo)', color: '#E9D5FF' }}
             >
               <span>Hamara Gana</span>
-              <span className="opacity-50">•</span>
-              <span className="text-white/60">Music</span>
+              <span className="opacity-60">•</span>
+              <span style={{ color: '#FFF0F5' }}>Music</span>
             </span>
             <h3
-              className="text-xl sm:text-2xl font-bold text-white leading-tight tracking-wide truncate mt-0.5"
-              style={{ fontFamily: 'var(--font-baloo)' }}
+              className="text-xl sm:text-2xl font-bold leading-tight tracking-wide truncate mt-0.5"
+              style={{
+                fontFamily: 'var(--font-baloo)',
+                color: '#FFFFFF',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.7)',
+              }}
             >
               Our Song
             </h3>
             <p
-              className="text-xs sm:text-sm text-rose-100/75 mt-0.5 leading-snug line-clamp-1"
-              style={{ fontFamily: 'var(--font-caveat)' }}
+              className="text-sm sm:text-base mt-0.5 leading-snug line-clamp-1 font-medium"
+              style={{
+                fontFamily: 'var(--font-caveat)',
+                color: '#FAF5FF',
+              }}
             >
               {content.songTitle || 'Dil Ibadat Kar Raha Hai'}
             </p>
@@ -503,16 +531,19 @@ export default function HubScreen({
 
           {/* Status badge / Chevron */}
           <div
-            className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center border transition-all ${
-              openedItems.cassette
-                ? 'bg-pink-400/25 border-pink-300 text-pink-200 shadow-md shadow-pink-400/25'
-                : 'bg-white/[0.08] border-white/15 text-white/70 group-hover:bg-white/[0.16] group-hover:text-white'
-            }`}
+            className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center border-2 transition-all shadow-md"
+            style={{
+              background: openedItems.cassette
+                ? 'rgba(216, 180, 254, 0.3)'
+                : 'rgba(255, 255, 255, 0.12)',
+              borderColor: openedItems.cassette ? '#D8B4FE' : 'rgba(255, 255, 255, 0.35)',
+              color: openedItems.cassette ? '#E9D5FF' : '#FFFFFF',
+            }}
           >
             {openedItems.cassette ? (
-              <CheckIcon size={15} color="#F9D5DE" />
+              <CheckIcon size={16} color="#E9D5FF" />
             ) : (
-              <ArrowRightIcon size={14} color="currentColor" />
+              <ArrowRightIcon size={15} color="#FFFFFF" />
             )}
           </div>
         </motion.button>
@@ -542,12 +573,12 @@ export default function HubScreen({
             <motion.div
               key="pending-hint"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.9 }}
+              animate={{ opacity: 0.95 }}
               className="flex flex-col items-center gap-1 text-center"
             >
               <p
-                className="text-xs text-rose-200/80 font-medium"
-                style={{ fontFamily: 'var(--font-caveat)' }}
+                className="text-sm font-medium"
+                style={{ fontFamily: 'var(--font-caveat)', color: '#FFD9E2' }}
               >
                 Teeno surprises kholo toh aage ka rasta khulega ✨
               </p>
@@ -556,8 +587,8 @@ export default function HubScreen({
                   buzz(10)
                   onProceedToReasons()
                 }}
-                className="text-[11px] text-[#E8C27A] hover:text-[#F5E6BE] underline font-medium cursor-pointer"
-                style={{ fontFamily: 'var(--font-baloo)' }}
+                className="text-xs underline font-bold cursor-pointer transition-colors"
+                style={{ fontFamily: 'var(--font-baloo)', color: '#FFD97D' }}
               >
                 (Ya seedha 25 Reasons dekho)
               </button>
