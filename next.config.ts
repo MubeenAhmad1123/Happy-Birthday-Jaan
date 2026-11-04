@@ -37,6 +37,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  outputFileTracingIncludes: {
+    '/api/photos/[id]': ['./assets-private/assets/photos/**/*'],
+  },
 }
 
 export default nextConfig

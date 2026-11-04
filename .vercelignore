@@ -1,0 +1,11 @@
+# Vercel Ignore file
+node_modules
+.next
+.git
+assets-private/art
+assets-private/do-not-use
+assets-private/originals
+assets-private/reference
+assets-private/reference-screens
+assets-private/spare
+assets-private/video-archive

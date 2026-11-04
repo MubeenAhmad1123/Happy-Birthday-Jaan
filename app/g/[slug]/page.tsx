@@ -15,8 +15,9 @@ export const metadata = {
 export default async function GatePage({ params }: Props) {
   const { slug } = await params
 
-  // Only the correct slug is valid — everything else is a 404
-  if (slug !== process.env.SITE_SLUG) {
+  // Valid slug check: accepts SITE_SLUG from env or default fallback
+  const validSlug = process.env.SITE_SLUG || 'qw3rty7uioplkjhgfds12345'
+  if (slug !== validSlug) {
     notFound()
   }
 

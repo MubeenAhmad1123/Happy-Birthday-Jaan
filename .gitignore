@@ -45,3 +45,6 @@ next-env.d.ts
 /assets-private
 assets-private/
 
+
+.vercel
+.env*
