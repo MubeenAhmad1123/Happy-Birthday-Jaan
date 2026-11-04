@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import ScreenShell from '@/components/ScreenShell'
 import AnimatedSticker from '@/components/AnimatedSticker'
 import { ArrowLeftIcon, ArrowRightIcon, ScaleIcon } from '@/components/Icons'
+import { buzz } from '@/lib/feedback'
 
 interface LawyerDreamScreenProps {
   onNext: () => void
@@ -25,7 +26,10 @@ export default function LawyerDreamScreen({
       <div className="w-full max-w-sm mx-auto flex items-center justify-between z-10 pt-1">
         <motion.button
           whileTap={{ scale: 0.94 }}
-          onClick={onBack}
+          onClick={() => {
+            buzz(10)
+            onBack()
+          }}
           className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas reasons pe jao"
@@ -151,7 +155,10 @@ export default function LawyerDreamScreen({
         <motion.button
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.02 }}
-          onClick={onNext}
+          onClick={() => {
+            buzz(10)
+            onNext()
+          }}
           className="btn-primary w-full flex items-center justify-center gap-2 shadow-xl"
         >
           <span>Azaadi ki roshni dekho</span>

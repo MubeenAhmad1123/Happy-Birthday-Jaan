@@ -7,6 +7,7 @@ import ScreenShell from '@/components/ScreenShell'
 import { PhotoItem } from '@/lib/contentData'
 import CharacterSticker from '@/components/CharacterSticker'
 import { ArrowLeftIcon, ArrowRightIcon, CameraIcon, HeartIcon } from '@/components/Icons'
+import { buzz, softChime } from '@/lib/feedback'
 
 interface CameraScreenProps {
   photos: PhotoItem[]
@@ -65,10 +66,12 @@ export default function CameraScreen({
   }, [activeIndex])
 
   const prevPhoto = () => {
+    buzz(10)
     setActiveIndex((prev) => (prev > 0 ? prev - 1 : totalPhotos - 1))
   }
 
   const nextPhoto = () => {
+    buzz(10)
     setActiveIndex((prev) => (prev < totalPhotos - 1 ? prev + 1 : 0))
   }
 
@@ -80,6 +83,8 @@ export default function CameraScreen({
   }
 
   const handleHeartReaction = () => {
+    buzz(15)
+    softChime()
     const newHeart: FloatingHeart = {
       id: Date.now(),
       xOffset: (Math.random() - 0.5) * 40,
@@ -109,7 +114,10 @@ export default function CameraScreen({
       <div className="w-full flex items-center justify-between z-20 pt-1 pb-1">
         <motion.button
           whileTap={{ scale: 0.93 }}
-          onClick={onBack}
+          onClick={() => {
+            buzz(10)
+            onBack()
+          }}
           className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas Hub jao"

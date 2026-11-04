@@ -106,6 +106,7 @@ export async function GET(req: NextRequest) {
           gateHint: content.gateHint ?? DEFAULT_CONTENT.gateHint,
           songTitle: content.songTitle ?? DEFAULT_CONTENT.songTitle,
           songUrl,
+          bubuLines: content.bubuLines ?? DEFAULT_CONTENT.bubuLines,
           reasons: reasons && reasons.length >= 25 ? reasons : DEFAULT_CONTENT.reasons,
           timeline,
           photos: photos.length >= 25 ? photos : DEFAULT_CONTENT.photos,

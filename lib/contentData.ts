@@ -26,6 +26,7 @@ export interface SiteContent {
   finalMessage: string
   songTitle: string
   songUrl: string
+  bubuLines?: string[]
   reasons: ReasonItem[]
   timeline: TimelineItem[]
   photos: PhotoItem[]
@@ -48,6 +49,21 @@ Tumhara Ganda Bachha 🤍 (Mera Shehzada)`,
     'Maria, meri Jaan, 25 saal mubarak ho. Tum bohot khush rehna, bohot muskurana. Tumhara Ganda Bachha hamesha tumhare saath hai, inshallah. 🤍',
   songTitle: 'Dil Ibadat Kar Raha Hai',
   songUrl: '',
+  bubuLines: [
+    'Aaj sirf tumhara din hai, Maria!',
+    'Mujhe pata hai tum muskura rahi ho 🤍',
+    'Dudu ne kaha hai ke tum duniya ki sab se pyari ho.',
+    'Chai bani hai, aa jao, thandi ho jayegi!',
+    'Tum thak gayi ho? Chalo, thori der ruk jao, main yahin hoon.',
+    'Meri taraf se ek bara sa hug 🤗',
+    'Tum jitni pyari ho na, utni to meri chai bhi meethi nahi.',
+    'Aaj koi tension nahi, sirf khushi.',
+    'Dudu thora sharmila hai, par dil se tumse bohot pyaar karta hai.',
+    'Sab kuch dekh lo, phir mujhe batana kya pasand aya.',
+    'Tumhari smile meri favourite hai, Jaan.',
+    '25 saal ki ho gayi ho, par dil se wohi pyari bacchi ho.',
+    'Ek raaz ki baat: akhri screen mein ek surprise hai.',
+  ],
   photos: [
     { url: '/api/photos/01', caption: 'Pencil Portrait — Tumhari pehli jhalak jo dil mein utar gayi 🤍', placeholderColor: '#FFE5EC' },
     { url: '/api/photos/02', caption: 'Teal Kurti — Woh pyari bangs aur tumhari maasoom smile ✨', placeholderColor: '#FFF0F3' },

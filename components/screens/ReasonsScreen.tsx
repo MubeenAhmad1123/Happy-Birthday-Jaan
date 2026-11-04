@@ -11,6 +11,7 @@ import {
   ArrowRightIcon,
   ArrowLeftIcon,
 } from '@/components/Icons'
+import { pop, buzz } from '@/lib/feedback'
 
 interface ReasonsScreenProps {
   reasons: ReasonItem[]
@@ -32,11 +33,13 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
   )
 
   const prevCard = () => {
+    buzz(10)
     setIsFlipped(false)
     setActiveIndex((prev) => (prev > 0 ? prev - 1 : total - 1))
   }
 
   const nextCard = () => {
+    buzz(10)
     setIsFlipped(false)
     setActiveIndex((prev) => (prev < total - 1 ? prev + 1 : 0))
   }
@@ -46,6 +49,8 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
     setIsFlipped(nextFlip)
 
     if (nextFlip) {
+      pop()
+      buzz(15)
       try {
         confetti({
           particleCount: 18,
@@ -56,6 +61,8 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
       } catch {
         // ignore
       }
+    } else {
+      buzz(8)
     }
   }
 
@@ -406,7 +413,10 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
         <motion.button
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.02 }}
-          onClick={onNext}
+          onClick={() => {
+            buzz(10)
+            onNext()
+          }}
           className="btn-primary w-full flex items-center justify-center gap-2 shadow-xl mt-1"
         >
           <span>Aage chalo (Tumhara Khwab)</span>

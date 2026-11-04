@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import ScreenShell from '@/components/ScreenShell'
 import { ArrowLeftIcon, LetterIcon, FlowerIcon, HeartIcon } from '@/components/Icons'
+import { buzz, softChime } from '@/lib/feedback'
 
 interface LetterScreenProps {
   letterText: string
@@ -19,6 +20,8 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
   const typingTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleOpenEnvelope = () => {
+    buzz(15)
+    softChime()
     setIsOpen(true)
     try {
       confetti({
@@ -81,7 +84,10 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
       <div className="w-full flex items-center justify-between z-20 pt-1 pb-2">
         <motion.button
           whileTap={{ scale: 0.94 }}
-          onClick={onBack}
+          onClick={() => {
+            buzz(10)
+            onBack()
+          }}
           className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas Hub"

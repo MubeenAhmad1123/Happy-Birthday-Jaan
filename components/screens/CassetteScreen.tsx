@@ -4,6 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import ScreenShell from '@/components/ScreenShell'
 import { ArrowLeftIcon, CassetteIcon, PlayIcon, PauseIcon } from '@/components/Icons'
+import { buzz } from '@/lib/feedback'
 
 interface CassetteScreenProps {
   songTitle: string
@@ -32,7 +33,10 @@ export default function CassetteScreen({
       <div className="w-full flex items-center justify-between z-20 pt-2 mb-2">
         <motion.button
           whileTap={{ scale: 0.94 }}
-          onClick={onBack}
+          onClick={() => {
+            buzz(10)
+            onBack()
+          }}
           className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas Hub"
@@ -166,7 +170,10 @@ export default function CassetteScreen({
             <motion.button
               whileTap={{ scale: 0.9 }}
               whileHover={{ scale: 1.05 }}
-              onClick={onTogglePlay}
+              onClick={() => {
+                buzz(10)
+                onTogglePlay()
+              }}
               className="w-16 h-16 rounded-full flex items-center justify-center shadow-xl text-white cursor-pointer select-none transition-all z-10"
               style={{
                 background: isPlaying

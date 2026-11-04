@@ -263,6 +263,31 @@ body {
   scrollbar-width: none;
 }
 
+/* ── Candle Flame Animation ───────────────────────────────────────── */
+@keyframes flame-flicker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 10px rgba(255, 170, 50, 0.7));
+  }
+  25% {
+    transform: scale(1.05, 0.94) rotate(-2deg);
+    filter: drop-shadow(0 0 14px rgba(255, 180, 60, 0.85));
+  }
+  50% {
+    transform: scale(0.95, 1.06) rotate(2.5deg);
+    filter: drop-shadow(0 0 8px rgba(255, 150, 40, 0.65));
+  }
+  75% {
+    transform: scale(1.03, 0.97) rotate(-1deg);
+    filter: drop-shadow(0 0 12px rgba(255, 175, 55, 0.8));
+  }
+}
+
+.animate-flame {
+  transform-origin: bottom center;
+  animation: flame-flicker 1.8s ease-in-out infinite;
+}
+
 /* ── 3D Card Flip Perspective ─────────────────────────────────────── */
 .perspective-1000 {
   perspective: 1000px;

@@ -6,6 +6,7 @@ import confetti from 'canvas-confetti'
 import ScreenShell from '@/components/ScreenShell'
 import AnimatedSticker from '@/components/AnimatedSticker'
 import { HeartIcon } from '@/components/Icons'
+import { buzz } from '@/lib/feedback'
 
 interface OpenerScreenProps {
   onYes: () => void
@@ -32,6 +33,7 @@ export default function OpenerScreen({ onYes }: OpenerScreenProps) {
   }
 
   const handleYesClick = () => {
+    buzz(10)
     try {
       confetti({
         particleCount: 80,

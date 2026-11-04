@@ -6,6 +6,7 @@ import confetti from 'canvas-confetti'
 import ScreenShell from '@/components/ScreenShell'
 import AnimatedSticker from '@/components/AnimatedSticker'
 import { HeartIcon } from '@/components/Icons'
+import { buzz } from '@/lib/feedback'
 
 interface FinaleScreenProps {
   finalMessage: string
@@ -132,7 +133,10 @@ export default function FinaleScreen({
       >
         <motion.button
           whileTap={{ scale: 0.95 }}
-          onClick={onReplay}
+          onClick={() => {
+            buzz(10)
+            onReplay()
+          }}
           className="btn-primary flex-1 text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-xl"
         >
           <span>Replay ↺</span>
@@ -140,7 +144,10 @@ export default function FinaleScreen({
 
         <motion.button
           whileTap={{ scale: 0.95 }}
-          onClick={onBackToHub}
+          onClick={() => {
+            buzz(10)
+            onBackToHub()
+          }}
           className="btn-secondary flex-1 text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-md"
         >
           <HeartIcon size={16} color="var(--rose)" />

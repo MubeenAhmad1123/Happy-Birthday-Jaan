@@ -1,13 +1,40 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
+import { unlockAudio } from '@/lib/feedback'
+import MuteToggle from './MuteToggle'
 
 interface AppFrameProps {
   children: React.ReactNode
   className?: string
+  showMuteToggle?: boolean
 }
 
-export default function AppFrame({ children, className = '' }: AppFrameProps) {
+export default function AppFrame({
+  children,
+  className = '',
+  showMuteToggle = true,
+}: AppFrameProps) {
+  const hasUnlockedRef = useRef(false)
+
+  // Lazily unlock WebAudio AudioContext on the very first user interaction
+  useEffect(() => {
+    const handleFirstTap = () => {
+      if (!hasUnlockedRef.current) {
+        hasUnlockedRef.current = true
+        unlockAudio()
+      }
+    }
+
+    window.addEventListener('pointerdown', handleFirstTap, { once: true, passive: true })
+    window.addEventListener('touchstart', handleFirstTap, { once: true, passive: true })
+
+    return () => {
+      window.removeEventListener('pointerdown', handleFirstTap)
+      window.removeEventListener('touchstart', handleFirstTap)
+    }
+  }, [])
+
   return (
     <div
       className={`min-h-dvh w-full bg-[#121014] flex justify-center items-center relative overflow-x-hidden ${className}`}
@@ -23,6 +50,7 @@ export default function AppFrame({ children, className = '' }: AppFrameProps) {
           boxSizing: 'border-box',
         }}
       >
+        {showMuteToggle && <MuteToggle />}
         {children}
       </div>
     </div>

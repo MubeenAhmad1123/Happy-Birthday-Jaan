@@ -6,6 +6,7 @@ import confetti from 'canvas-confetti'
 import ScreenShell from '@/components/ScreenShell'
 import CrystalHeartCanvas, { isWebGLAvailable } from '@/components/CrystalHeart'
 import { SparkleIcon, ArrowRightIcon } from '@/components/Icons'
+import { buzz } from '@/lib/feedback'
 
 interface CrystalHeartScreenProps {
   onNext: () => void
@@ -173,7 +174,10 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
         <motion.button
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.02 }}
-          onClick={onNext}
+          onClick={() => {
+            buzz(10)
+            onNext()
+          }}
           className="btn-primary w-full flex items-center justify-center gap-2 shadow-xl"
         >
           <span>Kuch cheezein khol ke dekho</span>

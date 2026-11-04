@@ -7,6 +7,7 @@ import { TimelineItem } from '@/lib/contentData'
 import AnimatedSticker from '@/components/AnimatedSticker'
 import { CharacterType } from '@/components/CharacterSticker'
 import { SparkleIcon, HeartIcon, ArrowRightIcon } from '@/components/Icons'
+import { buzz } from '@/lib/feedback'
 
 interface TimelineScreenProps {
   timeline: TimelineItem[]
@@ -130,7 +131,10 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
         <motion.button
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.02 }}
-          onClick={onNext}
+          onClick={() => {
+            buzz(10)
+            onNext()
+          }}
           className="btn-primary w-full flex items-center justify-center gap-2 shadow-xl"
         >
           <span>Aakhri paighaam dekho</span>

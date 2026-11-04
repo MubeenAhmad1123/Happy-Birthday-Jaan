@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ScreenShell from '@/components/ScreenShell'
 import CharacterSticker from '@/components/CharacterSticker'
 import { HeartIcon, LockIcon, SparkleIcon } from '@/components/Icons'
+import { buzz } from '@/lib/feedback'
 
 interface CountdownState {
   days: number
@@ -147,6 +148,7 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    buzz(10)
     if (!canUnlock || loading || lockoutSeconds > 0) return
 
     setLoading(true)
