@@ -49,7 +49,7 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
       }}
     >
       {/* Header & Progress Counter */}
-      <div className="w-full max-w-sm mx-auto flex flex-col items-center text-center mt-1">
+      <div className="w-full max-w-sm mx-auto flex flex-col items-center text-center mt-1 relative">
         <div className="flex items-center justify-between w-full mb-1">
           <span
             className="text-xs uppercase tracking-widest font-bold text-rose-500"
@@ -62,12 +62,17 @@ export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
           </div>
         </div>
 
-        <h1
-          className="text-3xl font-heading leading-tight"
-          style={{ fontFamily: 'var(--font-dancing)', color: 'var(--deep-rose)' }}
-        >
-          25 reasons I love you 🤍
-        </h1>
+        <div className="flex items-center justify-center gap-2">
+          <h1
+            className="text-3xl font-heading leading-tight"
+            style={{ fontFamily: 'var(--font-dancing)', color: 'var(--deep-rose)' }}
+          >
+            25 reasons I love you 🤍
+          </h1>
+          <div className="shrink-0 -mr-2">
+            <CharacterSticker type="dudu-bubu-flowers" size={48} />
+          </div>
+        </div>
         <p
           className="text-xs opacity-75 mt-0.5"
           style={{ fontFamily: 'var(--font-caveat)', color: 'var(--charcoal)' }}

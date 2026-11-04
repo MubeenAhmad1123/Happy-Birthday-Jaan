@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { SignJWT, jwtVerify } from 'jose'
 import bcrypt from 'bcryptjs'
 import { getDb } from '@/lib/firebaseAdmin'
+import { DEFAULT_CONTENT } from '@/lib/contentData'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,6 +24,45 @@ async function verifyAdmin(req: NextRequest): Promise<boolean> {
   }
 }
 
+// GET /api/admin - Fetch content & reasons for admin panel
+export async function GET(req: NextRequest) {
+  const isAdmin = await verifyAdmin(req)
+  if (!isAdmin) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const db = getDb()
+  if (db) {
+    try {
+      const [contentDoc, reasonsSnap] = await Promise.all([
+        db.collection('config').doc('content').get(),
+        db.collection('reasons').orderBy('order').get(),
+      ])
+
+      const content = contentDoc.exists ? contentDoc.data() : {}
+      const reasons = !reasonsSnap.empty
+        ? reasonsSnap.docs.map((d) => ({ id: d.id, ...(d.data() as any) }))
+        : DEFAULT_CONTENT.reasons
+
+      return NextResponse.json({
+        letter: content?.letter ?? DEFAULT_CONTENT.letter,
+        finalMessage: content?.finalMessage ?? DEFAULT_CONTENT.finalMessage,
+        unlockNow: content?.unlockNow ?? true,
+        reasons,
+      })
+    } catch (err) {
+      console.warn('Error reading admin content from Firestore:', err)
+    }
+  }
+
+  return NextResponse.json({
+    letter: DEFAULT_CONTENT.letter,
+    finalMessage: DEFAULT_CONTENT.finalMessage,
+    unlockNow: true,
+    reasons: DEFAULT_CONTENT.reasons,
+  })
+}
+
 // POST /api/admin - Login or Update Actions
 export async function POST(req: NextRequest) {
   let body: any
@@ -32,7 +72,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Bad request' }, { status: 400 })
   }
 
-  const { action, password, newGatePassword, letter, finalMessage, unlockNow } = body
+  const { action, password, newGatePassword, letter, finalMessage, unlockNow, reasons } = body
 
   // 1. Admin Login
   if (action === 'login') {
@@ -95,6 +135,30 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, message: 'Content saved!' })
   }
 
+  // Update 25 Reasons & photo assignments
+  if (action === 'updateReasons') {
+    if (Array.isArray(reasons) && db) {
+      try {
+        const batch = db.batch()
+        for (const item of reasons) {
+          const ref = db.collection('reasons').doc(String(item.id || item.order))
+          batch.set(
+            ref,
+            {
+              order: item.order,
+              text: item.text,
+              photoUrl: item.photoUrl || '',
+            },
+            { merge: true }
+          )
+        }
+        await batch.commit()
+      } catch (err) {
+        console.warn('Firestore reasons batch update error:', err)
+      }
+    }
+    return NextResponse.json({ success: true, message: 'Reasons & photos saved successfully!' })
+  }
+
   return NextResponse.json({ error: 'Unknown action' }, { status: 400 })
 }
-

@@ -88,6 +88,10 @@ export async function POST(req: NextRequest) {
   const token = await createSessionToken()
   const payload = { success: true, unlocked: isContentUnlocked() }
 
+  const isHttps =
+    req.headers.get('x-forwarded-proto') === 'https' ||
+    req.nextUrl.protocol === 'https:'
+
   const response = NextResponse.json(payload, { status: 200 })
-  return setSessionCookie(response, token)
+  return setSessionCookie(response, token, isHttps)
 }

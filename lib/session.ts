@@ -23,11 +23,16 @@ export async function createSessionToken(): Promise<string> {
 }
 
 /** Set the httpOnly session cookie on a Response object */
-export function setSessionCookie(response: Response, token: string): Response {
+export function setSessionCookie(
+  response: Response,
+  token: string,
+  isHttps: boolean = false
+): Response {
   const maxAge = SESSION_TTL_HOURS * 60 * 60
+  const secureFlag = isHttps ? '; Secure' : ''
   response.headers.append(
     'Set-Cookie',
-    `${SESSION_COOKIE}=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${maxAge}`
+    `${SESSION_COOKIE}=${token}; HttpOnly${secureFlag}; SameSite=Lax; Path=/; Max-Age=${maxAge}`
   )
   return response
 }

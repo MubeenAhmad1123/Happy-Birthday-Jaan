@@ -50,9 +50,28 @@ export async function GET(req: NextRequest) {
       if (contentDoc.exists) {
         const content = contentDoc.data() ?? {}
 
-        const reasons = reasonsSnap.empty
+        const rawReasons = reasonsSnap.empty
           ? DEFAULT_CONTENT.reasons
           : reasonsSnap.docs.map((d) => ({ id: d.id, ...(d.data() as any) }))
+
+        const reasons = await Promise.all(
+          rawReasons.map(async (r: any) => {
+            let pUrl = r.photoUrl || ''
+            if (pUrl && !pUrl.startsWith('http') && !pUrl.startsWith('/')) {
+              pUrl = await signedUrl(pUrl)
+            }
+            if (!pUrl && (r.order || r.id)) {
+              const num = parseInt(String(r.order || r.id), 10)
+              if (!isNaN(num) && num >= 1 && num <= 25) {
+                pUrl = `/api/photos/${String(num).padStart(2, '0')}`
+              }
+            }
+            return {
+              ...r,
+              photoUrl: pUrl,
+            }
+          })
+        )
 
         const timeline = timelineSnap.empty
           ? DEFAULT_CONTENT.timeline

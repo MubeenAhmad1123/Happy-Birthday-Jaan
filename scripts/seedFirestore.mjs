@@ -15,8 +15,9 @@ import bcrypt from 'bcryptjs'
 import { readFileSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { loadEnvConfig } from '@next/env'
+import nextEnv from '@next/env'
 
+const { loadEnvConfig } = nextEnv
 const __dirname = dirname(fileURLToPath(import.meta.url))
 loadEnvConfig(resolve(__dirname, '..'))
 
@@ -68,40 +69,40 @@ console.log('✅ config/content set')
 
 // ── reasons ────────────────────────────────────────────────────────
 const reasons = [
-  'Tumhari smile meri har thaki hui shaam ka sukoon hai.',
-  'Tum ho to chai bhi zyada meethi lagti hai ☕',
-  'Tumne mujhe himmat di, Begum.',
-  'Tumhari hansi meri favourite awaaz hai.',
-  'Tum saath ho to ghar jaisa lagta hai.',
-  'Tum mujhe behtar insaan banati ho.',
-  'Tumhare saath khamoshi bhi pyari lagti hai.',
-  'Tum meri Zindagi ho, aur mere dil ka Sukoon.',
-  '(Reason 9 — tumhare liye likhunga)',
-  '(Reason 10 — tumhare liye likhunga)',
-  '(Reason 11 — tumhare liye likhunga)',
-  '(Reason 12 — tumhare liye likhunga)',
-  '(Reason 13 — tumhare liye likhunga)',
-  '(Reason 14 — tumhare liye likhunga)',
-  '(Reason 15 — tumhare liye likhunga)',
-  '(Reason 16 — tumhare liye likhunga)',
-  '(Reason 17 — tumhare liye likhunga)',
-  '(Reason 18 — tumhare liye likhunga)',
-  '(Reason 19 — tumhare liye likhunga)',
-  '(Reason 20 — tumhare liye likhunga)',
-  '(Reason 21 — tumhare liye likhunga)',
-  '(Reason 22 — tumhare liye likhunga)',
-  '(Reason 23 — tumhare liye likhunga)',
-  '(Reason 24 — tumhare liye likhunga)',
-  '(Reason 25 — tumhare liye likhunga)',
+  { text: 'Tumhari smile meri har thaki hui shaam ka sukoon hai.', photoUrl: '/api/photos/01' },
+  { text: 'Tum ho to chai bhi zyada meethi lagti hai ☕', photoUrl: '/api/photos/02' },
+  { text: 'Tumne mujhe himmat di, Begum.', photoUrl: '/api/photos/03' },
+  { text: 'Tumhari hansi meri favourite awaaz hai.', photoUrl: '/api/photos/04' },
+  { text: 'Tum saath ho to ghar jaisa lagta hai.', photoUrl: '/api/photos/05' },
+  { text: 'Tum mujhe behtar insaan banati ho.', photoUrl: '/api/photos/06' },
+  { text: 'Tumhare saath khamoshi bhi pyari lagti hai.', photoUrl: '/api/photos/07' },
+  { text: 'Tum meri Zindagi ho, aur mere dil ka Sukoon.', photoUrl: '/api/photos/08' },
+  { text: 'Tumhari baatein sunna meri favourite aadat ban chuki hai.', photoUrl: '/api/photos/09' },
+  { text: 'Tumhara gussa bhi bohot cute hota hai 🥺', photoUrl: '/api/photos/10' },
+  { text: 'Tum mere har chote baday dukh ko bhula deti ho.', photoUrl: '/api/photos/11' },
+  { text: 'Tumhari masoomiyat dil jeet leti hai.', photoUrl: '/api/photos/12' },
+  { text: 'Jab tum "Ganda Bachha" kehti ho, dil pighal jaata hai.', photoUrl: '/api/photos/13' },
+  { text: 'Lambi calls mein jab tum so jaati ho, woh lamha anmol hota hai.', photoUrl: '/api/photos/14' },
+  { text: 'Tum meri har dua mein shamil rehti ho.', photoUrl: '/api/photos/15' },
+  { text: 'Tumhara care karna mujhe hamesha mehfooz feel karata hai.', photoUrl: '/api/photos/16' },
+  { text: 'Tumhara favourite colour white hai, aur tum khud noor jaisi ho 🤍', photoUrl: '/api/photos/17' },
+  { text: 'Tumhare baghair sab kuch adhoora lagta hai.', photoUrl: '/api/photos/18' },
+  { text: 'Tum mere khwabon ko apni umeed bana leti ho.', photoUrl: '/api/photos/19' },
+  { text: 'Tumhari har choti baat mere liye maayne rakhti hai.', photoUrl: '/api/photos/20' },
+  { text: 'Tum meri sab se achi dost aur meri Begum ho.', photoUrl: '/api/photos/21' },
+  { text: 'Tumhare saath waqt kitni jaldi guzar jata hai pata hi nahi chalta.', photoUrl: '/api/photos/22' },
+  { text: 'Tum meri aankhon mein khushi dekhna chahti ho.', photoUrl: '/api/photos/23' },
+  { text: 'Tum meri taqat aur meri kamzori dono ho.', photoUrl: '/api/photos/24' },
+  { text: 'Kyunkay Maria, tum jaisi poori dunya mein koi nahi hai 🤍', photoUrl: '/api/photos/25' },
 ]
 
 const batch = db.batch()
 // Delete old reasons
 const existing = await db.collection('reasons').get()
 existing.docs.forEach((d) => batch.delete(d.ref))
-reasons.forEach((text, i) => {
+reasons.forEach((r, i) => {
   const ref = db.collection('reasons').doc(`reason-${String(i + 1).padStart(2, '0')}`)
-  batch.set(ref, { text, order: i + 1 })
+  batch.set(ref, { text: r.text, photoUrl: r.photoUrl, order: i + 1 })
 })
 await batch.commit()
 console.log('✅ 25 reasons seeded')

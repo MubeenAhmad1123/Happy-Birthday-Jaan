@@ -9,6 +9,7 @@ import CrystalHeartScreen from '@/components/screens/CrystalHeartScreen'
 import HubScreen from '@/components/screens/HubScreen'
 import ReasonsScreen from '@/components/screens/ReasonsScreen'
 import LawyerDreamScreen from '@/components/screens/LawyerDreamScreen'
+import FreedomScreen from '@/components/screens/FreedomScreen'
 import TimelineScreen from '@/components/screens/TimelineScreen'
 import FinaleScreen from '@/components/screens/FinaleScreen'
 import { SiteContent, DEFAULT_CONTENT } from '@/lib/contentData'
@@ -25,7 +26,7 @@ export default function StoryApp({
   bypassDate,
 }: StoryAppProps) {
   const [unlocked, setUnlocked] = useState(initiallyUnlocked)
-  const [currentScreen, setCurrentScreen] = useState<number>(1) // 1 to 8
+  const [currentScreen, setCurrentScreen] = useState<number>(1) // 1 to 9
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT)
   const [loadingContent, setLoadingContent] = useState(false)
 
@@ -134,10 +135,10 @@ export default function StoryApp({
           </motion.div>
         )}
 
-        {/* Screen 5b: Tumhara Khwab ⚖️ (her lawyer dream) */}
+        {/* Screen 6: Tumhara Khwab ⚖️ (her lawyer dream) */}
         {currentScreen === 6 && (
           <motion.div
-            key="screen-5b"
+            key="screen-6"
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.04 }}
@@ -150,10 +151,26 @@ export default function StoryApp({
           </motion.div>
         )}
 
-        {/* Screen 6: Hamari Kahani (Timeline) */}
+        {/* Screen 7: Azaadi 🕊️ (her freedom and joy) */}
         {currentScreen === 7 && (
           <motion.div
-            key="screen-6"
+            key="screen-7"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.04 }}
+            transition={{ duration: 0.35 }}
+          >
+            <FreedomScreen
+              onNext={() => setCurrentScreen(8)}
+              onBack={() => setCurrentScreen(6)}
+            />
+          </motion.div>
+        )}
+
+        {/* Screen 8: Hamari Kahani (Timeline) */}
+        {currentScreen === 8 && (
+          <motion.div
+            key="screen-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -161,15 +178,15 @@ export default function StoryApp({
           >
             <TimelineScreen
               timeline={content.timeline}
-              onNext={() => setCurrentScreen(8)}
+              onNext={() => setCurrentScreen(9)}
             />
           </motion.div>
         )}
 
-        {/* Screen 7: Finale */}
-        {currentScreen === 8 && (
+        {/* Screen 9: Finale */}
+        {currentScreen === 9 && (
           <motion.div
-            key="screen-7"
+            key="screen-9"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
