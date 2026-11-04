@@ -76,3 +76,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to read audio' }, { status: 500 })
   }
 }
+

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import ScreenShell from '@/components/ScreenShell'
 import AnimatedSticker from '@/components/AnimatedSticker'
-import { HeartIcon, SparkleIcon, HeartOutlineIcon } from '@/components/Icons'
+import { HeartIcon } from '@/components/Icons'
 
 interface OpenerScreenProps {
   onYes: () => void
@@ -54,7 +54,7 @@ export default function OpenerScreen({ onYes }: OpenerScreenProps) {
   }
 
   return (
-    <ScreenShell theme="dark" showAmbient={true}>
+    <ScreenShell theme="blush" showAmbient={true}>
       <div className="w-full flex flex-col items-center justify-center my-auto py-6">
         <AnimatePresence mode="wait">
           {!showSadBear ? (
@@ -78,17 +78,18 @@ export default function OpenerScreen({ onYes }: OpenerScreenProps) {
               {/* Romantic Question */}
               <div className="flex flex-col items-center gap-2 px-2">
                 <h1
-                  className="heading-fluid leading-tight text-white"
+                  className="heading-fluid leading-tight text-deep-rose"
                   style={{
                     fontFamily: 'var(--font-dancing)',
-                    textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+                    color: 'var(--deep-rose)',
+                    textShadow: '0 2px 10px rgba(229,107,138,0.2)',
                   }}
                 >
                   Maine tumhare liye kuch special banaya hai… dekhogi?
                 </h1>
 
                 <p
-                  className="body-fluid font-medium text-white/80 mt-1"
+                  className="body-fluid font-medium text-rose-600/90 mt-1"
                   style={{ fontFamily: 'var(--font-caveat)' }}
                 >
                   Sirf tumhare liye, meri Jaan
@@ -115,7 +116,7 @@ export default function OpenerScreen({ onYes }: OpenerScreenProps) {
                   animate={{ x: dodgeOffset.x, y: dodgeOffset.y }}
                   transition={{ type: 'spring', stiffness: 350, damping: 20 }}
                   onClick={handleNoClick}
-                  className="btn-secondary min-w-[105px] flex items-center justify-center gap-1.5 opacity-80"
+                  className="btn-secondary min-w-[105px] flex items-center justify-center gap-1.5 opacity-90"
                   aria-label="No, nahi dekhna"
                 >
                   <span>NO</span>
@@ -142,17 +143,17 @@ export default function OpenerScreen({ onYes }: OpenerScreenProps) {
 
               <div className="flex flex-col items-center gap-2 px-2">
                 <h2
-                  className="heading-fluid leading-tight text-white"
+                  className="heading-fluid leading-tight text-deep-rose"
                   style={{
                     fontFamily: 'var(--font-dancing)',
-                    textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+                    color: 'var(--deep-rose)',
                   }}
                 >
                   Kyun click kiya no?
                 </h2>
 
                 <p
-                  className="body-fluid text-white/80"
+                  className="body-fluid text-[#2D2329]"
                   style={{ fontFamily: 'var(--font-caveat)' }}
                 >
                   Main kitne dino se tumhare liye yeh bana raha tha… ab YES bolo!

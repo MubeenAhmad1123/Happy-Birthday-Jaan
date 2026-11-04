@@ -40,8 +40,8 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
 
     try {
       confetti({
-        particleCount: 18,
-        spread: 45,
+        particleCount: 20,
+        spread: 50,
         origin: { y: 0.5 },
         colors: ['#FFFFFF', '#F9D5DE', '#E56B8A', '#E8C27A'],
       })
@@ -51,7 +51,7 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
   }
 
   return (
-    <ScreenShell theme="dark" showAmbient={true} contentClassName="justify-between">
+    <ScreenShell theme="blush" showAmbient={true} contentClassName="justify-between">
       {/* Dynamic tap sparkles */}
       <AnimatePresence>
         {sparkles.map((s) => (
@@ -72,34 +72,42 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
       {/* Top Header */}
       <div className="w-full flex flex-col items-center pt-3 text-center z-10">
         <span
-          className="text-xs tracking-widest uppercase font-bold text-rose-400 opacity-90"
+          className="text-xs tracking-widest uppercase font-bold text-rose-500 opacity-90"
           style={{ fontFamily: 'var(--font-baloo)' }}
         >
           A piece of my heart
         </span>
         <h2
-          className="heading-fluid leading-tight text-white mt-1"
+          className="heading-fluid leading-tight text-deep-rose mt-1"
           style={{
             fontFamily: 'var(--font-dancing)',
-            textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+            textShadow: '0 2px 10px rgba(229,107,138,0.2)',
           }}
         >
           For you, Maria
         </h2>
         <p
-          className="text-xs sm:text-sm text-white/60 mt-0.5"
+          className="text-xs sm:text-sm text-rose-700/80 font-medium mt-0.5"
           style={{ fontFamily: 'var(--font-caveat)' }}
         >
-          (Dil pe tap karo aur dekho)
+          (Dil pe tap karo aur dekho ✨)
         </p>
       </div>
 
-      {/* Center 3D Crystal Heart Area */}
+      {/* Center 3D Crystal Heart Area with glowing soft vignette */}
       <div
         onClick={triggerPulse}
         className="relative w-full flex-1 flex flex-col items-center justify-center my-auto cursor-pointer select-none"
         style={{ minHeight: 'min(58dvh, 410px)', maxHeight: '420px' }}
       >
+        {/* Soft glowing ambient light pool behind the crystal heart */}
+        <div
+          className="absolute w-72 h-72 rounded-full pointer-events-none filter blur-2xl"
+          style={{
+            background: 'radial-gradient(circle, rgba(249,213,222,0.85) 0%, rgba(229,107,138,0.2) 50%, transparent 70%)',
+          }}
+        />
+
         {/* Elegant "25" Badge ABOVE the heart with clear spacing, NO "25 years/saal" text */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -107,20 +115,20 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
           transition={{ delay: 0.2 }}
           className="mb-1 z-20 pointer-events-none"
         >
-          <div className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full border border-gold/40 shadow-lg bg-black/60 backdrop-blur-md">
-            <SparkleIcon size={14} color="#E8C27A" />
+          <div className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full border border-rose-300 shadow-md bg-white/95 backdrop-blur-md">
+            <SparkleIcon size={14} color="#D4AF37" />
             <span
               className="text-xl sm:text-2xl font-bold tracking-wider"
               style={{
                 fontFamily: 'var(--font-dancing)',
-                background: 'linear-gradient(135deg, #FFF8F5 0%, #E8C27A 50%, #E56B8A 100%)',
+                background: 'linear-gradient(135deg, #B8405E 0%, #E56B8A 50%, #D4AF37 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
             >
               25
             </span>
-            <SparkleIcon size={14} color="#E8C27A" />
+            <SparkleIcon size={14} color="#D4AF37" />
           </div>
         </motion.div>
 
@@ -129,7 +137,6 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
           {use3D ? (
             <CrystalHeartCanvas pulsing={pulsing} />
           ) : (
-            /* Polished 2D SVG Glow Heart Fallback */
             <motion.div
               animate={{
                 scale: pulsing ? [1, 1.22, 1] : [1, 1.06, 1],
@@ -157,8 +164,8 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
                   stroke="#FFFFFF"
                   strokeWidth="3.5"
                 />
-                <polygon points="110,35 75,75 110,130 145,75" fill="#FFFFFF" opacity="0.3" />
-                <polygon points="110,130 110,185 145,75" fill="#E56B8A" opacity="0.25" />
+                <polygon points="110,35 75,75 110,130 145,75" fill="#FFFFFF" opacity="0.4" />
+                <polygon points="110,130 110,185 145,75" fill="#E56B8A" opacity="0.3" />
               </svg>
             </motion.div>
           )}
@@ -169,10 +176,10 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-base text-rose-300/80 font-medium tracking-wide mt-1 pointer-events-none"
+          className="text-lg text-deep-rose font-bold tracking-wide mt-1 pointer-events-none"
           style={{ fontFamily: 'var(--font-dancing)' }}
         >
-          Maria
+          Maria 🤍
         </motion.p>
       </div>
 
@@ -194,7 +201,7 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
           <ArrowRightIcon size={18} color="#FFFFFF" />
         </motion.button>
         <span
-          className="text-xs text-white/50 text-center"
+          className="text-xs text-charcoal/70 text-center font-medium"
           style={{ fontFamily: 'var(--font-caveat)' }}
         >
           3 surprises tumhara intezar kar rahe hain

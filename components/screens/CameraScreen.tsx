@@ -22,7 +22,6 @@ export default function CameraScreen({
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({})
   const thumbnailStripRef = useRef<HTMLDivElement>(null)
 
-  // Ensure we always have an array of 25 items
   const safePhotos = photos && photos.length > 0 ? photos : []
   const totalPhotos = safePhotos.length
   const currentPhoto = safePhotos[activeIndex] || safePhotos[0] || {
@@ -75,30 +74,17 @@ export default function CameraScreen({
 
   return (
     <ScreenShell
-      theme="dark"
-      showAmbient={false}
+      theme="blush"
+      showAmbient={true}
       className="p-0"
-      contentClassName="h-full justify-between max-w-[480px] px-3 py-2"
+      contentClassName="h-full justify-between max-w-[440px] px-3 py-2"
     >
-      {/* Blurred background copy of the current photo (colour-tinted) */}
-      {currentPhoto.url && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-25 z-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={currentPhoto.url}
-            alt=""
-            className="w-full h-full object-cover filter blur-3xl scale-125 transform transition-all duration-700"
-          />
-          <div className="absolute inset-0 bg-ink-black/60" />
-        </div>
-      )}
-
       {/* Top Bar */}
       <div className="w-full flex items-center justify-between z-10 pt-1 pb-2">
         <motion.button
           whileTap={{ scale: 0.93 }}
           onClick={onBack}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 hover:bg-white/15 text-rose-300 border border-white/10 backdrop-blur-md"
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas Hub jao"
         >
@@ -106,45 +92,45 @@ export default function CameraScreen({
           <span>Wapas</span>
         </motion.button>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <CameraIcon size={18} color="var(--rose)" />
           <span
-            className="text-base font-bold text-white tracking-wide"
+            className="text-base font-bold text-deep-rose tracking-wide"
             style={{ fontFamily: 'var(--font-baloo)' }}
           >
-            Yaadein ({activeIndex + 1}/{totalPhotos})
+            You Through My Eyes ({activeIndex + 1}/{totalPhotos})
           </span>
         </div>
 
         <div className="w-12" />
       </div>
 
-      {/* Retro Camera Frame with 3:4 Viewfinder */}
+      {/* Main Carousel Frame (Inspired by reference Image 2) */}
       <div className="w-full flex flex-col items-center z-10 my-auto">
         <div
-          className="relative w-full rounded-3xl p-3 shadow-2xl border flex flex-col items-center"
+          className="relative w-full rounded-3xl p-3 shadow-xl border flex flex-col items-center bg-white"
           style={{
-            background: 'linear-gradient(160deg, #1E1A20 0%, #151218 100%)',
-            borderColor: 'rgba(229, 107, 138, 0.3)',
-            boxShadow: '0 16px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)',
+            borderColor: 'rgba(229, 107, 138, 0.25)',
+            boxShadow: '0 14px 36px rgba(229, 107, 138, 0.15)',
           }}
         >
-          {/* Camera Top Details: Shutter & Flash LED */}
-          <div className="w-full flex justify-between items-center mb-2 px-2">
-            <div className="flex items-center gap-2">
-              <div className="w-3.5 h-3.5 rounded-full bg-rose-500 animate-pulse shadow-sm shadow-rose-500/50" />
-              <div className="w-2.5 h-2.5 rounded-full bg-gold/80" />
-            </div>
-            <div className="text-[11px] font-mono font-bold tracking-widest text-rose-300/80 uppercase">
-              MARIA-MEMORIES • 25
-            </div>
-          </div>
-
-          {/* 3:4 Aspect Ratio Viewfinder (max 58dvh on phone) */}
+          {/* Carousel Viewport (Aspect 3:4 for portrait mobile photos) */}
           <div
-            className="relative w-full aspect-[3/4] max-h-[56dvh] rounded-2xl overflow-hidden bg-black flex items-center justify-center border border-white/10 select-none shadow-inner"
+            className="relative w-full aspect-[3/4] max-h-[54dvh] rounded-2xl overflow-hidden bg-rose-50/60 flex items-center justify-center border border-rose-100 select-none shadow-inner"
             style={{ touchAction: 'pan-y' }}
           >
+            {/* Background subtle blur of photo */}
+            {currentPhoto.url && (
+              <div className="absolute inset-0 pointer-events-none opacity-20 filter blur-xl scale-110">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={currentPhoto.url}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -162,7 +148,7 @@ export default function CameraScreen({
                     nextPhoto()
                   }
                 }}
-                className="w-full h-full flex items-center justify-center relative cursor-grab active:cursor-grabbing"
+                className="w-full h-full flex items-center justify-center relative cursor-grab active:cursor-grabbing p-1"
               >
                 {!imgErrors[activeIndex] && currentPhoto.url ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -172,13 +158,13 @@ export default function CameraScreen({
                     loading="lazy"
                     decoding="async"
                     onError={() => handleImageError(activeIndex)}
-                    className="w-full h-full object-contain pointer-events-none"
+                    className="w-full h-full object-contain pointer-events-none rounded-xl"
                   />
                 ) : (
                   <div className="flex flex-col items-center justify-center p-4 text-center">
                     <CharacterSticker type="dudu-bubu-hug" size={130} />
                     <span
-                      className="text-sm text-rose-300 mt-2 font-medium"
+                      className="text-sm text-deep-rose mt-2 font-bold"
                       style={{ fontFamily: 'var(--font-caveat)' }}
                     >
                       Hamara sukoon 🤍
@@ -188,28 +174,28 @@ export default function CameraScreen({
               </motion.div>
             </AnimatePresence>
 
-            {/* Left / Right 48px Navigation Buttons */}
+            {/* Left / Right Circular White Navigation Pills (Like Reference Screenshot) */}
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={prevPhoto}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-lg z-20 cursor-pointer"
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 text-deep-rose shadow-lg flex items-center justify-center z-20 border border-rose-200 cursor-pointer"
               aria-label="Previous photo"
             >
-              <ArrowLeftIcon size={20} color="#FFFFFF" />
+              <ArrowLeftIcon size={18} color="var(--deep-rose)" />
             </motion.button>
 
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={nextPhoto}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-lg z-20 cursor-pointer"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 text-deep-rose shadow-lg flex items-center justify-center z-20 border border-rose-200 cursor-pointer"
               aria-label="Next photo"
             >
-              <ArrowRightIcon size={20} color="#FFFFFF" />
+              <ArrowRightIcon size={18} color="var(--deep-rose)" />
             </motion.button>
           </div>
 
-          {/* Caption Card below camera viewfinder */}
-          <div className="w-full mt-2.5 px-2 py-1.5 min-h-[46px] rounded-xl bg-black/40 border border-white/5 flex items-center justify-center text-center">
+          {/* Caption in Dancing Script font */}
+          <div className="w-full mt-2.5 px-2 py-1 flex flex-col items-center justify-center text-center">
             <AnimatePresence mode="wait">
               <motion.p
                 key={activeIndex}
@@ -217,16 +203,30 @@ export default function CameraScreen({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.2 }}
-                className="text-base sm:text-lg leading-snug text-white/95"
-                style={{ fontFamily: 'var(--font-caveat)' }}
+                className="text-lg sm:text-xl font-bold leading-snug text-deep-rose"
+                style={{ fontFamily: 'var(--font-dancing)' }}
               >
                 {currentPhoto.caption}
               </motion.p>
             </AnimatePresence>
+
+            {/* Dot indicators (Like Reference Image 2) */}
+            <div className="flex items-center gap-1.5 mt-2">
+              {safePhotos.slice(0, 10).map((_, i) => (
+                <div
+                  key={i}
+                  className={`rounded-full transition-all duration-300 ${
+                    activeIndex % 10 === i
+                      ? 'w-4 h-1.5 bg-rose-500'
+                      : 'w-1.5 h-1.5 bg-rose-200'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* 25-Thumbnail Horizontal Film Strip */}
+        {/* 25-Thumbnail Horizontal Film Strip with snap-scroll */}
         <div
           ref={thumbnailStripRef}
           className="w-full mt-3 flex items-center gap-2 overflow-x-auto py-2 px-1 snap-x no-scrollbar"
@@ -237,10 +237,10 @@ export default function CameraScreen({
               key={idx}
               whileTap={{ scale: 0.9 }}
               onClick={() => setActiveIndex(idx)}
-              className={`relative flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-black snap-center ${
+              className={`relative flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-white snap-center cursor-pointer ${
                 activeIndex === idx
-                  ? 'border-rose-500 scale-105 shadow-lg shadow-rose-500/30'
-                  : 'border-white/20 opacity-55 hover:opacity-80'
+                  ? 'border-rose-500 scale-105 shadow-md shadow-rose-500/30'
+                  : 'border-rose-200/70 opacity-60 hover:opacity-90'
               }`}
               aria-label={`Photo ${idx + 1}`}
             >
@@ -252,7 +252,7 @@ export default function CameraScreen({
                 decoding="async"
                 className="w-full h-full object-cover rounded-lg"
               />
-              <span className="absolute bottom-0.5 right-1 text-[9px] font-bold text-white bg-black/70 px-1 rounded">
+              <span className="absolute bottom-0.5 right-1 text-[9px] font-bold text-white bg-black/60 px-1 rounded">
                 {idx + 1}
               </span>
             </motion.button>

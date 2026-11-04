@@ -311,3 +311,4 @@ export function PauseIcon({ size = 22, color = 'currentColor', className = '', .
     </svg>
   )
 }
+

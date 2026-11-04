@@ -6,7 +6,6 @@ import ScreenShell from '@/components/ScreenShell'
 import CharacterSticker from '@/components/CharacterSticker'
 import { HeartIcon, LockIcon, SparkleIcon } from '@/components/Icons'
 
-// ── Types ──────────────────────────────────────────────────────────
 interface CountdownState {
   days: number
   hours: number
@@ -20,7 +19,6 @@ interface GateScreenProps {
   bypassDate: boolean
 }
 
-// ── Countdown hook ─────────────────────────────────────────────────
 function useCountdown(unlockAt: string): { remaining: CountdownState; isUnlocked: boolean } {
   const target = new Date(unlockAt).getTime()
 
@@ -52,11 +50,9 @@ function useCountdown(unlockAt: string): { remaining: CountdownState; isUnlocked
   return { remaining, isUnlocked }
 }
 
-// ── Steaming Chai Cup (SVG) ─────────────────────────────────────────
 function ChaiCup() {
   return (
     <div className="relative flex flex-col items-center select-none" aria-hidden>
-      {/* Steam */}
       <div className="flex gap-2.5 mb-1 h-9">
         {[0, 1, 2].map((i) => (
           <svg
@@ -78,19 +74,18 @@ function ChaiCup() {
           </svg>
         ))}
       </div>
-      {/* Cup */}
       <svg width="86" height="74" viewBox="0 0 90 80" fill="none">
-        <ellipse cx="45" cy="73" rx="38" ry="6" fill="#E56B8A" opacity="0.3" />
+        <ellipse cx="45" cy="73" rx="38" ry="6" fill="#F9D5DE" opacity="0.6" />
         <path
           d="M15 20 Q14 65 45 68 Q76 65 75 20 Z"
-          fill="#1E1A20"
+          fill="#FFFDF9"
           stroke="#E56B8A"
           strokeWidth="2.5"
         />
         <path
           d="M18 36 Q18 64 45 66 Q72 64 72 36 Z"
-          fill="#B8405E"
-          opacity="0.6"
+          fill="#FDE8ED"
+          opacity="0.8"
         />
         <path
           d="M75 28 Q92 28 92 42 Q92 56 75 56"
@@ -99,32 +94,25 @@ function ChaiCup() {
           strokeLinecap="round"
           fill="none"
         />
-        <ellipse cx="45" cy="20" rx="30" ry="5" fill="#2A2026" stroke="#E56B8A" strokeWidth="2" />
-        <ellipse cx="30" cy="50" rx="4" ry="9" fill="white" opacity="0.25" transform="rotate(-15 30 50)" />
+        <ellipse cx="45" cy="20" rx="30" ry="5" fill="#FFFFFF" stroke="#E56B8A" strokeWidth="2" />
+        <ellipse cx="30" cy="50" rx="4" ry="9" fill="white" opacity="0.5" transform="rotate(-15 30 50)" />
       </svg>
     </div>
   )
 }
 
-// ── Countdown tile (rich dark style with gold border) ────────────────
 function CountdownTile({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
       <div
-        className="px-3 py-2 text-2xl font-bold min-w-[3.2rem] text-center rounded-2xl border shadow-lg"
-        style={{
-          fontFamily: 'var(--font-baloo)',
-          background: 'rgba(30, 26, 32, 0.9)',
-          borderColor: 'rgba(232, 194, 122, 0.4)',
-          color: '#FFF8F5',
-          boxShadow: '0 4px 14px rgba(0,0,0,0.4)',
-        }}
+        className="px-3 py-2 text-2xl font-bold min-w-[3.2rem] text-center rounded-2xl bg-white border border-rose-200/80 shadow-md text-deep-rose"
+        style={{ fontFamily: 'var(--font-baloo)' }}
       >
         {String(value).padStart(2, '0')}
       </div>
       <span
-        className="text-xs mt-1.5 font-medium tracking-wide uppercase"
-        style={{ fontFamily: 'var(--font-baloo)', color: 'var(--soft-gold)' }}
+        className="text-xs mt-1.5 font-bold tracking-wide uppercase text-rose-500"
+        style={{ fontFamily: 'var(--font-baloo)' }}
       >
         {label}
       </span>
@@ -132,7 +120,6 @@ function CountdownTile({ value, label }: { value: number; label: string }) {
   )
 }
 
-// ── Gate screen ────────────────────────────────────────────────────
 export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScreenProps) {
   const { remaining, isUnlocked: dateUnlocked } = useCountdown(unlockAt)
   const canUnlock = bypassDate || dateUnlocked
@@ -182,7 +169,7 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
         setError(`Thoda ruko! ${data.retryAfter ?? 60}s baad try karo`)
         triggerShake()
       } else {
-        setError('Hmm, phir se koshish karo')
+        setError('Hmm, phir se koshish karo 🥺')
         triggerShake()
         setPassword('')
         setTimeout(() => inputRef.current?.focus(), 100)
@@ -200,7 +187,7 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
   }
 
   return (
-    <ScreenShell theme="dark" showAmbient={true}>
+    <ScreenShell theme="blush" showAmbient={true}>
       <div className="w-full flex flex-col items-center justify-center my-auto py-4">
         <motion.div
           className="flex flex-col items-center gap-5 w-full max-w-sm text-center"
@@ -208,7 +195,7 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          {/* Chai cup + Dudu Bubu */}
+          {/* Steaming Chai Cup + Dudu-Bubu Chai Sticker */}
           <div className="flex items-center justify-center gap-3">
             <ChaiCup />
             <motion.div
@@ -222,23 +209,24 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
           {/* Heading */}
           <div className="flex flex-col items-center gap-1">
             <h1
-              className="heading-fluid leading-tight text-white"
+              className="heading-fluid leading-tight text-deep-rose"
               style={{
                 fontFamily: 'var(--font-dancing)',
-                textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+                color: 'var(--deep-rose)',
+                textShadow: '0 2px 10px rgba(229,107,138,0.2)',
               }}
             >
               Jaan, hamara secret word likho
             </h1>
             <div className="flex items-center gap-1.5 mt-0.5">
-              <SparkleIcon size={14} color="#E8C27A" />
+              <SparkleIcon size={14} color="var(--rose)" />
               <span
-                className="text-sm font-medium tracking-wide"
-                style={{ fontFamily: 'var(--font-caveat)', color: 'var(--soft-gold)' }}
+                className="text-sm font-medium tracking-wide text-rose-500"
+                style={{ fontFamily: 'var(--font-caveat)' }}
               >
                 A special surprise for Maria
               </span>
-              <SparkleIcon size={14} color="#E8C27A" />
+              <SparkleIcon size={14} color="var(--rose)" />
             </div>
           </div>
 
@@ -252,10 +240,10 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
                 className="flex flex-col items-center gap-3 w-full my-2"
               >
                 <p
-                  className="text-center text-lg"
-                  style={{ fontFamily: 'var(--font-caveat)', color: 'var(--rose)' }}
+                  className="text-center text-lg text-rose-600 font-bold"
+                  style={{ fontFamily: 'var(--font-caveat)' }}
                 >
-                  Bas thora sa intezar…
+                  Bas thora sa intezar… ✨
                 </p>
                 <div className="flex gap-2.5 justify-center">
                   <CountdownTile value={remaining.days} label="din" />
@@ -264,10 +252,10 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
                   <CountdownTile value={remaining.seconds} label="second" />
                 </div>
                 <p
-                  className="text-center text-sm opacity-80 text-white/70 mt-1"
+                  className="text-center text-sm opacity-80 text-charcoal/80 mt-1"
                   style={{ fontFamily: 'var(--font-caveat)' }}
                 >
-                  5 November tak ruko, Jaan
+                  5 November tak ruko, Jaan 🎂
                 </p>
               </motion.div>
             )}
@@ -291,11 +279,6 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
                 autoComplete="off"
                 maxLength={128}
                 aria-label="Secret password"
-                style={{
-                  background: 'rgba(30, 26, 32, 0.85)',
-                  borderColor: 'rgba(229, 107, 138, 0.4)',
-                  color: '#FFF8F5',
-                }}
               />
             </div>
 
@@ -305,8 +288,8 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
                   initial={{ opacity: 0, y: -4 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="text-center text-base"
-                  style={{ fontFamily: 'var(--font-caveat)', color: 'var(--rose)' }}
+                  className="text-center text-base text-deep-rose font-bold"
+                  style={{ fontFamily: 'var(--font-caveat)' }}
                   role="alert"
                 >
                   {error}
@@ -340,10 +323,10 @@ export default function GateScreen({ onUnlocked, unlockAt, bypassDate }: GateScr
           </form>
 
           {/* Discreet Hint */}
-          <div className="mt-2 text-center flex items-center justify-center gap-1.5 opacity-70">
+          <div className="mt-1 text-center flex items-center justify-center gap-1.5 opacity-80">
             <HeartIcon size={14} color="var(--rose)" />
             <p
-              className="text-sm text-white/80"
+              className="text-sm text-charcoal/80 font-medium"
               style={{ fontFamily: 'var(--font-caveat)' }}
             >
               Hint: hamara pyara naam

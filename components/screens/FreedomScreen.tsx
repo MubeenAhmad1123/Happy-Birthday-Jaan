@@ -17,7 +17,7 @@ export default function FreedomScreen({
 }: FreedomScreenProps) {
   return (
     <ScreenShell
-      theme="dark"
+      theme="blush"
       showAmbient={true}
       contentClassName="justify-between py-2"
     >
@@ -26,7 +26,7 @@ export default function FreedomScreen({
         <motion.button
           whileTap={{ scale: 0.94 }}
           onClick={onBack}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 hover:bg-white/15 text-rose-300 border border-white/10 backdrop-blur-md"
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas lawyer screen pe jao"
         >
@@ -34,10 +34,10 @@ export default function FreedomScreen({
           <span>Wapas</span>
         </motion.button>
 
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-emerald-400/30">
-          <DoveIcon size={16} color="#34D399" />
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white shadow-sm border border-emerald-300">
+          <DoveIcon size={16} color="#059669" />
           <span
-            className="text-xs font-bold tracking-wider uppercase text-emerald-300"
+            className="text-xs font-bold tracking-wider uppercase text-emerald-700"
             style={{ fontFamily: 'var(--font-baloo)' }}
           >
             Azaadi Aur Khushi
@@ -65,8 +65,8 @@ export default function FreedomScreen({
           className="grid grid-cols-2 gap-3 w-full"
         >
           {/* Photo 18 (Meadow) */}
-          <div className="p-2.5 bg-[#1E1A20] border border-emerald-500/30 shadow-xl rounded-2xl transform -rotate-2 hover:rotate-0 transition-transform">
-            <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center">
+          <div className="p-2.5 bg-white border border-emerald-200 shadow-md rounded-2xl transform -rotate-2 hover:rotate-0 transition-transform">
+            <div className="w-full h-36 rounded-xl overflow-hidden bg-emerald-50 flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/photos/18"
@@ -78,16 +78,16 @@ export default function FreedomScreen({
               />
             </div>
             <p
-              className="text-xs text-emerald-300 font-bold mt-1.5 text-center"
+              className="text-xs text-emerald-700 font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Khuli Hawa
+              Khuli Hawa 🌾
             </p>
           </div>
 
           {/* Photo 19 (Sunrise Dupatta) */}
-          <div className="p-2.5 bg-[#1E1A20] border border-rose-500/30 shadow-xl rounded-2xl transform rotate-2 hover:rotate-0 transition-transform">
-            <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center">
+          <div className="p-2.5 bg-white border border-rose-200 shadow-md rounded-2xl transform rotate-2 hover:rotate-0 transition-transform">
+            <div className="w-full h-36 rounded-xl overflow-hidden bg-rose-50 flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/photos/19"
@@ -99,10 +99,10 @@ export default function FreedomScreen({
               />
             </div>
             <p
-              className="text-xs text-rose-300 font-bold mt-1.5 text-center"
+              className="text-xs text-deep-rose font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Nayi Subah
+              Nayi Subah 🌅
             </p>
           </div>
         </motion.div>
@@ -115,16 +115,17 @@ export default function FreedomScreen({
           className="flex flex-col gap-1.5 px-2"
         >
           <h2
-            className="heading-fluid leading-tight text-white"
+            className="heading-fluid leading-tight text-deep-rose"
             style={{
               fontFamily: 'var(--font-dancing)',
-              textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+              color: 'var(--deep-rose)',
+              textShadow: '0 2px 10px rgba(229,107,138,0.2)',
             }}
           >
             Azaadi, Sukoon Aur Tum
           </h2>
           <p
-            className="text-base sm:text-lg leading-relaxed text-white/90"
+            className="text-base sm:text-lg leading-relaxed text-[#2D2329]"
             style={{ fontFamily: 'var(--font-caveat)' }}
           >
             Tumhara haq hai aisi zindagi jahan koi dar na ho, jahan tum khul ke
@@ -132,7 +133,7 @@ export default function FreedomScreen({
             tumhare saath khara hoon, inshallah.
           </p>
           <span
-            className="text-xs font-bold tracking-wider text-emerald-300 mt-0.5"
+            className="text-xs font-bold tracking-wider text-rose-600 mt-0.5"
             style={{ fontFamily: 'var(--font-baloo)' }}
           >
             TUM HAMESHA KHUSH RAHO, BEGUM 🤍

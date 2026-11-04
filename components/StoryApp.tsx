@@ -121,7 +121,7 @@ export default function StoryApp({
   const songSource = content.songUrl || '/api/audio'
 
   return (
-    <div className="w-full min-h-[100dvh] relative overflow-x-hidden bg-ink-black flex flex-col items-center">
+    <div className="w-full min-h-[100dvh] relative overflow-x-hidden bg-[#FFF6F8] flex flex-col items-center">
       {/* Single Shared Audio Instance across all screens */}
       <audio
         ref={audioRef}

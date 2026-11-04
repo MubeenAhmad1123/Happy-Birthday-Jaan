@@ -4,7 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import ScreenShell from '@/components/ScreenShell'
 import AnimatedSticker from '@/components/AnimatedSticker'
-import { ArrowLeftIcon, ArrowRightIcon, ScaleIcon, SparkleIcon } from '@/components/Icons'
+import { ArrowLeftIcon, ArrowRightIcon, ScaleIcon } from '@/components/Icons'
 
 interface LawyerDreamScreenProps {
   onNext: () => void
@@ -17,7 +17,7 @@ export default function LawyerDreamScreen({
 }: LawyerDreamScreenProps) {
   return (
     <ScreenShell
-      theme="dark"
+      theme="blush"
       showAmbient={true}
       contentClassName="justify-between py-2"
     >
@@ -26,7 +26,7 @@ export default function LawyerDreamScreen({
         <motion.button
           whileTap={{ scale: 0.94 }}
           onClick={onBack}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 hover:bg-white/15 text-rose-300 border border-white/10 backdrop-blur-md"
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas reasons pe jao"
         >
@@ -34,11 +34,11 @@ export default function LawyerDreamScreen({
           <span>Wapas</span>
         </motion.button>
 
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-gold/30">
-          <ScaleIcon size={16} color="#E8C27A" />
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white shadow-sm border border-rose-200">
+          <ScaleIcon size={16} color="var(--deep-rose)" />
           <span
-            className="text-xs font-bold tracking-wider uppercase text-gold"
-            style={{ fontFamily: 'var(--font-baloo)', color: 'var(--soft-gold)' }}
+            className="text-xs font-bold tracking-wider uppercase text-deep-rose"
+            style={{ fontFamily: 'var(--font-baloo)' }}
           >
             Tumhara Khwab
           </span>
@@ -57,7 +57,7 @@ export default function LawyerDreamScreen({
           animation="float"
         />
 
-        {/* Photos 14 & 15 Side-by-Side Polaroids with contain backing */}
+        {/* Photos 14 & 15 Side-by-Side Polaroids */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,8 +65,8 @@ export default function LawyerDreamScreen({
           className="grid grid-cols-2 gap-3 w-full"
         >
           {/* Photo 14 (Library) */}
-          <div className="p-2.5 bg-[#1E1A20] border border-rose-500/30 shadow-xl rounded-2xl transform -rotate-2 hover:rotate-0 transition-transform">
-            <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center">
+          <div className="p-2.5 bg-white border border-rose-200 shadow-md rounded-2xl transform -rotate-2 hover:rotate-0 transition-transform">
+            <div className="w-full h-36 rounded-xl overflow-hidden bg-rose-50 flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/photos/14"
@@ -78,16 +78,16 @@ export default function LawyerDreamScreen({
               />
             </div>
             <p
-              className="text-xs text-rose-300 font-bold mt-1.5 text-center"
+              className="text-xs text-deep-rose font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Law Library
+              Law Library 📚
             </p>
           </div>
 
           {/* Photo 15 (Courthouse) */}
-          <div className="p-2.5 bg-[#1E1A20] border border-rose-500/30 shadow-xl rounded-2xl transform rotate-2 hover:rotate-0 transition-transform">
-            <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center">
+          <div className="p-2.5 bg-white border border-rose-200 shadow-md rounded-2xl transform rotate-2 hover:rotate-0 transition-transform">
+            <div className="w-full h-36 rounded-xl overflow-hidden bg-rose-50 flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/photos/15"
@@ -99,10 +99,10 @@ export default function LawyerDreamScreen({
               />
             </div>
             <p
-              className="text-xs text-rose-300 font-bold mt-1.5 text-center"
+              className="text-xs text-deep-rose font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              The Courthouse
+              The Courthouse 🏛️
             </p>
           </div>
         </motion.div>
@@ -115,16 +115,17 @@ export default function LawyerDreamScreen({
           className="flex flex-col gap-1.5 px-2"
         >
           <h2
-            className="heading-fluid leading-tight text-white"
+            className="heading-fluid leading-tight text-deep-rose"
             style={{
               fontFamily: 'var(--font-dancing)',
-              textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+              color: 'var(--deep-rose)',
+              textShadow: '0 2px 10px rgba(229,107,138,0.2)',
             }}
           >
             Advocate Maria
           </h2>
           <p
-            className="text-base sm:text-lg leading-relaxed text-white/90"
+            className="text-base sm:text-lg leading-relaxed text-[#2D2329]"
             style={{ fontFamily: 'var(--font-caveat)' }}
           >
             Yeh sirf ek khwab nahi hai, yeh tumhara mustaqbil hai. Tumhari mehnat,
@@ -132,7 +133,7 @@ export default function LawyerDreamScreen({
             khari ho kar sachai ke liye laro gi.
           </p>
           <span
-            className="text-xs font-bold tracking-wider text-rose-400 mt-0.5"
+            className="text-xs font-bold tracking-wider text-rose-600 mt-0.5"
             style={{ fontFamily: 'var(--font-baloo)' }}
           >
             MUJHE TUM PE BOHOT NAAZ HAI 🤍

@@ -16,7 +16,7 @@ interface TimelineScreenProps {
 export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps) {
   return (
     <ScreenShell
-      theme="dark"
+      theme="blush"
       showAmbient={true}
       contentClassName="justify-between py-4"
     >
@@ -27,22 +27,23 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
         className="text-center mt-2 mb-6 max-w-sm z-10"
       >
         <span
-          className="text-xs uppercase tracking-widest font-bold text-rose-400"
+          className="text-xs uppercase tracking-widest font-bold text-rose-500"
           style={{ fontFamily: 'var(--font-baloo)' }}
         >
           Our Journey
         </span>
         <h1
-          className="heading-fluid leading-tight text-white mt-1"
+          className="heading-fluid leading-tight text-deep-rose mt-1"
           style={{
             fontFamily: 'var(--font-dancing)',
-            textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+            color: 'var(--deep-rose)',
+            textShadow: '0 2px 10px rgba(229,107,138,0.2)',
           }}
         >
-          Hamari Kahani
+          Hamari Kahani 📖
         </h1>
         <p
-          className="text-sm text-white/70 mt-0.5"
+          className="text-sm text-charcoal/80 mt-0.5"
           style={{ fontFamily: 'var(--font-caveat)' }}
         >
           Har ek lamha jo humne saath guzara…
@@ -52,7 +53,7 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
       {/* Vertical Timeline Container */}
       <div className="relative w-full max-w-sm flex flex-col gap-6 pb-6 z-10">
         {/* Connecting Vertical Line */}
-        <div className="absolute left-5 top-6 bottom-12 w-0.5 border-l-2 border-dashed border-rose-500/30 pointer-events-none" />
+        <div className="absolute left-5 top-6 bottom-12 w-0.5 border-l-2 border-dashed border-rose-300 pointer-events-none" />
 
         {timeline.map((item, idx) => {
           const charType: CharacterType =
@@ -79,21 +80,17 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
               className="relative flex items-start gap-3.5 pl-1"
             >
               {/* Date node icon circle */}
-              <div className="w-9 h-9 rounded-full bg-[#1E1A20] border-2 border-rose-400 flex items-center justify-center text-sm shadow-md z-10 shrink-0 text-white">
-                <SparkleIcon size={16} color="var(--soft-gold)" />
+              <div className="w-9 h-9 rounded-full bg-white border-2 border-rose-400 flex items-center justify-center text-sm shadow-md z-10 shrink-0 text-rose-500">
+                <SparkleIcon size={16} color="var(--rose)" />
               </div>
 
               {/* Card Content */}
               <div
-                className="p-4 flex-1 rounded-3xl border shadow-xl text-left"
-                style={{
-                  background: 'linear-gradient(135deg, #1E1A20 0%, #151218 100%)',
-                  borderColor: 'rgba(229, 107, 138, 0.35)',
-                }}
+                className="p-4 flex-1 rounded-3xl border shadow-md text-left bg-white border-rose-200"
               >
-                <div className="flex items-center justify-between border-b pb-1.5 mb-2 border-white/10">
+                <div className="flex items-center justify-between border-b pb-1.5 mb-2 border-rose-100">
                   <span
-                    className="text-base font-bold text-rose-300"
+                    className="text-base font-bold text-deep-rose"
                     style={{ fontFamily: 'var(--font-baloo)' }}
                   >
                     {item.date}
@@ -102,7 +99,7 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
                 </div>
 
                 <p
-                  className="text-base sm:text-lg leading-snug mb-3 text-white/90"
+                  className="text-base sm:text-lg leading-snug mb-3 text-[#2D2329]"
                   style={{ fontFamily: 'var(--font-caveat)' }}
                 >
                   {item.text}

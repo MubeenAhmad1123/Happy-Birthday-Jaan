@@ -49,7 +49,7 @@ export default function FinaleScreen({
 
   return (
     <ScreenShell
-      theme="dark"
+      theme="blush"
       showAmbient={true}
       contentClassName="justify-between py-3"
     >
@@ -67,7 +67,7 @@ export default function FinaleScreen({
               initial={{ scale: 0, rotate: -20 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: i * 0.03, type: 'spring' }}
-              className="w-7 h-8 rounded-lg bg-[#1E1A20] border border-rose-500/40 shadow-md flex items-center justify-center font-bold text-sm text-rose-300 select-none"
+              className="w-7 h-8 rounded-lg bg-white border border-rose-300 shadow-md flex items-center justify-center font-bold text-sm text-deep-rose select-none"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
               {letter}
@@ -79,13 +79,14 @@ export default function FinaleScreen({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.45 }}
-          className="heading-fluid leading-tight text-white mt-1"
+          className="heading-fluid leading-tight text-deep-rose mt-1"
           style={{
             fontFamily: 'var(--font-dancing)',
-            textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+            color: 'var(--deep-rose)',
+            textShadow: '0 2px 10px rgba(229,107,138,0.2)',
           }}
         >
-          Maria
+          Maria 🤍
         </motion.h2>
       </motion.div>
 
@@ -105,15 +106,13 @@ export default function FinaleScreen({
 
         {/* Message Card */}
         <div
-          className="w-full p-5 rounded-3xl border text-center mt-3 shadow-2xl relative"
+          className="w-full p-5 rounded-3xl border text-center mt-3 shadow-xl relative bg-white border-rose-200"
           style={{
-            background: 'linear-gradient(135deg, #1E1A20 0%, #151218 100%)',
-            borderColor: 'rgba(232, 194, 122, 0.4)',
-            boxShadow: '0 12px 36px rgba(0,0,0,0.6)',
+            boxShadow: '0 12px 36px rgba(229,107,138,0.15)',
           }}
         >
           <p
-            className="text-xl sm:text-2xl leading-relaxed text-white/95"
+            className="text-xl sm:text-2xl leading-relaxed text-[#2D2329]"
             style={{
               fontFamily: 'var(--font-caveat)',
             }}
@@ -142,7 +141,7 @@ export default function FinaleScreen({
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={onBackToHub}
-          className="btn-secondary flex-1 text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-xl"
+          className="btn-secondary flex-1 text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-md"
         >
           <HeartIcon size={16} color="var(--rose)" />
           <span>Wapas Hub</span>

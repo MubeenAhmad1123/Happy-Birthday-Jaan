@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 import AmbientBackground from './AmbientBackground'
 
-export type ScreenTheme = 'dark' | 'charcoal' | 'blush' | 'cream' | 'rose'
+export type ScreenTheme = 'blush' | 'cream' | 'rose' | 'dark' | 'charcoal'
 
 interface ScreenShellProps {
   children: React.ReactNode
@@ -11,45 +11,16 @@ interface ScreenShellProps {
   className?: string
   contentClassName?: string
   showAmbient?: boolean
-  ambientVariant?: 'dark' | 'light'
-}
-
-const THEME_STYLES: Record<ScreenTheme, { bg: string; text: string }> = {
-  dark: {
-    bg: 'linear-gradient(175deg, #121014 0%, #1A151C 50%, #121014 100%)',
-    text: '#FFF8F5',
-  },
-  charcoal: {
-    bg: 'linear-gradient(160deg, #1E1A20 0%, #151218 60%, #121014 100%)',
-    text: '#FFF8F5',
-  },
-  blush: {
-    bg: 'linear-gradient(160deg, #FFF8F5 0%, #FFF0F4 50%, #F9D5DE 100%)',
-    text: '#3A3036',
-  },
-  cream: {
-    bg: 'linear-gradient(160deg, #FFFDF9 0%, #FFF5F7 60%, #F9D5DE 100%)',
-    text: '#3A3036',
-  },
-  rose: {
-    bg: 'linear-gradient(160deg, #2A1721 0%, #1E1A20 60%, #121014 100%)',
-    text: '#FFF8F5',
-  },
+  ambientVariant?: 'light' | 'dark'
 }
 
 export default function ScreenShell({
   children,
-  theme = 'dark',
   className = '',
   contentClassName = '',
   showAmbient = true,
-  ambientVariant,
 }: ScreenShellProps) {
   const shellRef = useRef<HTMLDivElement>(null)
-
-  const isDark = theme === 'dark' || theme === 'charcoal' || theme === 'rose'
-  const activeAmbientVariant = ambientVariant || (isDark ? 'dark' : 'light')
-  const themeStyle = THEME_STYLES[theme] || THEME_STYLES.dark
 
   // Development check: logs any element wider than viewport to eliminate horizontal scroll
   useEffect(() => {
@@ -71,23 +42,23 @@ export default function ScreenShell({
   return (
     <div
       ref={shellRef}
-      className={`min-h-dvh w-full relative overflow-x-hidden flex flex-col items-center justify-between transition-colors duration-500 ${className}`}
+      className={`min-h-dvh w-full relative overflow-x-hidden flex flex-col items-center justify-between ${className}`}
       style={{
-        background: themeStyle.bg,
-        color: themeStyle.text,
+        background: 'linear-gradient(175deg, #FFF9FA 0%, #FFF2F5 45%, #FDEAF0 85%, #FFF5F7 100%)',
+        color: '#2D2329',
         boxSizing: 'border-box',
-        paddingLeft: 'max(20px, env(safe-area-inset-left, 0px))',
-        paddingRight: 'max(20px, env(safe-area-inset-right, 0px))',
-        paddingTop: 'max(16px, env(safe-area-inset-top, 0px))',
-        paddingBottom: 'max(20px, env(safe-area-inset-bottom, 0px))',
+        paddingLeft: 'max(16px, env(safe-area-inset-left, 0px))',
+        paddingRight: 'max(16px, env(safe-area-inset-right, 0px))',
+        paddingTop: 'max(14px, env(safe-area-inset-top, 0px))',
+        paddingBottom: 'max(18px, env(safe-area-inset-bottom, 0px))',
       }}
     >
-      {/* Subtle ambient particle animation */}
-      {showAmbient && <AmbientBackground variant={activeAmbientVariant} />}
+      {/* Subtle floating ambient hearts and petals */}
+      {showAmbient && <AmbientBackground variant="light" />}
 
-      {/* Centred safe-area content wrapper capped at 480px */}
+      {/* Centred safe-area content wrapper capped at 440px for ideal mobile reading */}
       <div
-        className={`w-full max-w-[480px] mx-auto min-w-0 flex flex-col justify-between items-center relative z-10 flex-1 ${contentClassName}`}
+        className={`w-full max-w-[440px] mx-auto min-w-0 flex flex-col justify-between items-center relative z-10 flex-1 ${contentClassName}`}
       >
         {children}
       </div>

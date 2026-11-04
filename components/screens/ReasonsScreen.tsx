@@ -4,14 +4,13 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ScreenShell from '@/components/ScreenShell'
 import { ReasonItem } from '@/lib/contentData'
-import CharacterSticker from '@/components/CharacterSticker'
 import {
   HeartIcon,
   SparkleIcon,
-  FlowerIcon,
   CloseIcon,
-  ArrowLeftIcon,
   ArrowRightIcon,
+  CameraIcon,
+  ArrowLeftIcon,
 } from '@/components/Icons'
 
 interface ReasonsScreenProps {
@@ -19,384 +18,304 @@ interface ReasonsScreenProps {
   onNext: () => void
 }
 
-const tilts = [-3, 2.5, -2, 3, -2.5, 1.8]
-
 export default function ReasonsScreen({ reasons, onNext }: ReasonsScreenProps) {
-  const [currentPage, setCurrentPage] = useState(0)
-  const [activeModalIndex, setActiveModalIndex] = useState<number | null>(null)
-  const [viewedReasons, setViewedReasons] = useState<Record<number, boolean>>({})
-
-  // 3 cards per page as requested
-  const itemsPerPage = 3
   const safeReasons = reasons && reasons.length > 0 ? reasons : []
-  const totalReasons = safeReasons.length
-  const totalPages = Math.ceil(totalReasons / itemsPerPage)
+  const total = safeReasons.length
 
-  const startIndex = currentPage * itemsPerPage
-  const currentReasons = safeReasons.slice(startIndex, startIndex + itemsPerPage)
+  // Track which cards are flipped (open)
+  const [flippedMap, setFlippedMap] = useState<Record<number, boolean>>({})
+  // Track photo modal index
+  const [photoModalIndex, setPhotoModalIndex] = useState<number | null>(null)
 
-  const openReasonModal = (index: number) => {
-    setActiveModalIndex(index)
-    setViewedReasons((prev) => ({ ...prev, [index]: true }))
+  const toggleFlip = (index: number) => {
+    setFlippedMap((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }))
   }
 
-  const closeModal = () => {
-    setActiveModalIndex(null)
-  }
-
-  const nextReasonInModal = () => {
-    if (activeModalIndex !== null) {
-      const nextIdx = (activeModalIndex + 1) % totalReasons
-      setActiveModalIndex(nextIdx)
-      setViewedReasons((prev) => ({ ...prev, [nextIdx]: true }))
+  const flipAll = () => {
+    const allOpen = Object.keys(flippedMap).length === total && Object.values(flippedMap).every(Boolean)
+    if (allOpen) {
+      setFlippedMap({})
+    } else {
+      const nextMap: Record<number, boolean> = {}
+      for (let i = 0; i < total; i++) {
+        nextMap[i] = true
+      }
+      setFlippedMap(nextMap)
     }
   }
 
-  const prevReasonInModal = () => {
-    if (activeModalIndex !== null) {
-      const prevIdx = (activeModalIndex - 1 + totalReasons) % totalReasons
-      setActiveModalIndex(prevIdx)
-      setViewedReasons((prev) => ({ ...prev, [prevIdx]: true }))
-    }
-  }
+  const revealedCount = Object.values(flippedMap).filter(Boolean).length
+  const allRevealed = revealedCount === total && total > 0
 
-  const activeReason =
-    activeModalIndex !== null ? safeReasons[activeModalIndex] : null
+  const activePhotoReason =
+    photoModalIndex !== null ? safeReasons[photoModalIndex] : null
 
   return (
     <ScreenShell
-      theme="dark"
+      theme="blush"
       showAmbient={true}
       contentClassName="justify-between py-2"
     >
-      {/* Header & Progress Counter */}
-      <div className="w-full max-w-sm flex flex-col items-center text-center mt-1 z-10">
-        <div className="flex items-center justify-between w-full mb-1 px-1">
+      {/* Top Header */}
+      <div className="w-full max-w-sm flex flex-col items-center text-center mt-2 z-10 px-2">
+        <div className="flex items-center justify-between w-full mb-1">
           <span
-            className="text-xs uppercase tracking-widest font-bold text-rose-400"
+            className="text-xs uppercase tracking-widest font-bold text-rose-500"
             style={{ fontFamily: 'var(--font-baloo)' }}
           >
             25 Years • 25 Reasons
           </span>
-          <div className="px-3 py-0.5 rounded-full text-xs font-bold text-white bg-rose-950/70 border border-rose-500/40 shadow-sm">
-            {Object.keys(viewedReasons).length}/{totalReasons} Dekhe
-          </div>
+
+          <button
+            onClick={flipAll}
+            className="text-xs font-bold text-rose-600 bg-white/90 border border-rose-200/80 px-2.5 py-0.5 rounded-full shadow-sm hover:bg-rose-50 cursor-pointer transition-all"
+            style={{ fontFamily: 'var(--font-baloo)' }}
+          >
+            {revealedCount === total ? 'Hide all' : 'Reveal all'}
+          </button>
         </div>
 
-        <h1
-          className="heading-fluid leading-tight text-white mt-0.5"
-          style={{
-            fontFamily: 'var(--font-dancing)',
-            textShadow: '0 2px 14px rgba(229,107,138,0.4)',
-          }}
-        >
-          25 reasons I love you
-        </h1>
+        <div className="flex items-center justify-center gap-2 mt-0.5">
+          <h1
+            className="heading-fluid leading-tight text-deep-rose"
+            style={{
+              fontFamily: 'var(--font-dancing)',
+              color: 'var(--deep-rose)',
+              textShadow: '0 2px 10px rgba(229,107,138,0.2)',
+            }}
+          >
+            25 Reasons I Love You
+          </h1>
+          <HeartIcon size={24} color="var(--rose)" />
+        </div>
+
+        {/* Progress Bar & Counter */}
+        <div className="w-full max-w-xs mt-2 flex flex-col gap-1 items-center">
+          <div className="w-full h-2 rounded-full bg-rose-200/50 overflow-hidden border border-rose-300/40">
+            <div
+              className="h-full bg-gradient-to-r from-rose-400 to-rose-600 rounded-full transition-all duration-300"
+              style={{ width: `${(revealedCount / total) * 100}%` }}
+            />
+          </div>
+          <span
+            className="text-xs font-medium text-rose-600/90"
+            style={{ fontFamily: 'var(--font-baloo)' }}
+          >
+            {revealedCount} of {total} revealed
+          </span>
+        </div>
+      </div>
+
+      {/* Grid of 25 Love Cards (2 columns on mobile, matching reference layout) */}
+      <div className="w-full max-w-sm grid grid-cols-2 gap-2.5 my-3 px-1 z-10">
+        {safeReasons.map((item, idx) => {
+          const isFlipped = !!flippedMap[idx]
+          const photoUrl =
+            item.photoUrl ||
+            `/api/photos/${String(idx + 1).padStart(2, '0')}`
+
+          return (
+            <div
+              key={item.id || idx}
+              className="relative w-full h-[120px] sm:h-[130px] perspective-1000 select-none cursor-pointer"
+              onClick={() => toggleFlip(idx)}
+            >
+              <motion.div
+                className="w-full h-full relative transform-style-3d transition-transform duration-500 rounded-2xl shadow-md"
+                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                transition={{ duration: 0.45, ease: 'easeInOut' }}
+              >
+                {/* ── FRONT FACE (Unrevealed: Vibrant Pink Love Card) ── */}
+                <div
+                  className="absolute inset-0 w-full h-full backface-hidden rounded-2xl flex flex-col items-center justify-center p-3 text-white border border-white/30"
+                  style={{
+                    background: 'linear-gradient(135deg, #FF6B8B 0%, #E56B8A 50%, #B8405E 100%)',
+                    boxShadow: '0 6px 18px rgba(229,107,138,0.25)',
+                  }}
+                >
+                  <motion.div
+                    animate={{ scale: [1, 1.15, 1] }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 2.2 + (idx % 4) * 0.3,
+                      ease: 'easeInOut',
+                    }}
+                  >
+                    <HeartIcon size={26} color="#FFFFFF" />
+                  </motion.div>
+
+                  <span
+                    className="text-2xl font-bold mt-1 tracking-wide"
+                    style={{
+                      fontFamily: 'var(--font-baloo)',
+                      textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                    }}
+                  >
+                    {idx + 1}
+                  </span>
+                </div>
+
+                {/* ── BACK FACE (Revealed: Clean White Romantic Text Card) ── */}
+                <div
+                  className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl flex flex-col justify-between p-2.5 bg-white border border-rose-200 shadow-md text-left overflow-hidden"
+                  style={{
+                    background: '#FFFFFF',
+                  }}
+                >
+                  <div className="flex items-center justify-between border-b border-rose-100 pb-1 mb-1">
+                    <span
+                      className="text-[11px] font-bold text-rose-500"
+                      style={{ fontFamily: 'var(--font-baloo)' }}
+                    >
+                      #{idx + 1}
+                    </span>
+                    <HeartIcon size={12} color="var(--rose)" />
+                  </div>
+
+                  <p
+                    className="text-xs sm:text-sm leading-snug font-medium text-[#2D2329] line-clamp-3 my-auto"
+                    style={{ fontFamily: 'var(--font-caveat)' }}
+                  >
+                    {item.text}
+                  </p>
+
+                  {/* Photo View Thumbnail Pill */}
+                  <div className="flex items-center justify-between pt-1 border-t border-rose-50 mt-1">
+                    <span
+                      className="text-[10px] text-rose-400 font-bold"
+                      style={{ fontFamily: 'var(--font-baloo)' }}
+                    >
+                      Maria 🤍
+                    </span>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setPhotoModalIndex(idx)
+                      }}
+                      className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-rose-50 text-[10px] text-rose-600 font-bold hover:bg-rose-100 transition-colors cursor-pointer"
+                      style={{ fontFamily: 'var(--font-baloo)' }}
+                      title="View Photo"
+                    >
+                      <CameraIcon size={11} color="var(--rose)" />
+                      <span>Photo</span>
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Footer Instruction & Next Chapter Button */}
+      <div className="w-full max-w-sm flex flex-col items-center gap-3 px-2 pb-4 z-10">
         <p
-          className="text-xs sm:text-sm text-white/60 mt-0.5"
+          className="text-xs sm:text-sm text-center text-rose-700/80 flex items-center justify-center gap-1 font-medium"
           style={{ fontFamily: 'var(--font-caveat)' }}
         >
-          (Har card pe tap karke tasveer aur dil ki baat dekho)
+          <span>Click each heart to reveal</span>
+          <HeartIcon size={14} color="var(--rose)" />
         </p>
-      </div>
 
-      {/* 3 Cards at a time (stacked vertically) */}
-      <div className="w-full max-w-sm flex flex-col gap-3 my-auto z-10 px-1">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentPage}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="flex flex-col gap-3 w-full"
-          >
-            {currentReasons.map((item, localIdx) => {
-              const globalIndex = startIndex + localIdx
-              const tilt = tilts[globalIndex % tilts.length]
-              const variant = globalIndex % 3 // 0: Dark, 1: Rose, 2: Blush
-              const photoUrl =
-                item.photoUrl ||
-                `/api/photos/${String(globalIndex + 1).padStart(2, '0')}`
-
-              // Card styling variants
-              let cardBg = 'linear-gradient(135deg, #1E1A20 0%, #151218 100%)'
-              let cardBorder = 'rgba(229, 107, 138, 0.4)'
-              let textColor = '#FFF8F5'
-              let subtextColor = 'rgba(255, 248, 245, 0.75)'
-
-              if (variant === 1) {
-                cardBg = 'linear-gradient(135deg, #B8405E 0%, #E56B8A 100%)'
-                cardBorder = 'rgba(255, 255, 255, 0.25)'
-                textColor = '#FFFFFF'
-                subtextColor = 'rgba(255, 255, 255, 0.9)'
-              } else if (variant === 2) {
-                cardBg = 'linear-gradient(135deg, #FFF8F5 0%, #F9D5DE 100%)'
-                cardBorder = 'rgba(232, 194, 122, 0.5)'
-                textColor = '#1E1A20'
-                subtextColor = 'rgba(58, 48, 54, 0.85)'
-              }
-
-              return (
-                <motion.button
-                  key={item.id || globalIndex}
-                  whileTap={{ scale: 0.96 }}
-                  whileHover={{ scale: 1.02 }}
-                  onClick={() => openReasonModal(globalIndex)}
-                  className="w-full min-h-[105px] p-3.5 rounded-3xl flex items-center justify-between border cursor-pointer text-left shadow-lg select-none"
-                  style={{
-                    background: cardBg,
-                    borderColor: cardBorder,
-                  }}
-                  aria-label={`Reason ${globalIndex + 1}`}
-                >
-                  <div className="flex items-center gap-3.5 min-w-0 flex-1">
-                    {/* Small tilted photo thumbnail */}
-                    <div
-                      className="relative w-16 h-20 rounded-xl overflow-hidden shrink-0 border-2 border-white/40 shadow-md bg-black"
-                      style={{
-                        transform: `rotate(${tilt}deg)`,
-                      }}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={photoUrl}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none'
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-black/10" />
-                    </div>
-
-                    {/* Content preview */}
-                    <div className="flex flex-col min-w-0 pr-2">
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <span
-                          className="px-2 py-0.5 rounded-full text-[11px] font-bold border border-current"
-                          style={{
-                            fontFamily: 'var(--font-baloo)',
-                            color: textColor,
-                          }}
-                        >
-                          #{globalIndex + 1}
-                        </span>
-                        <HeartIcon size={14} color={variant === 2 ? '#B8405E' : '#E56B8A'} />
-                      </div>
-
-                      <p
-                        className="text-base line-clamp-2 leading-snug font-medium"
-                        style={{
-                          fontFamily: 'var(--font-caveat)',
-                          color: subtextColor,
-                        }}
-                      >
-                        {item.text}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div
-                    className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 border"
-                    style={{ borderColor: cardBorder }}
-                  >
-                    <ArrowRightIcon size={12} color={textColor} />
-                  </div>
-                </motion.button>
-              )
-            })}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Paging Controls */}
-      <div className="w-full max-w-sm flex items-center justify-between z-10 px-2 py-2">
+        {/* Proceed Button */}
         <motion.button
-          whileTap={{ scale: 0.92 }}
-          onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
-          disabled={currentPage === 0}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 bg-white/10 text-white border border-white/10 disabled:opacity-30 disabled:pointer-events-none"
-          style={{ fontFamily: 'var(--font-baloo)' }}
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.02 }}
+          onClick={onNext}
+          className="btn-primary w-full flex items-center justify-center gap-2 shadow-xl"
         >
-          <ArrowLeftIcon size={14} color="currentColor" />
-          <span>Piche</span>
+          <span>Aage chalo (Tumhara Khwab)</span>
+          <ArrowRightIcon size={18} color="#FFFFFF" />
         </motion.button>
-
-        {/* Dots Indicator */}
-        <div className="flex gap-1.5">
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentPage(i)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                currentPage === i
-                  ? 'w-5 bg-rose-500'
-                  : 'bg-white/30 hover:bg-white/50'
-              }`}
-              aria-label={`Go to page ${i + 1}`}
-            />
-          ))}
-        </div>
-
-        {currentPage < totalPages - 1 ? (
-          <motion.button
-            whileTap={{ scale: 0.92 }}
-            onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
-            className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 bg-white/10 text-white border border-white/10"
-            style={{ fontFamily: 'var(--font-baloo)' }}
-          >
-            <span>Aage</span>
-            <ArrowRightIcon size={14} color="currentColor" />
-          </motion.button>
-        ) : (
-          <motion.button
-            whileTap={{ scale: 0.92 }}
-            onClick={onNext}
-            className="px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 bg-rose-600 text-white shadow-lg border border-rose-400/50"
-            style={{ fontFamily: 'var(--font-baloo)' }}
-          >
-            <span>Aage chalo</span>
-            <ArrowRightIcon size={14} color="#FFFFFF" />
-          </motion.button>
-        )}
       </div>
 
-      {/* Expanded Modal / Bottom-Sheet (Large Photo + Separate Text Card) */}
+      {/* Full Photo Modal when tapped */}
       <AnimatePresence>
-        {activeModalIndex !== null && activeReason && (
+        {photoModalIndex !== null && activePhotoReason && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-between p-4"
+            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col items-center justify-between p-4"
           >
-            {/* Modal Top Bar */}
+            {/* Modal Header */}
             <div className="w-full max-w-sm flex items-center justify-between pt-1">
-              <div className="flex items-center gap-1.5 text-rose-300 font-bold text-sm">
-                <SparkleIcon size={14} color="#E8C27A" />
+              <div className="flex items-center gap-1.5 text-white font-bold text-sm">
+                <SparkleIcon size={16} color="var(--soft-gold)" />
                 <span style={{ fontFamily: 'var(--font-baloo)' }}>
-                  Reason #{activeModalIndex + 1} of {totalReasons}
+                  Reason #{photoModalIndex + 1}
                 </span>
               </div>
 
-              <motion.button
-                whileTap={{ scale: 0.9 }}
-                onClick={closeModal}
-                className="w-10 h-10 rounded-full bg-white/15 text-white flex items-center justify-center border border-white/20 cursor-pointer"
-                aria-label="Close"
+              <button
+                onClick={() => setPhotoModalIndex(null)}
+                className="w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center border border-white/30 cursor-pointer"
+                aria-label="Close photo"
               >
                 <CloseIcon size={18} color="#FFFFFF" />
-              </motion.button>
+              </button>
             </div>
 
-            {/* Modal Center: Large 3:4 Photo on top with blurred backing */}
-            <div
-              className="relative w-full max-w-sm flex-1 flex flex-col items-center justify-center my-auto py-2"
-              style={{ touchAction: 'pan-y' }}
-            >
-              <div
-                className="relative w-full aspect-[3/4] max-h-[46dvh] rounded-3xl overflow-hidden bg-black/80 border border-white/15 flex items-center justify-center shadow-2xl"
-              >
-                {/* Background blur */}
-                {activeReason.photoUrl && (
-                  <div className="absolute inset-0 pointer-events-none opacity-30 filter blur-xl scale-110">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={
-                        activeReason.photoUrl ||
-                        `/api/photos/${String(activeModalIndex + 1).padStart(2, '0')}`
-                      }
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-
-                {/* Main contain image */}
+            {/* Modal Image Display (3:4 ratio) */}
+            <div className="relative w-full max-w-sm flex-1 flex flex-col items-center justify-center my-auto py-2">
+              <div className="relative w-full aspect-[3/4] max-h-[50dvh] rounded-3xl overflow-hidden bg-black flex items-center justify-center shadow-2xl border border-white/20">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={
-                    activeReason.photoUrl ||
-                    `/api/photos/${String(activeModalIndex + 1).padStart(2, '0')}`
+                    activePhotoReason.photoUrl ||
+                    `/api/photos/${String(photoModalIndex + 1).padStart(2, '0')}`
                   }
-                  alt={activeReason.text}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-contain relative z-10 pointer-events-none"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                  }}
+                  alt={activePhotoReason.text}
+                  className="w-full h-full object-contain"
                 />
 
-                {/* Left / Right arrows inside photo to flip between all 25 */}
+                {/* Left / Right arrows to navigate photos */}
                 <button
-                  onClick={prevReasonInModal}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center z-20 border border-white/20 cursor-pointer"
-                  aria-label="Previous reason"
+                  onClick={() =>
+                    setPhotoModalIndex((prev) =>
+                      prev !== null ? (prev > 0 ? prev - 1 : total - 1) : 0
+                    )
+                  }
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center border border-white/20 cursor-pointer"
+                  aria-label="Previous photo"
                 >
                   <ArrowLeftIcon size={18} color="#FFFFFF" />
                 </button>
 
                 <button
-                  onClick={nextReasonInModal}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center z-20 border border-white/20 cursor-pointer"
-                  aria-label="Next reason"
+                  onClick={() =>
+                    setPhotoModalIndex((prev) =>
+                      prev !== null ? (prev < total - 1 ? prev + 1 : 0) : 0
+                    )
+                  }
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center border border-white/20 cursor-pointer"
+                  aria-label="Next photo"
                 >
                   <ArrowRightIcon size={18} color="#FFFFFF" />
                 </button>
               </div>
 
-              {/* Separate Text Card BELOW the photo */}
-              <motion.div
-                key={activeModalIndex}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.25 }}
-                className="w-full mt-3 p-4 rounded-3xl border text-center shadow-2xl relative"
-                style={{
-                  background:
-                    activeModalIndex % 2 === 0
-                      ? 'linear-gradient(145deg, #1E1A20 0%, #121014 100%)'
-                      : 'linear-gradient(145deg, #FFF8F5 0%, #F9D5DE 100%)',
-                  borderColor: 'rgba(232, 194, 122, 0.4)',
-                }}
-              >
-                {/* Subtle decorative icons in corners */}
-                <div className="absolute top-2.5 left-3 opacity-40">
-                  <FlowerIcon
-                    size={16}
-                    color={activeModalIndex % 2 === 0 ? 'var(--rose)' : 'var(--deep-rose)'}
-                  />
-                </div>
-                <div className="absolute top-2.5 right-3 opacity-40">
-                  <HeartIcon
-                    size={16}
-                    color={activeModalIndex % 2 === 0 ? 'var(--rose)' : 'var(--deep-rose)'}
-                  />
-                </div>
-
+              {/* Reason card below photo */}
+              <div className="w-full mt-3 p-3.5 rounded-2xl bg-white shadow-xl text-center border border-rose-200">
                 <p
-                  className="text-xl sm:text-2xl leading-relaxed font-bold px-3 py-1"
-                  style={{
-                    fontFamily: 'var(--font-caveat)',
-                    color: activeModalIndex % 2 === 0 ? '#FFF8F5' : '#1E1A20',
-                  }}
+                  className="text-base sm:text-lg leading-snug font-bold text-[#2D2329]"
+                  style={{ fontFamily: 'var(--font-caveat)' }}
                 >
-                  {activeReason.text}
+                  {activePhotoReason.text}
                 </p>
-              </motion.div>
+              </div>
             </div>
 
-            {/* Modal Bottom Counter */}
             <div className="w-full max-w-sm flex justify-center pb-2">
               <span
-                className="text-xs text-white/50"
+                className="text-xs text-white/60"
                 style={{ fontFamily: 'var(--font-caveat)' }}
               >
-                Swipe left / right ya teer daba ke agla reason dekho ✨
+                Swipe left / right ya buttons se agla photo dekho 🤍
               </span>
             </div>
           </motion.div>

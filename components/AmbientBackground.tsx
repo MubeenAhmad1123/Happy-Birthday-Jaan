@@ -88,3 +88,4 @@ export default function AmbientBackground({ variant = 'dark' }: AmbientBackgroun
     </div>
   )
 }
+

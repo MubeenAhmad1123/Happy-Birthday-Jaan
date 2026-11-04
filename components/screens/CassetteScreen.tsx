@@ -27,13 +27,13 @@ export default function CassetteScreen({
   durationText = '03:45',
 }: CassetteScreenProps) {
   return (
-    <ScreenShell theme="dark" showAmbient={true} contentClassName="justify-between">
+    <ScreenShell theme="blush" showAmbient={true} contentClassName="justify-between">
       {/* Top Header */}
       <div className="w-full flex items-center justify-between z-20 pt-2 mb-2">
         <motion.button
           whileTap={{ scale: 0.94 }}
           onClick={onBack}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 hover:bg-white/15 text-rose-300 border border-white/10 backdrop-blur-md"
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
           aria-label="Wapas Hub"
         >
@@ -41,36 +41,35 @@ export default function CassetteScreen({
           <span>Wapas</span>
         </motion.button>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <CassetteIcon size={18} color="var(--rose)" />
           <span
-            className="text-base font-bold text-white tracking-wide"
+            className="text-base font-bold text-deep-rose tracking-wide"
             style={{ fontFamily: 'var(--font-baloo)' }}
           >
-            Hamara Gaana
+            Our Song
           </span>
         </div>
 
         <div className="w-12" />
       </div>
 
-      <div className="w-full max-w-sm flex flex-col items-center gap-6 my-auto">
+      <div className="w-full max-w-sm flex flex-col items-center gap-6 my-auto z-10 px-1">
         {/* Retro Cassette Tape SVG with spinning reels */}
         <div
-          className="relative w-full aspect-[16/10] rounded-3xl p-4 shadow-2xl border flex flex-col justify-between"
+          className="relative w-full aspect-[16/10] rounded-3xl p-3.5 shadow-xl border flex flex-col justify-between"
           style={{
-            background: 'linear-gradient(135deg, #1E1A20 0%, #121014 100%)',
+            background: 'linear-gradient(135deg, #2D2329 0%, #1A1417 100%)',
             borderColor: 'rgba(229, 107, 138, 0.4)',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)',
+            boxShadow: '0 16px 40px rgba(184, 64, 94, 0.25)',
           }}
         >
           {/* Cassette Label Area */}
           <div
-            className="w-full h-full rounded-2xl p-3 flex flex-col justify-between"
-            style={{ background: 'linear-gradient(145deg, #FFF8F5 0%, #FFF0F4 100%)' }}
+            className="w-full h-full rounded-2xl p-3 flex flex-col justify-between bg-white"
           >
             {/* Top Label */}
-            <div className="flex justify-between items-center border-b pb-1 border-rose-200">
+            <div className="flex justify-between items-center border-b pb-1 border-rose-100">
               <span
                 className="text-[11px] font-bold text-rose-500 uppercase tracking-widest"
                 style={{ fontFamily: 'var(--font-baloo)' }}
@@ -93,8 +92,7 @@ export default function CassetteScreen({
             </div>
 
             {/* Cassette Window with Two Spinning Reels */}
-            <div className="w-full h-14 rounded-xl bg-neutral-950 border border-neutral-800 flex items-center justify-around px-4 relative overflow-hidden shadow-inner">
-              {/* Tape line connecting reels */}
+            <div className="w-full h-14 rounded-xl bg-neutral-900 border border-neutral-700 flex items-center justify-around px-4 relative overflow-hidden shadow-inner">
               <div className="absolute top-1/2 left-10 right-10 h-3 -translate-y-1/2 bg-amber-950/70" />
 
               {/* Left Reel */}
@@ -105,7 +103,7 @@ export default function CassetteScreen({
                     ? { repeat: Infinity, duration: 2.2, ease: 'linear' }
                     : { duration: 0.2 }
                 }
-                className="relative w-10 h-10 rounded-full border-4 border-white/80 bg-neutral-800 flex items-center justify-center z-10"
+                className="relative w-10 h-10 rounded-full border-4 border-white/90 bg-neutral-800 flex items-center justify-center z-10"
               >
                 <div className="w-full h-0.5 bg-white/60 absolute" />
                 <div className="w-0.5 h-full bg-white/60 absolute" />
@@ -125,7 +123,7 @@ export default function CassetteScreen({
                     ? { repeat: Infinity, duration: 2.2, ease: 'linear' }
                     : { duration: 0.2 }
                 }
-                className="relative w-10 h-10 rounded-full border-4 border-white/80 bg-neutral-800 flex items-center justify-center z-10"
+                className="relative w-10 h-10 rounded-full border-4 border-white/90 bg-neutral-800 flex items-center justify-center z-10"
               >
                 <div className="w-full h-0.5 bg-white/60 absolute" />
                 <div className="w-0.5 h-full bg-white/60 absolute" />
@@ -134,7 +132,7 @@ export default function CassetteScreen({
             </div>
 
             {/* Bottom Brand */}
-            <div className="text-center pt-1 border-t border-rose-100">
+            <div className="text-center pt-1 border-t border-rose-50">
               <span
                 className="text-[9px] uppercase tracking-wider text-rose-400 font-bold"
                 style={{ fontFamily: 'var(--font-baloo)' }}
@@ -147,13 +145,13 @@ export default function CassetteScreen({
 
         {/* Progress Bar & Timing */}
         <div className="w-full px-2 flex flex-col gap-1.5">
-          <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden relative border border-white/10">
+          <div className="w-full h-2 rounded-full bg-rose-200/60 overflow-hidden relative border border-rose-300/40">
             <div
-              className="h-full bg-gradient-to-r from-rose-500 to-rose-400 rounded-full transition-all duration-300"
+              className="h-full bg-gradient-to-r from-rose-400 to-rose-600 rounded-full transition-all duration-300"
               style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
             />
           </div>
-          <div className="w-full flex justify-between text-xs text-white/50 font-mono">
+          <div className="w-full flex justify-between text-xs text-rose-600/80 font-mono font-bold">
             <span>{currentTimeText}</span>
             <span>{durationText}</span>
           </div>
@@ -173,7 +171,7 @@ export default function CassetteScreen({
               style={{
                 background: isPlaying
                   ? 'linear-gradient(135deg, #B8405E 0%, #E56B8A 100%)'
-                  : 'linear-gradient(135deg, #E56B8A 0%, #FF7597 100%)',
+                  : 'linear-gradient(135deg, #FF6B8B 0%, #E56B8A 100%)',
                 boxShadow: '0 8px 24px rgba(229,107,138,0.4)',
               }}
               aria-label={isPlaying ? 'Pause song' : 'Play song'}
@@ -189,7 +187,7 @@ export default function CassetteScreen({
           </div>
 
           <p
-            className="text-base text-center text-white/90"
+            className="text-base text-center text-deep-rose font-bold"
             style={{ fontFamily: 'var(--font-caveat)' }}
           >
             {isPlaying
@@ -201,7 +199,7 @@ export default function CassetteScreen({
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-xs text-rose-300 bg-rose-950/40 px-3 py-1.5 rounded-lg border border-rose-500/30 text-center max-w-xs"
+              className="text-xs text-rose-600 bg-rose-100/70 px-3 py-1.5 rounded-lg border border-rose-300 text-center max-w-xs font-bold"
             >
               {audioError}
             </motion.p>

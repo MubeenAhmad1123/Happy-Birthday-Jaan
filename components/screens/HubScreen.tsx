@@ -90,7 +90,7 @@ export default function HubScreen({
 
   return (
     <ScreenShell
-      theme="dark"
+      theme="blush"
       showAmbient={true}
       contentClassName="justify-between py-2"
     >
@@ -110,22 +110,23 @@ export default function HubScreen({
         />
 
         <span
-          className="text-xs uppercase tracking-widest font-bold text-rose-400 mt-1"
+          className="text-xs uppercase tracking-widest font-bold text-rose-500 mt-1"
           style={{ fontFamily: 'var(--font-baloo)' }}
         >
           Special Surprises
         </span>
         <h1
-          className="heading-fluid leading-tight text-white mt-0.5"
+          className="heading-fluid leading-tight text-deep-rose mt-0.5"
           style={{
             fontFamily: 'var(--font-dancing)',
-            textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+            color: 'var(--deep-rose)',
+            textShadow: '0 2px 10px rgba(229,107,138,0.2)',
           }}
         >
           Kuch cheezein khol ke dekho
         </h1>
         <p
-          className="text-sm text-white/70 mt-0.5"
+          className="text-sm text-charcoal/80 mt-0.5"
           style={{ fontFamily: 'var(--font-caveat)' }}
         >
           Teeno cheezon ko ek ek karke tap karo:
@@ -134,7 +135,7 @@ export default function HubScreen({
 
       {/* 3 Large, Colourful Tappable Cards (~110-130px tall each) */}
       <div className="w-full max-w-sm flex flex-col gap-3.5 my-auto z-10 px-1">
-        {/* Card 1: Black Card with Rose Text (Memories) */}
+        {/* Card 1: Rose Card with White Text (Photo Memories) */}
         <motion.button
           initial={{ opacity: 0, x: -15 }}
           animate={{ opacity: 1, x: 0 }}
@@ -142,27 +143,27 @@ export default function HubScreen({
           whileTap={{ scale: 0.97 }}
           whileHover={{ scale: 1.02 }}
           onClick={() => openItem('camera')}
-          className="w-full min-h-[115px] p-4 rounded-3xl flex items-center justify-between cursor-pointer border text-left transition-all select-none"
+          className="w-full min-h-[110px] p-4 rounded-3xl flex items-center justify-between cursor-pointer border text-left transition-all select-none shadow-lg text-white"
           style={{
-            background: 'linear-gradient(135deg, #1E1A20 0%, #121014 100%)',
-            borderColor: 'rgba(229, 107, 138, 0.45)',
-            boxShadow: '0 10px 28px rgba(0,0,0,0.5)',
+            background: 'linear-gradient(135deg, #FF6B8B 0%, #E56B8A 50%, #B8405E 100%)',
+            borderColor: 'rgba(255, 255, 255, 0.4)',
+            boxShadow: '0 10px 28px rgba(184, 64, 94, 0.3)',
           }}
           aria-label="Open Photo Memories"
         >
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-black/50 border border-rose-500/30 flex items-center justify-center shrink-0 shadow-inner">
-              <CameraIcon size={28} color="var(--rose)" />
+            <div className="w-14 h-14 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0 shadow-inner">
+              <CameraIcon size={28} color="#FFFFFF" />
             </div>
             <div className="flex flex-col">
               <h3
-                className="text-xl font-bold text-rose-300"
+                className="text-xl font-bold text-white"
                 style={{ fontFamily: 'var(--font-baloo)' }}
               >
                 Photo Memories
               </h3>
               <p
-                className="text-sm text-white/75 mt-0.5"
+                className="text-sm text-white/90 mt-0.5"
                 style={{ fontFamily: 'var(--font-caveat)' }}
               >
                 Hamari 25 pyari tasveerein aur yaadein
@@ -172,19 +173,19 @@ export default function HubScreen({
           <div
             className={`w-8 h-8 rounded-full flex items-center justify-center border-2 shrink-0 ${
               openedItems.camera
-                ? 'border-emerald-400 bg-emerald-950/60 text-emerald-400'
-                : 'border-rose-400/40 text-rose-400/40'
+                ? 'border-white bg-white/30 text-white'
+                : 'border-white/50 text-white/50'
             }`}
           >
             {openedItems.camera ? (
-              <CheckIcon size={16} color="#34D399" />
+              <CheckIcon size={16} color="#FFFFFF" />
             ) : (
               <ArrowRightIcon size={14} color="currentColor" />
             )}
           </div>
         </motion.button>
 
-        {/* Card 2: Rose Card with White Text (The Letter) */}
+        {/* Card 2: White Paper Card with Rose Accents (The Letter) */}
         <motion.button
           initial={{ opacity: 0, x: 15 }}
           animate={{ opacity: 1, x: 0 }}
@@ -192,27 +193,25 @@ export default function HubScreen({
           whileTap={{ scale: 0.97 }}
           whileHover={{ scale: 1.02 }}
           onClick={() => openItem('letter')}
-          className="w-full min-h-[115px] p-4 rounded-3xl flex items-center justify-between cursor-pointer border text-left transition-all select-none"
+          className="w-full min-h-[110px] p-4 rounded-3xl flex items-center justify-between cursor-pointer border text-left transition-all select-none shadow-md bg-white border-rose-200"
           style={{
-            background: 'linear-gradient(135deg, #B8405E 0%, #E56B8A 100%)',
-            borderColor: 'rgba(255, 255, 255, 0.25)',
-            boxShadow: '0 10px 28px rgba(184,64,94,0.4)',
+            boxShadow: '0 8px 25px rgba(229,107,138,0.12)',
           }}
           aria-label="Open The Letter"
         >
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0 shadow-inner">
-              <LetterIcon size={28} color="#FFFFFF" />
+            <div className="w-14 h-14 rounded-2xl bg-rose-50 border border-rose-200 flex items-center justify-center shrink-0 shadow-inner">
+              <LetterIcon size={28} color="var(--deep-rose)" />
             </div>
             <div className="flex flex-col">
               <h3
-                className="text-xl font-bold text-white"
+                className="text-xl font-bold text-deep-rose"
                 style={{ fontFamily: 'var(--font-baloo)' }}
               >
                 The Letter
               </h3>
               <p
-                className="text-sm text-white/90 mt-0.5"
+                className="text-sm text-charcoal/80 mt-0.5"
                 style={{ fontFamily: 'var(--font-caveat)' }}
               >
                 Dil ki baat, sirf tumhare liye
@@ -222,19 +221,19 @@ export default function HubScreen({
           <div
             className={`w-8 h-8 rounded-full flex items-center justify-center border-2 shrink-0 ${
               openedItems.letter
-                ? 'border-white bg-white/30 text-white'
-                : 'border-white/50 text-white/50'
+                ? 'border-emerald-500 bg-emerald-50 text-emerald-600'
+                : 'border-rose-300 text-rose-300'
             }`}
           >
             {openedItems.letter ? (
-              <CheckIcon size={16} color="#FFFFFF" />
+              <CheckIcon size={16} color="#059669" />
             ) : (
               <ArrowRightIcon size={14} color="currentColor" />
             )}
           </div>
         </motion.button>
 
-        {/* Card 3: Blush Card with Black Text (Our Song) */}
+        {/* Card 3: Blush Card with Dark Charcoal Accents (Our Song) */}
         <motion.button
           initial={{ opacity: 0, x: -15 }}
           animate={{ opacity: 1, x: 0 }}
@@ -242,11 +241,11 @@ export default function HubScreen({
           whileTap={{ scale: 0.97 }}
           whileHover={{ scale: 1.02 }}
           onClick={() => openItem('cassette')}
-          className="w-full min-h-[115px] p-4 rounded-3xl flex items-center justify-between cursor-pointer border text-left transition-all select-none"
+          className="w-full min-h-[110px] p-4 rounded-3xl flex items-center justify-between cursor-pointer border text-left transition-all select-none shadow-md"
           style={{
             background: 'linear-gradient(135deg, #FFF8F5 0%, #F9D5DE 100%)',
-            borderColor: 'rgba(232, 194, 122, 0.4)',
-            boxShadow: '0 10px 28px rgba(0,0,0,0.3)',
+            borderColor: 'rgba(229, 107, 138, 0.35)',
+            boxShadow: '0 8px 25px rgba(229,107,138,0.12)',
           }}
           aria-label="Open Our Song"
         >
@@ -297,21 +296,16 @@ export default function HubScreen({
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.02 }}
               onClick={onProceedToReasons}
-              className="w-full min-h-[54px] rounded-2xl flex items-center justify-center gap-2.5 text-lg font-bold text-white shadow-2xl transition-all cursor-pointer border border-rose-500/40"
-              style={{
-                background: 'linear-gradient(135deg, #1E1A20 0%, #121014 100%)',
-                boxShadow: '0 0 24px rgba(229,107,138,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
-                fontFamily: 'var(--font-baloo)',
-              }}
+              className="btn-primary w-full flex items-center justify-center gap-2 shadow-2xl"
             >
-              <span>One last thing</span>
-              <ArrowRightIcon size={18} color="var(--rose)" />
+              <span>One last thing (25 Reasons)</span>
+              <ArrowRightIcon size={18} color="#FFFFFF" />
             </motion.button>
           ) : (
             <motion.p
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.7 }}
-              className="text-xs text-center text-white/50"
+              animate={{ opacity: 0.8 }}
+              className="text-xs text-center text-charcoal/70 font-medium"
               style={{ fontFamily: 'var(--font-caveat)' }}
             >
               Teeno surprises kholo toh aage ka rasta khulega ✨
