@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import ScreenShell from '@/components/ScreenShell'
+import { ArrowLeftIcon, LetterIcon, FlowerIcon, HeartIcon } from '@/components/Icons'
 
 interface LetterScreenProps {
   letterText: string
@@ -12,6 +14,7 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
   const [isOpen, setIsOpen] = useState(false)
   const [displayedText, setDisplayedText] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const cardScrollRef = useRef<HTMLDivElement>(null)
   const typingTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   // Start typewriter when envelope opens
@@ -20,6 +23,7 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
 
     let currentIndex = 0
     setIsTyping(true)
+    setDisplayedText('')
 
     typingTimerRef.current = setInterval(() => {
       currentIndex += 2
@@ -29,15 +33,19 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
         if (typingTimerRef.current) clearInterval(typingTimerRef.current)
       } else {
         setDisplayedText(letterText.slice(0, currentIndex))
+        // Auto scroll down inside paper card
+        if (cardScrollRef.current) {
+          cardScrollRef.current.scrollTop = cardScrollRef.current.scrollHeight
+        }
       }
-    }, 28)
+    }, 24)
 
     return () => {
       if (typingTimerRef.current) clearInterval(typingTimerRef.current)
     }
   }, [isOpen, letterText])
 
-  // Tap anywhere on paper to skip typewriter
+  // Tap anywhere on paper to instantly skip typewriter
   const handleSkipTyping = () => {
     if (isTyping) {
       if (typingTimerRef.current) clearInterval(typingTimerRef.current)
@@ -47,28 +55,35 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
   }
 
   return (
-    <div
-      className="screen relative p-4 flex flex-col items-center justify-center overflow-hidden"
-      style={{
-        background: 'linear-gradient(160deg, #FFF8F5 0%, #F9D5DE 100%)',
-      }}
+    <ScreenShell
+      theme="charcoal"
+      showAmbient={true}
+      ambientVariant="dark"
+      contentClassName="justify-between"
     >
       {/* Top Header */}
-      <div className="w-full max-w-sm flex items-center justify-between mb-4 z-20">
+      <div className="w-full flex items-center justify-between z-20 pt-2 mb-2">
         <motion.button
           whileTap={{ scale: 0.94 }}
           onClick={onBack}
-          className="sticker px-3 py-1.5 text-sm font-bold flex items-center gap-1 bg-white/90"
-          style={{ fontFamily: 'var(--font-baloo)', color: 'var(--deep-rose)' }}
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 hover:bg-white/15 text-rose-300 border border-white/10 backdrop-blur-md"
+          style={{ fontFamily: 'var(--font-baloo)' }}
+          aria-label="Wapas Hub"
         >
-          ← Wapas
+          <ArrowLeftIcon size={16} color="currentColor" />
+          <span>Wapas</span>
         </motion.button>
-        <span
-          className="text-lg font-bold"
-          style={{ fontFamily: 'var(--font-baloo)', color: 'var(--deep-rose)' }}
-        >
-          Khat ✉️
-        </span>
+
+        <div className="flex items-center gap-2">
+          <LetterIcon size={18} color="var(--rose)" />
+          <span
+            className="text-base font-bold text-white tracking-wide"
+            style={{ fontFamily: 'var(--font-baloo)' }}
+          >
+            Khat
+          </span>
+        </div>
+
         <div className="w-12" />
       </div>
 
@@ -77,25 +92,40 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
           /* Sealed Envelope View */
           <motion.div
             key="envelope-closed"
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.92, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.85, opacity: 0 }}
-            className="flex flex-col items-center gap-6 my-auto max-w-xs text-center cursor-pointer select-none"
+            exit={{ scale: 0.88, opacity: 0 }}
+            transition={{ duration: 0.35 }}
+            className="flex flex-col items-center gap-6 my-auto w-full max-w-xs text-center cursor-pointer select-none"
             onClick={() => setIsOpen(true)}
           >
-            {/* SVG Envelope */}
+            {/* SVG Envelope with Wax Seal */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
-              className="relative w-64 h-48 drop-shadow-2xl"
+              transition={{ repeat: Infinity, duration: 2.6, ease: 'easeInOut' }}
+              className="relative w-72 h-52 drop-shadow-2xl"
             >
               <svg viewBox="0 0 240 180" width="100%" height="100%">
                 {/* Envelope Base */}
-                <rect x="10" y="10" width="220" height="160" rx="14" fill="#FFFFFF" stroke="#E56B8A" strokeWidth="3" />
+                <rect
+                  x="10"
+                  y="10"
+                  width="220"
+                  height="160"
+                  rx="16"
+                  fill="#FFF8F5"
+                  stroke="#E56B8A"
+                  strokeWidth="2.5"
+                />
                 {/* Flap fold lines */}
-                <path d="M10 10 L120 100 L230 10" stroke="#F9D5DE" strokeWidth="3" fill="#FFF0F5" />
-                <path d="M10 170 L95 90" stroke="#F9D5DE" strokeWidth="2.5" />
-                <path d="M230 170 L145 90" stroke="#F9D5DE" strokeWidth="2.5" />
+                <path
+                  d="M10 10 L120 100 L230 10"
+                  stroke="#F9D5DE"
+                  strokeWidth="2.5"
+                  fill="#FFF0F4"
+                />
+                <path d="M10 170 L95 90" stroke="#F9D5DE" strokeWidth="2" />
+                <path d="M230 170 L145 90" stroke="#F9D5DE" strokeWidth="2" />
                 {/* Wax Seal with Heart */}
                 <circle cx="120" cy="98" r="22" fill="#E56B8A" />
                 <circle cx="120" cy="98" r="18" fill="#B8405E" />
@@ -106,80 +136,77 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
               </svg>
             </motion.div>
 
-            <div>
+            <div className="flex flex-col items-center gap-1.5">
               <h2
-                className="text-2xl font-bold"
-                style={{ fontFamily: 'var(--font-dancing)', color: 'var(--deep-rose)' }}
+                className="text-2xl sm:text-3xl font-bold text-white"
+                style={{
+                  fontFamily: 'var(--font-dancing)',
+                  textShadow: '0 2px 10px rgba(229,107,138,0.4)',
+                }}
               >
-                Maria ke naam… 🤍
+                Maria ke naam…
               </h2>
               <p
-                className="text-sm opacity-70 mt-1"
-                style={{ fontFamily: 'var(--font-caveat)', color: 'var(--charcoal)' }}
+                className="text-sm text-rose-300 font-medium"
+                style={{ fontFamily: 'var(--font-caveat)' }}
               >
                 (Khat kholne ke liye tap karo)
               </p>
             </div>
           </motion.div>
         ) : (
-          /* Opened Letter View */
+          /* Opened Letter Paper Card (Max 70dvh with inner scroll) */
           <motion.div
             key="letter-open"
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            initial={{ opacity: 0, y: 25, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.35 }}
             onClick={handleSkipTyping}
-            className="w-full max-w-sm rounded-3xl p-6 shadow-2xl relative border-4 flex flex-col select-none my-auto max-h-[75dvh] overflow-y-auto"
+            className="w-full max-w-[440px] rounded-3xl p-6 shadow-2xl relative border-2 flex flex-col select-none my-auto max-h-[70dvh] overflow-hidden"
             style={{
               background: '#FFFDF9',
-              borderColor: '#F9D5DE',
-              boxShadow: '0 12px 36px rgba(229,107,138,0.22)',
+              borderColor: 'rgba(232, 194, 122, 0.4)',
+              boxShadow: '0 16px 48px rgba(0,0,0,0.5)',
             }}
           >
-            {/* Paper texture lines */}
-            <div
-              className="absolute inset-0 pointer-events-none rounded-3xl opacity-20"
-              style={{
-                backgroundImage:
-                  'repeating-linear-gradient(transparent, transparent 31px, #E56B8A 31px, #E56B8A 32px)',
-                backgroundPosition: '0 40px',
-              }}
-            />
-
-            {/* Stamp on top right */}
-            <div className="absolute top-4 right-4 sticker px-2 py-1 bg-rose-50 border-rose-300 transform rotate-3 flex items-center gap-1">
-              <span className="text-xs">🌸</span>
-              <span
-                className="text-[10px] font-bold text-rose-500 uppercase"
-                style={{ fontFamily: 'var(--font-baloo)' }}
-              >
-                Nov 2026
-              </span>
+            {/* Corner Decorative Flower SVGs */}
+            <div className="absolute top-3 left-3 opacity-30 pointer-events-none">
+              <FlowerIcon size={22} color="var(--rose)" />
+            </div>
+            <div className="absolute top-3 right-3 opacity-30 pointer-events-none">
+              <HeartIcon size={20} color="var(--rose)" />
             </div>
 
-            {/* Letter Content with Typewriter */}
-            <div className="relative z-10 pt-2 pb-4">
+            {/* Scrollable Letter Body */}
+            <div
+              ref={cardScrollRef}
+              className="relative z-10 w-full overflow-y-auto pr-1 text-left"
+              style={{
+                scrollBehavior: 'smooth',
+                maxHeight: 'calc(70dvh - 56px)',
+              }}
+            >
               <p
-                className="text-xl sm:text-2xl leading-relaxed whitespace-pre-wrap"
+                className="whitespace-pre-wrap leading-[1.7] text-[#1E1A20]"
                 style={{
                   fontFamily: 'var(--font-caveat)',
-                  color: 'var(--charcoal)',
+                  fontSize: 'clamp(18px, 4.8vw, 20px)',
                 }}
               >
                 {displayedText}
-                {isTyping && <span className="animate-pulse text-rose-500">|</span>}
+                {isTyping && <span className="animate-pulse text-rose-500 font-bold">|</span>}
               </p>
 
-              {/* Sign off */}
+              {/* Romantic Sign-off in Dancing Script */}
               {!isTyping && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="mt-6 text-right"
+                  className="mt-6 pt-3 border-t border-rose-200/50 text-right"
                 >
                   <p
-                    className="text-xl font-bold"
+                    className="text-2xl font-bold"
                     style={{
                       fontFamily: 'var(--font-dancing)',
                       color: 'var(--deep-rose)',
@@ -188,7 +215,7 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
                     Tumhara Ganda Bachha 🤍
                   </p>
                   <p
-                    className="text-sm opacity-80"
+                    className="text-base font-medium opacity-80"
                     style={{ fontFamily: 'var(--font-caveat)', color: 'var(--rose)' }}
                   >
                     (Mera Shehzada)
@@ -197,21 +224,20 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
               )}
             </div>
 
-            {/* Skip hint */}
+            {/* Tap to skip hint */}
             {isTyping && (
-              <div className="text-center mt-auto pt-2">
+              <div className="text-center pt-2 mt-auto border-t border-rose-100">
                 <span
-                  className="text-xs opacity-50"
+                  className="text-xs text-rose-400 font-medium"
                   style={{ fontFamily: 'var(--font-caveat)' }}
                 >
-                  (Tap karo to skip typewriter)
+                  (Tap anywhere to skip typewriter)
                 </span>
               </div>
             )}
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </ScreenShell>
   )
 }
-

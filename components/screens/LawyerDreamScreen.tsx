@@ -2,7 +2,9 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import CharacterSticker from '@/components/CharacterSticker'
+import ScreenShell from '@/components/ScreenShell'
+import AnimatedSticker from '@/components/AnimatedSticker'
+import { ArrowLeftIcon, ArrowRightIcon, ScaleIcon, SparkleIcon } from '@/components/Icons'
 
 interface LawyerDreamScreenProps {
   onNext: () => void
@@ -14,48 +16,48 @@ export default function LawyerDreamScreen({
   onBack,
 }: LawyerDreamScreenProps) {
   return (
-    <div
-      className="screen relative p-4 sm:p-6 flex flex-col justify-between overflow-y-auto"
-      style={{
-        background: 'linear-gradient(160deg, #FFFDF9 0%, #FFF5F7 60%, #F9D5DE 100%)',
-      }}
+    <ScreenShell
+      theme="dark"
+      showAmbient={true}
+      contentClassName="justify-between py-2"
     >
       {/* Top Header */}
       <div className="w-full max-w-sm mx-auto flex items-center justify-between z-10 pt-1">
         <motion.button
           whileTap={{ scale: 0.94 }}
           onClick={onBack}
-          className="sticker px-3 py-1 text-xs font-bold flex items-center gap-1 bg-white/95"
-          style={{ fontFamily: 'var(--font-baloo)', color: 'var(--deep-rose)' }}
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 hover:bg-white/15 text-rose-300 border border-white/10 backdrop-blur-md"
+          style={{ fontFamily: 'var(--font-baloo)' }}
+          aria-label="Wapas reasons pe jao"
         >
-          ← Wapas
+          <ArrowLeftIcon size={16} color="currentColor" />
+          <span>Wapas</span>
         </motion.button>
-        <div className="flex items-center gap-1.5 sticker px-3 py-1 bg-white/95">
-          <span className="text-sm">⚖️</span>
+
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-gold/30">
+          <ScaleIcon size={16} color="#E8C27A" />
           <span
-            className="text-xs font-bold tracking-wider uppercase text-rose-600"
-            style={{ fontFamily: 'var(--font-baloo)' }}
+            className="text-xs font-bold tracking-wider uppercase text-gold"
+            style={{ fontFamily: 'var(--font-baloo)', color: 'var(--soft-gold)' }}
           >
             Tumhara Khwab
           </span>
         </div>
+
         <div className="w-12" />
       </div>
 
       {/* Main Content */}
-      <div className="w-full max-w-sm mx-auto flex flex-col items-center my-auto gap-4 text-center py-2">
-        {/* Lawyer Character Sticker */}
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, type: 'spring' }}
-          className="relative"
-        >
-          <div className="absolute inset-0 bg-amber-200/40 rounded-full blur-2xl transform scale-125 pointer-events-none" />
-          <CharacterSticker type="dudu-bubu-lawyer" size={130} />
-        </motion.div>
+      <div className="w-full max-w-sm mx-auto flex flex-col items-center my-auto gap-4 text-center py-2 z-10">
+        {/* Animated Lawyer Sticker */}
+        <AnimatedSticker
+          name="dudu-bubu-lawyer"
+          fallbackType="dudu-bubu-lawyer"
+          size={135}
+          animation="float"
+        />
 
-        {/* Photos 14 & 15 Side-by-Side Polaroids */}
+        {/* Photos 14 & 15 Side-by-Side Polaroids with contain backing */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,8 +65,8 @@ export default function LawyerDreamScreen({
           className="grid grid-cols-2 gap-3 w-full"
         >
           {/* Photo 14 (Library) */}
-          <div className="sticker p-2 bg-white shadow-md rounded-2xl transform -rotate-2 hover:rotate-0 transition-transform">
-            <div className="w-full h-32 rounded-xl overflow-hidden bg-rose-50 border border-rose-100 flex items-center justify-center">
+          <div className="p-2.5 bg-[#1E1A20] border border-rose-500/30 shadow-xl rounded-2xl transform -rotate-2 hover:rotate-0 transition-transform">
+            <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/photos/14"
@@ -76,16 +78,16 @@ export default function LawyerDreamScreen({
               />
             </div>
             <p
-              className="text-[11px] text-rose-600 font-bold mt-1 text-center"
+              className="text-xs text-rose-300 font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Law Library 📚
+              Law Library
             </p>
           </div>
 
           {/* Photo 15 (Courthouse) */}
-          <div className="sticker p-2 bg-white shadow-md rounded-2xl transform rotate-2 hover:rotate-0 transition-transform">
-            <div className="w-full h-32 rounded-xl overflow-hidden bg-rose-50 border border-rose-100 flex items-center justify-center">
+          <div className="p-2.5 bg-[#1E1A20] border border-rose-500/30 shadow-xl rounded-2xl transform rotate-2 hover:rotate-0 transition-transform">
+            <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/photos/15"
@@ -97,58 +99,64 @@ export default function LawyerDreamScreen({
               />
             </div>
             <p
-              className="text-[11px] text-rose-600 font-bold mt-1 text-center"
+              className="text-xs text-rose-300 font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Courthouse Steps 🏛️
+              The Courthouse
             </p>
           </div>
         </motion.div>
 
-        {/* Message Card */}
+        {/* Inspiring Tribute Text */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.4 }}
-          className="sticker p-4 bg-white/95 shadow-lg border-rose-300 w-full rounded-2xl"
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="flex flex-col gap-1.5 px-2"
         >
           <h2
-            className="text-2xl font-heading mb-1.5"
-            style={{ fontFamily: 'var(--font-dancing)', color: 'var(--deep-rose)' }}
-          >
-            Advocate Maria 🤍
-          </h2>
-
-          <p
-            className="text-base sm:text-lg leading-relaxed font-body"
+            className="heading-fluid leading-tight text-white"
             style={{
-              fontFamily: 'var(--font-caveat)',
-              color: 'var(--charcoal)',
+              fontFamily: 'var(--font-dancing)',
+              textShadow: '0 2px 14px rgba(229,107,138,0.4)',
             }}
           >
-            Tumhara khwab abhi bhi zinda hai, Maria. Ek din tum bohot bari wakeel banogi, aur main tumhara sab se pehla supporter hounga.
-          </p>
-
+            Advocate Maria
+          </h2>
           <p
-            className="text-xs opacity-75 mt-2 text-rose-500 font-bold"
+            className="text-base sm:text-lg leading-relaxed text-white/90"
+            style={{ fontFamily: 'var(--font-caveat)' }}
+          >
+            Yeh sirf ek khwab nahi hai, yeh tumhara mustaqbil hai. Tumhari mehnat,
+            tumhara jazba aur tumhara honsla… Inshallah ek din tum court mein
+            khari ho kar sachai ke liye laro gi.
+          </p>
+          <span
+            className="text-xs font-bold tracking-wider text-rose-400 mt-0.5"
             style={{ fontFamily: 'var(--font-baloo)' }}
           >
-            Hamesha tumhare saath, inshallah ⚖️🤍
-          </p>
+            MUJHE TUM PE BOHOT NAAZ HAI 🤍
+          </span>
         </motion.div>
       </div>
 
-      {/* Bottom Button to proceed to Freedom Screen */}
-      <div className="w-full max-w-sm mx-auto mb-1">
+      {/* Bottom Button to Next Screen */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.45 }}
+        className="w-full max-w-sm mx-auto z-10 pb-2 px-1"
+      >
         <motion.button
           whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.02 }}
           onClick={onNext}
-          className="btn-primary w-full text-base shadow-md flex items-center justify-center gap-1.5 py-2.5"
+          className="btn-primary w-full flex items-center justify-center gap-2 shadow-xl"
         >
-          <span>Azaadi 🕊️</span>
-          <span>→</span>
+          <span>Azaadi ki roshni dekho</span>
+          <ArrowRightIcon size={18} color="#FFFFFF" />
         </motion.button>
-      </div>
-    </div>
+      </motion.div>
+    </ScreenShell>
   )
 }

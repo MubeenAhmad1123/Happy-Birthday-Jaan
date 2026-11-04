@@ -3,7 +3,9 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
-import CharacterSticker from '@/components/CharacterSticker'
+import ScreenShell from '@/components/ScreenShell'
+import AnimatedSticker from '@/components/AnimatedSticker'
+import { HeartIcon, SparkleIcon, HeartOutlineIcon } from '@/components/Icons'
 
 interface OpenerScreenProps {
   onYes: () => void
@@ -17,9 +19,9 @@ export default function OpenerScreen({ onYes }: OpenerScreenProps) {
   const handleNoClick = () => {
     if (dodgeCount < 3) {
       const angles = [
-        { x: -50, y: -20 },
-        { x: 50, y: 30 },
-        { x: -40, y: 40 },
+        { x: -50, y: -25 },
+        { x: 50, y: 35 },
+        { x: -45, y: 40 },
       ]
       const nextOffset = angles[dodgeCount % angles.length]
       setDodgeOffset(nextOffset)
@@ -35,10 +37,10 @@ export default function OpenerScreen({ onYes }: OpenerScreenProps) {
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#E56B8A', '#F9D5DE', '#FFF8F5', '#FFB703', '#FFFFFF'],
+        colors: ['#E56B8A', '#F9D5DE', '#FFF8F5', '#E8C27A', '#FFFFFF'],
       })
-    } catch (err) {
-      console.warn('Confetti error:', err)
+    } catch {
+      // ignore
     }
     setTimeout(() => {
       onYes()
@@ -52,121 +54,123 @@ export default function OpenerScreen({ onYes }: OpenerScreenProps) {
   }
 
   return (
-    <div
-      className="screen"
-      style={{
-        background: 'linear-gradient(160deg, #FFF8F5 0%, #F9D5DE 100%)',
-      }}
-    >
-      <AnimatePresence mode="wait">
-        {!showSadBear ? (
-          <motion.div
-            key="opener-main"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.4 }}
-            className="flex flex-col items-center gap-6 px-6 max-w-sm text-center"
-          >
-            {/* Panda peeking from box */}
+    <ScreenShell theme="dark" showAmbient={true}>
+      <div className="w-full flex flex-col items-center justify-center my-auto py-6">
+        <AnimatePresence mode="wait">
+          {!showSadBear ? (
             <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+              key="opener-main"
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.92 }}
+              transition={{ duration: 0.35 }}
+              className="flex flex-col items-center gap-6 w-full max-w-sm text-center"
             >
-              <CharacterSticker type="dudu-bubu-box" size={160} />
+              {/* Panda peeking from box */}
+              <AnimatedSticker
+                name="dudu-bubu-box"
+                fallbackType="dudu-bubu-box"
+                size={160}
+                priority={true}
+                animation="float"
+              />
+
+              {/* Romantic Question */}
+              <div className="flex flex-col items-center gap-2 px-2">
+                <h1
+                  className="heading-fluid leading-tight text-white"
+                  style={{
+                    fontFamily: 'var(--font-dancing)',
+                    textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+                  }}
+                >
+                  Maine tumhare liye kuch special banaya hai… dekhogi?
+                </h1>
+
+                <p
+                  className="body-fluid font-medium text-white/80 mt-1"
+                  style={{ fontFamily: 'var(--font-caveat)' }}
+                >
+                  Sirf tumhare liye, meri Jaan
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="relative flex items-center justify-center gap-4 mt-2 w-full min-h-[64px]">
+                {/* YES Button */}
+                <motion.button
+                  whileTap={{ scale: 0.92 }}
+                  whileHover={{ scale: 1.04 }}
+                  onClick={handleYesClick}
+                  className="btn-primary min-w-[140px] shadow-xl flex items-center justify-center gap-2 text-lg font-bold"
+                  aria-label="Yes, dekhna hai"
+                >
+                  <HeartIcon size={20} color="#FFFFFF" />
+                  <span>YES!</span>
+                </motion.button>
+
+                {/* NO Button with playful dodge */}
+                <motion.button
+                  whileTap={{ scale: 0.92 }}
+                  animate={{ x: dodgeOffset.x, y: dodgeOffset.y }}
+                  transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+                  onClick={handleNoClick}
+                  className="btn-secondary min-w-[105px] flex items-center justify-center gap-1.5 opacity-80"
+                  aria-label="No, nahi dekhna"
+                >
+                  <span>NO</span>
+                </motion.button>
+              </div>
             </motion.div>
-
-            {/* Question */}
-            <h1
-              className="text-3xl sm:text-4xl leading-snug px-2"
-              style={{
-                fontFamily: 'var(--font-dancing)',
-                color: 'var(--deep-rose)',
-              }}
+          ) : (
+            <motion.div
+              key="opener-sad"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.35 }}
+              className="flex flex-col items-center gap-6 w-full max-w-sm text-center"
             >
-              Maine tumhare liye kuch special banaya hai… dekhogi? 🥺
-            </h1>
+              {/* Sad Bear */}
+              <AnimatedSticker
+                name="bubu-sad"
+                fallbackType="bubu-sad"
+                size={165}
+                priority={true}
+                animation="bounce"
+              />
 
-            <p
-              className="text-lg opacity-80"
-              style={{
-                fontFamily: 'var(--font-caveat)',
-                color: 'var(--charcoal)',
-              }}
-            >
-              Sirf tumhare liye, meri Jaan 🤍
-            </p>
+              <div className="flex flex-col items-center gap-2 px-2">
+                <h2
+                  className="heading-fluid leading-tight text-white"
+                  style={{
+                    fontFamily: 'var(--font-dancing)',
+                    textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+                  }}
+                >
+                  Kyun click kiya no?
+                </h2>
 
-            {/* Buttons */}
-            <div className="relative flex items-center justify-center gap-4 mt-2 w-full min-h-[70px]">
-              {/* YES Button */}
+                <p
+                  className="body-fluid text-white/80"
+                  style={{ fontFamily: 'var(--font-caveat)' }}
+                >
+                  Main kitne dino se tumhare liye yeh bana raha tha… ab YES bolo!
+                </p>
+              </div>
+
               <motion.button
                 whileTap={{ scale: 0.94 }}
-                whileHover={{ scale: 1.05 }}
-                onClick={handleYesClick}
-                className="btn-primary min-w-[130px] text-lg font-bold shadow-lg"
+                onClick={handleTryAgain}
+                className="btn-primary px-8 text-lg font-bold flex items-center justify-center gap-2 shadow-xl"
               >
-                YES! 💕
+                <HeartIcon size={20} color="#FFFFFF" />
+                <span>TRY AGAIN</span>
               </motion.button>
-
-              {/* NO Button with playful dodge */}
-              <motion.button
-                whileTap={{ scale: 0.94 }}
-                animate={{ x: dodgeOffset.x, y: dodgeOffset.y }}
-                transition={{ type: 'spring', stiffness: 350, damping: 20 }}
-                onClick={handleNoClick}
-                className="btn-secondary min-w-[100px] text-base opacity-90"
-              >
-                NO 🙈
-              </motion.button>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="opener-sad"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="flex flex-col items-center gap-6 px-6 max-w-sm text-center"
-          >
-            <motion.div
-              animate={{ rotate: [-2, 2, -2] }}
-              transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-            >
-              <CharacterSticker type="bubu-sad" size={170} />
             </motion.div>
-
-            <h2
-              className="text-3xl leading-snug"
-              style={{
-                fontFamily: 'var(--font-dancing)',
-                color: 'var(--deep-rose)',
-              }}
-            >
-              Kyun click kiya no? 😭
-            </h2>
-
-            <p
-              className="text-xl"
-              style={{
-                fontFamily: 'var(--font-caveat)',
-                color: 'var(--charcoal)',
-              }}
-            >
-              Main kitne dino se tumhare liye yeh bana raha tha… ab YES bolo! 🥺🤍
-            </p>
-
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={handleTryAgain}
-              className="btn-primary mt-2 text-lg px-8"
-            >
-              TRY AGAIN 🤍
-            </motion.button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+          )}
+        </AnimatePresence>
+      </div>
+    </ScreenShell>
   )
 }
-

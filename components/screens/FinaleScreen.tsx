@@ -3,7 +3,9 @@
 import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import confetti from 'canvas-confetti'
-import CharacterSticker from '@/components/CharacterSticker'
+import ScreenShell from '@/components/ScreenShell'
+import AnimatedSticker from '@/components/AnimatedSticker'
+import { HeartIcon } from '@/components/Icons'
 
 interface FinaleScreenProps {
   finalMessage: string
@@ -19,10 +21,10 @@ export default function FinaleScreen({
   // Confetti shower on entrance
   useEffect(() => {
     try {
-      const count = 200
+      const count = 180
       const defaults = {
-        origin: { y: 0.7 },
-        colors: ['#E56B8A', '#F9D5DE', '#FFF8F5', '#FFB703', '#FFFFFF'],
+        origin: { y: 0.65 },
+        colors: ['#E56B8A', '#F9D5DE', '#FFF8F5', '#E8C27A', '#FFFFFF'],
       }
 
       function fire(particleRatio: number, opts: confetti.Options) {
@@ -46,20 +48,17 @@ export default function FinaleScreen({
   const tiles = ['H', 'A', 'P', 'P', 'Y', 'B', 'I', 'R', 'T', 'H', 'D', 'A', 'Y']
 
   return (
-    <div
-      className="screen relative p-6 flex flex-col items-center justify-between overflow-hidden"
-      style={{
-        backgroundColor: '#FFF5F7',
-        backgroundImage: 'radial-gradient(#F9D5DE 2px, transparent 2px)',
-        backgroundSize: '24px 24px',
-      }}
+    <ScreenShell
+      theme="dark"
+      showAmbient={true}
+      contentClassName="justify-between py-3"
     >
       {/* Top: Letter Tiles */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="flex flex-col items-center gap-2 mt-2"
+        transition={{ duration: 0.5 }}
+        className="flex flex-col items-center gap-2 mt-1 z-10 w-full"
       >
         <div className="flex flex-wrap justify-center gap-1.5 max-w-xs">
           {tiles.map((letter, i) => (
@@ -67,8 +66,8 @@ export default function FinaleScreen({
               key={i}
               initial={{ scale: 0, rotate: -20 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: i * 0.04, type: 'spring' }}
-              className="w-7 h-8 rounded-lg bg-white border-2 border-rose-300 shadow-sm flex items-center justify-center font-bold text-base text-rose-600 select-none"
+              transition={{ delay: i * 0.03, type: 'spring' }}
+              className="w-7 h-8 rounded-lg bg-[#1E1A20] border border-rose-500/40 shadow-md flex items-center justify-center font-bold text-sm text-rose-300 select-none"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
               {letter}
@@ -79,40 +78,44 @@ export default function FinaleScreen({
         <motion.h2
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="text-3xl font-heading text-rose-600 mt-1"
-          style={{ fontFamily: 'var(--font-dancing)', color: 'var(--deep-rose)' }}
+          transition={{ delay: 0.45 }}
+          className="heading-fluid leading-tight text-white mt-1"
+          style={{
+            fontFamily: 'var(--font-dancing)',
+            textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+          }}
         >
-          Maria 🤍
+          Maria
         </motion.h2>
       </motion.div>
 
-      {/* Center Dudu-Bubu Hugging with Bouquet */}
+      {/* Center Dudu-Bubu Hugging */}
       <motion.div
-        initial={{ scale: 0.85, opacity: 0 }}
+        initial={{ scale: 0.88, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.4, type: 'spring' }}
-        className="flex flex-col items-center my-auto"
+        transition={{ delay: 0.35, type: 'spring' }}
+        className="flex flex-col items-center my-auto z-10 w-full max-w-sm"
       >
-        <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ repeat: Infinity, duration: 2.8, ease: 'easeInOut' }}
-        >
-          <CharacterSticker type="dudu-bubu-hug" size={170} />
-        </motion.div>
+        <AnimatedSticker
+          name="dudu-bubu-hug"
+          fallbackType="dudu-bubu-hug"
+          size={165}
+          animation="float"
+        />
 
         {/* Message Card */}
         <div
-          className="sticker p-5 max-w-sm bg-white/95 shadow-xl text-center mt-3 border-rose-300"
+          className="w-full p-5 rounded-3xl border text-center mt-3 shadow-2xl relative"
           style={{
-            boxShadow: '0 8px 30px rgba(229,107,138,0.25)',
+            background: 'linear-gradient(135deg, #1E1A20 0%, #151218 100%)',
+            borderColor: 'rgba(232, 194, 122, 0.4)',
+            boxShadow: '0 12px 36px rgba(0,0,0,0.6)',
           }}
         >
           <p
-            className="text-xl sm:text-2xl leading-relaxed"
+            className="text-xl sm:text-2xl leading-relaxed text-white/95"
             style={{
               fontFamily: 'var(--font-caveat)',
-              color: 'var(--charcoal)',
             }}
           >
             {finalMessage ||
@@ -125,13 +128,13 @@ export default function FinaleScreen({
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        className="w-full max-w-sm flex gap-3 mb-3"
+        transition={{ delay: 0.6 }}
+        className="w-full max-w-sm flex gap-3 mb-2 z-10 px-1"
       >
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={onReplay}
-          className="btn-primary flex-1 text-base shadow-md flex items-center justify-center gap-1.5"
+          className="btn-primary flex-1 text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-xl"
         >
           <span>Replay ↺</span>
         </motion.button>
@@ -139,12 +142,12 @@ export default function FinaleScreen({
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={onBackToHub}
-          className="btn-secondary flex-1 text-base shadow-md flex items-center justify-center gap-1.5"
+          className="btn-secondary flex-1 text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-xl"
         >
-          <span>Wapas Hub 🤍</span>
+          <HeartIcon size={16} color="var(--rose)" />
+          <span>Wapas Hub</span>
         </motion.button>
       </motion.div>
-    </div>
+    </ScreenShell>
   )
 }
-

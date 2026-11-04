@@ -93,7 +93,7 @@ export async function GET(req: NextRequest) {
           })
         )
 
-        let songUrl = ''
+        let songUrl = '/api/audio'
         if (content.songPath) {
           songUrl = await signedUrl(content.songPath)
         } else if (content.songUrl) {
@@ -106,9 +106,9 @@ export async function GET(req: NextRequest) {
           gateHint: content.gateHint ?? DEFAULT_CONTENT.gateHint,
           songTitle: content.songTitle ?? DEFAULT_CONTENT.songTitle,
           songUrl,
-          reasons,
+          reasons: reasons && reasons.length >= 25 ? reasons : DEFAULT_CONTENT.reasons,
           timeline,
-          photos: photos.length > 0 ? photos : DEFAULT_CONTENT.photos,
+          photos: photos.length >= 25 ? photos : DEFAULT_CONTENT.photos,
         })
       }
     } catch (err) {

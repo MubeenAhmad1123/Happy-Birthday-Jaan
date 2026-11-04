@@ -1,156 +1,224 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import ScreenShell from '@/components/ScreenShell'
 import { PhotoItem } from '@/lib/contentData'
 import CharacterSticker from '@/components/CharacterSticker'
+import { ArrowLeftIcon, ArrowRightIcon, CameraIcon } from '@/components/Icons'
 
 interface CameraScreenProps {
   photos: PhotoItem[]
   onBack: () => void
+  onRefreshContent?: () => Promise<void>
 }
 
-export default function CameraScreen({ photos, onBack }: CameraScreenProps) {
+export default function CameraScreen({
+  photos,
+  onBack,
+  onRefreshContent,
+}: CameraScreenProps) {
   const [activeIndex, setActiveIndex] = useState(0)
-  const currentPhoto = photos[activeIndex] || photos[0]
+  const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({})
+  const thumbnailStripRef = useRef<HTMLDivElement>(null)
 
-  const backgroundColors = [
-    '#FFF0F5',
-    '#FFF5F0',
-    '#F0F8FF',
-    '#FDF2F4',
-    '#FFF9E6',
-    '#F5F0FF',
-  ]
-  const currentBg = backgroundColors[activeIndex % backgroundColors.length]
+  // Ensure we always have an array of 25 items
+  const safePhotos = photos && photos.length > 0 ? photos : []
+  const totalPhotos = safePhotos.length
+  const currentPhoto = safePhotos[activeIndex] || safePhotos[0] || {
+    url: '/api/photos/01',
+    caption: 'Hamari pyari yaadein 🤍',
+  }
+
+  // Preload next 2 photos
+  useEffect(() => {
+    if (totalPhotos <= 1) return
+    const next1 = safePhotos[(activeIndex + 1) % totalPhotos]?.url
+    const next2 = safePhotos[(activeIndex + 2) % totalPhotos]?.url
+    if (next1) {
+      const img1 = new Image()
+      img1.src = next1
+    }
+    if (next2) {
+      const img2 = new Image()
+      img2.src = next2
+    }
+  }, [activeIndex, safePhotos, totalPhotos])
+
+  // Scroll active thumbnail into center of film strip
+  useEffect(() => {
+    if (!thumbnailStripRef.current) return
+    const activeThumb = thumbnailStripRef.current.children[activeIndex] as HTMLElement
+    if (activeThumb) {
+      activeThumb.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      })
+    }
+  }, [activeIndex])
+
+  const prevPhoto = () => {
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : totalPhotos - 1))
+  }
+
+  const nextPhoto = () => {
+    setActiveIndex((prev) => (prev < totalPhotos - 1 ? prev + 1 : 0))
+  }
+
+  const handleImageError = (index: number) => {
+    setImgErrors((prev) => ({ ...prev, [index]: true }))
+    if (onRefreshContent) {
+      onRefreshContent().catch(() => {})
+    }
+  }
 
   return (
-    <div
-      className="screen relative overflow-hidden transition-colors duration-700 p-4"
-      style={{ backgroundColor: currentBg }}
+    <ScreenShell
+      theme="dark"
+      showAmbient={false}
+      className="p-0"
+      contentClassName="h-full justify-between max-w-[480px] px-3 py-2"
     >
-      {/* Soft blurred background ambient glow */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-20 filter blur-3xl transition-all duration-700"
-        style={{
-          background: `radial-gradient(circle at center, var(--rose) 0%, transparent 70%)`,
-        }}
-      />
+      {/* Blurred background copy of the current photo (colour-tinted) */}
+      {currentPhoto.url && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-25 z-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={currentPhoto.url}
+            alt=""
+            className="w-full h-full object-cover filter blur-3xl scale-125 transform transition-all duration-700"
+          />
+          <div className="absolute inset-0 bg-ink-black/60" />
+        </div>
+      )}
 
       {/* Top Bar */}
-      <div className="w-full max-w-sm flex items-center justify-between z-10 pt-2 mb-3">
+      <div className="w-full flex items-center justify-between z-10 pt-1 pb-2">
         <motion.button
-          whileTap={{ scale: 0.94 }}
+          whileTap={{ scale: 0.93 }}
           onClick={onBack}
-          className="sticker px-3 py-1.5 text-sm font-bold flex items-center gap-1 bg-white/90"
-          style={{ fontFamily: 'var(--font-baloo)', color: 'var(--deep-rose)' }}
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 hover:bg-white/15 text-rose-300 border border-white/10 backdrop-blur-md"
+          style={{ fontFamily: 'var(--font-baloo)' }}
+          aria-label="Wapas Hub jao"
         >
-          ← Wapas
+          <ArrowLeftIcon size={16} color="currentColor" />
+          <span>Wapas</span>
         </motion.button>
-        <span
-          className="text-lg font-bold"
-          style={{ fontFamily: 'var(--font-baloo)', color: 'var(--deep-rose)' }}
-        >
-          Yaadein 📷 ({activeIndex + 1}/{photos.length})
-        </span>
+
+        <div className="flex items-center gap-2">
+          <CameraIcon size={18} color="var(--rose)" />
+          <span
+            className="text-base font-bold text-white tracking-wide"
+            style={{ fontFamily: 'var(--font-baloo)' }}
+          >
+            Yaadein ({activeIndex + 1}/{totalPhotos})
+          </span>
+        </div>
+
         <div className="w-12" />
       </div>
 
-      {/* Retro Camera Body */}
-      <div className="w-full max-w-sm flex flex-col items-center z-10">
+      {/* Retro Camera Frame with 3:4 Viewfinder */}
+      <div className="w-full flex flex-col items-center z-10 my-auto">
         <div
-          className="relative w-full rounded-3xl p-4 shadow-xl border-4"
+          className="relative w-full rounded-3xl p-3 shadow-2xl border flex flex-col items-center"
           style={{
-            background: 'linear-gradient(145deg, #FFFFFF, #FFF5F7)',
-            borderColor: '#F9D5DE',
-            boxShadow: '0 12px 32px rgba(229,107,138,0.2)',
+            background: 'linear-gradient(160deg, #1E1A20 0%, #151218 100%)',
+            borderColor: 'rgba(229, 107, 138, 0.3)',
+            boxShadow: '0 16px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)',
           }}
         >
-          {/* Camera top details: Shutter & Flash */}
-          <div className="flex justify-between items-center mb-2 px-3">
-            <div className="flex gap-2 items-center">
-              <div className="w-4 h-4 rounded-full bg-rose-400 animate-pulse" />
-              <div className="w-2.5 h-2.5 rounded-full bg-yellow-300" />
+          {/* Camera Top Details: Shutter & Flash LED */}
+          <div className="w-full flex justify-between items-center mb-2 px-2">
+            <div className="flex items-center gap-2">
+              <div className="w-3.5 h-3.5 rounded-full bg-rose-500 animate-pulse shadow-sm shadow-rose-500/50" />
+              <div className="w-2.5 h-2.5 rounded-full bg-gold/80" />
             </div>
-            <div className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest">
-              MEMORIES-25
+            <div className="text-[11px] font-mono font-bold tracking-widest text-rose-300/80 uppercase">
+              MARIA-MEMORIES • 25
             </div>
           </div>
 
-          {/* Camera Viewfinder / Screen */}
+          {/* 3:4 Aspect Ratio Viewfinder (max 58dvh on phone) */}
           <div
-            className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-rose-50 flex items-center justify-center border-2 border-rose-200"
-            style={{
-              boxShadow: 'inset 0 4px 12px rgba(0,0,0,0.06)',
-            }}
+            className="relative w-full aspect-[3/4] max-h-[56dvh] rounded-2xl overflow-hidden bg-black flex items-center justify-center border border-white/10 select-none shadow-inner"
+            style={{ touchAction: 'pan-y' }}
           >
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
-                initial={{ opacity: 0, scale: 0.96 }}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.04 }}
-                transition={{ duration: 0.3 }}
-                className="w-full h-full flex flex-col items-center justify-center p-3 relative"
+                exit={{ opacity: 0, scale: 1.02 }}
+                transition={{ duration: 0.25 }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x > 40) {
+                    prevPhoto()
+                  } else if (info.offset.x < -40) {
+                    nextPhoto()
+                  }
+                }}
+                className="w-full h-full flex items-center justify-center relative cursor-grab active:cursor-grabbing"
               >
-                {/* Image display */}
-                {currentPhoto.url && (
+                {!imgErrors[activeIndex] && currentPhoto.url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={currentPhoto.url}
-                    alt={currentPhoto.caption}
-                    className="w-full h-full object-contain rounded-xl select-none"
-                    onError={(e) => {
-                      // Fallback sticker if image fails to load
-                      (e.currentTarget as HTMLElement).style.display = 'none'
-                      const fallback = e.currentTarget.nextElementSibling as HTMLElement
-                      if (fallback) fallback.style.display = 'flex'
-                    }}
+                    alt={currentPhoto.caption || 'Maria Memory'}
+                    loading="lazy"
+                    decoding="async"
+                    onError={() => handleImageError(activeIndex)}
+                    className="w-full h-full object-contain pointer-events-none"
                   />
+                ) : (
+                  <div className="flex flex-col items-center justify-center p-4 text-center">
+                    <CharacterSticker type="dudu-bubu-hug" size={130} />
+                    <span
+                      className="text-sm text-rose-300 mt-2 font-medium"
+                      style={{ fontFamily: 'var(--font-caveat)' }}
+                    >
+                      Hamara sukoon 🤍
+                    </span>
+                  </div>
                 )}
-                <div
-                  className="hidden flex-col items-center justify-center w-full h-full"
-                  aria-hidden
-                >
-                  <CharacterSticker type="dudu-bubu-hug" size={130} />
-                </div>
               </motion.div>
             </AnimatePresence>
 
-            {/* Tap controls overlays (left / right) */}
-            <button
-              onClick={() =>
-                setActiveIndex((prev) => (prev > 0 ? prev - 1 : photos.length - 1))
-              }
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm text-rose-600 flex items-center justify-center font-bold shadow-md cursor-pointer"
+            {/* Left / Right 48px Navigation Buttons */}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={prevPhoto}
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-lg z-20 cursor-pointer"
               aria-label="Previous photo"
             >
-              ‹
-            </button>
-            <button
-              onClick={() =>
-                setActiveIndex((prev) => (prev < photos.length - 1 ? prev + 1 : 0))
-              }
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm text-rose-600 flex items-center justify-center font-bold shadow-md cursor-pointer"
+              <ArrowLeftIcon size={20} color="#FFFFFF" />
+            </motion.button>
+
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={nextPhoto}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-lg z-20 cursor-pointer"
               aria-label="Next photo"
             >
-              ›
-            </button>
+              <ArrowRightIcon size={20} color="#FFFFFF" />
+            </motion.button>
           </div>
 
-          {/* Caption */}
-          <div className="mt-3 text-center min-h-[48px] flex items-center justify-center px-2">
+          {/* Caption Card below camera viewfinder */}
+          <div className="w-full mt-2.5 px-2 py-1.5 min-h-[46px] rounded-xl bg-black/40 border border-white/5 flex items-center justify-center text-center">
             <AnimatePresence mode="wait">
               <motion.p
                 key={activeIndex}
-                initial={{ opacity: 0, y: 5 }}
+                initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                className="text-lg leading-snug"
-                style={{
-                  fontFamily: 'var(--font-caveat)',
-                  color: 'var(--charcoal)',
-                }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.2 }}
+                className="text-base sm:text-lg leading-snug text-white/95"
+                style={{ fontFamily: 'var(--font-caveat)' }}
               >
                 {currentPhoto.caption}
               </motion.p>
@@ -158,30 +226,39 @@ export default function CameraScreen({ photos, onBack }: CameraScreenProps) {
           </div>
         </div>
 
-        {/* Film Strip Thumbnails Below */}
-        <div className="w-full mt-4 flex items-center gap-2 overflow-x-auto py-2 px-1 no-scrollbar">
-          {photos.map((p, idx) => (
+        {/* 25-Thumbnail Horizontal Film Strip */}
+        <div
+          ref={thumbnailStripRef}
+          className="w-full mt-3 flex items-center gap-2 overflow-x-auto py-2 px-1 snap-x no-scrollbar"
+          style={{ scrollSnapType: 'x mandatory' }}
+        >
+          {safePhotos.map((p, idx) => (
             <motion.button
               key={idx}
-              whileTap={{ scale: 0.92 }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => setActiveIndex(idx)}
-              className={`relative flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-white ${
+              className={`relative flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-black snap-center ${
                 activeIndex === idx
-                  ? 'border-rose-500 scale-105 shadow-md'
-                  : 'border-rose-200 opacity-60'
+                  ? 'border-rose-500 scale-105 shadow-lg shadow-rose-500/30'
+                  : 'border-white/20 opacity-55 hover:opacity-80'
               }`}
+              aria-label={`Photo ${idx + 1}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={p.url}
                 alt=""
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover rounded-lg"
               />
+              <span className="absolute bottom-0.5 right-1 text-[9px] font-bold text-white bg-black/70 px-1 rounded">
+                {idx + 1}
+              </span>
             </motion.button>
           ))}
         </div>
       </div>
-    </div>
+    </ScreenShell>
   )
 }
-

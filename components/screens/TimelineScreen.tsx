@@ -2,8 +2,11 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
+import ScreenShell from '@/components/ScreenShell'
 import { TimelineItem } from '@/lib/contentData'
-import CharacterSticker, { CharacterType } from '@/components/CharacterSticker'
+import AnimatedSticker from '@/components/AnimatedSticker'
+import { CharacterType } from '@/components/CharacterSticker'
+import { SparkleIcon, HeartIcon, ArrowRightIcon } from '@/components/Icons'
 
 interface TimelineScreenProps {
   timeline: TimelineItem[]
@@ -12,45 +15,46 @@ interface TimelineScreenProps {
 
 export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps) {
   return (
-    <div
-      className="min-h-[100dvh] w-full relative p-6 flex flex-col items-center"
-      style={{
-        background: 'linear-gradient(180deg, #FFF8F5 0%, #FFF0F5 50%, #F9D5DE 100%)',
-      }}
+    <ScreenShell
+      theme="dark"
+      showAmbient={true}
+      contentClassName="justify-between py-4"
     >
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mt-4 mb-8 max-w-sm"
+        className="text-center mt-2 mb-6 max-w-sm z-10"
       >
         <span
-          className="text-xs uppercase tracking-widest font-bold text-rose-500"
+          className="text-xs uppercase tracking-widest font-bold text-rose-400"
           style={{ fontFamily: 'var(--font-baloo)' }}
         >
           Our Journey
         </span>
         <h1
-          className="text-4xl font-heading leading-tight"
-          style={{ fontFamily: 'var(--font-dancing)', color: 'var(--deep-rose)' }}
+          className="heading-fluid leading-tight text-white mt-1"
+          style={{
+            fontFamily: 'var(--font-dancing)',
+            textShadow: '0 2px 14px rgba(229,107,138,0.4)',
+          }}
         >
-          Hamari Kahani 📖
+          Hamari Kahani
         </h1>
         <p
-          className="text-base opacity-75 mt-1"
-          style={{ fontFamily: 'var(--font-caveat)', color: 'var(--charcoal)' }}
+          className="text-sm text-white/70 mt-0.5"
+          style={{ fontFamily: 'var(--font-caveat)' }}
         >
           Har ek lamha jo humne saath guzara…
         </p>
       </motion.div>
 
       {/* Vertical Timeline Container */}
-      <div className="relative w-full max-w-sm flex flex-col gap-8 pb-10">
-        {/* Connecting Vertical Dotted Line */}
-        <div className="absolute left-6 top-8 bottom-12 w-0.5 border-l-2 border-dashed border-rose-300 pointer-events-none" />
+      <div className="relative w-full max-w-sm flex flex-col gap-6 pb-6 z-10">
+        {/* Connecting Vertical Line */}
+        <div className="absolute left-5 top-6 bottom-12 w-0.5 border-l-2 border-dashed border-rose-500/30 pointer-events-none" />
 
         {timeline.map((item, idx) => {
-          // Map character string to CharacterType
           const charType: CharacterType =
             (item.character as CharacterType) ||
             (idx === 0
@@ -70,70 +74,72 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
               key={item.id || idx}
               initial={{ opacity: 0, x: -15 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: idx * 0.05 }}
-              className="relative flex items-start gap-4 pl-2"
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.45, delay: idx * 0.05 }}
+              className="relative flex items-start gap-3.5 pl-1"
             >
               {/* Date node icon circle */}
-              <div className="w-9 h-9 rounded-full sticker bg-white flex items-center justify-center text-lg shadow-md z-10 flex-shrink-0 border-rose-400">
-                {item.icon || '🌸'}
+              <div className="w-9 h-9 rounded-full bg-[#1E1A20] border-2 border-rose-400 flex items-center justify-center text-sm shadow-md z-10 shrink-0 text-white">
+                <SparkleIcon size={16} color="var(--soft-gold)" />
               </div>
 
               {/* Card Content */}
-              <div className="sticker p-4 flex-1 bg-white/95 shadow-md border-rose-200">
-                <div className="flex items-center justify-between border-b pb-1 mb-2 border-rose-100">
+              <div
+                className="p-4 flex-1 rounded-3xl border shadow-xl text-left"
+                style={{
+                  background: 'linear-gradient(135deg, #1E1A20 0%, #151218 100%)',
+                  borderColor: 'rgba(229, 107, 138, 0.35)',
+                }}
+              >
+                <div className="flex items-center justify-between border-b pb-1.5 mb-2 border-white/10">
                   <span
-                    className="text-base font-bold text-rose-600"
+                    className="text-base font-bold text-rose-300"
                     style={{ fontFamily: 'var(--font-baloo)' }}
                   >
                     {item.date}
                   </span>
-                  <span className="text-xs text-rose-300">🤍</span>
+                  <HeartIcon size={14} color="var(--rose)" />
                 </div>
 
                 <p
-                  className="text-lg leading-snug mb-3"
-                  style={{
-                    fontFamily: 'var(--font-caveat)',
-                    color: 'var(--charcoal)',
-                  }}
+                  className="text-base sm:text-lg leading-snug mb-3 text-white/90"
+                  style={{ fontFamily: 'var(--font-caveat)' }}
                 >
                   {item.text}
                 </p>
 
-                {/* Cute Character Scene Sticker */}
-                <div className="flex justify-center pt-1 border-t border-rose-50">
-                  <CharacterSticker type={charType} size={110} />
+                {/* Sticker scene */}
+                <div className="flex justify-end pt-1">
+                  <AnimatedSticker
+                    name={charType}
+                    fallbackType={charType}
+                    size={75}
+                    animation="float"
+                  />
                 </div>
               </div>
             </motion.div>
           )
         })}
-
-        {/* Final CTA Button to Screen 7 (Finale) */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="mt-6 flex flex-col items-center gap-2"
-        >
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={onNext}
-            className="btn-primary w-full text-lg shadow-xl flex items-center justify-center gap-2 py-3.5"
-          >
-            <span>Ek aakhri paigham 💌</span>
-            <span>→</span>
-          </motion.button>
-          <span
-            className="text-xs opacity-60 text-center"
-            style={{ fontFamily: 'var(--font-caveat)', color: 'var(--charcoal)' }}
-          >
-            Yeh bas shuruaat hai, Jaan 🤍
-          </span>
-        </motion.div>
       </div>
-    </div>
+
+      {/* Bottom Button to Finale */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="w-full max-w-sm z-10 pt-2 pb-4 px-1"
+      >
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.02 }}
+          onClick={onNext}
+          className="btn-primary w-full flex items-center justify-center gap-2 shadow-xl"
+        >
+          <span>Aakhri paighaam dekho</span>
+          <ArrowRightIcon size={18} color="#FFFFFF" />
+        </motion.button>
+      </motion.div>
+    </ScreenShell>
   )
 }
-

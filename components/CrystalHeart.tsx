@@ -1,14 +1,13 @@
 'use client'
 
-import React, { useRef, useMemo, useState, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
 import * as THREE from 'three'
 
-interface CrystalHeart3DProps {
-  onPulse?: () => void
+interface CrystalHeartCanvasProps {
   pulsing: boolean
 }
 
-// Check if device supports smooth WebGL
+// Low-end device / WebGL detection
 export function isWebGLAvailable(): boolean {
   if (typeof window === 'undefined') return false
   try {
@@ -16,12 +15,11 @@ export function isWebGLAvailable(): boolean {
     const gl =
       canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
     if (!gl) return false
-    // Low-end device check
-    if (
-      typeof navigator !== 'undefined' &&
-      navigator.hardwareConcurrency &&
-      navigator.hardwareConcurrency < 2
-    ) {
+
+    // Fall back on devices with very low concurrency or high dpr penalty
+    const concurrency = navigator.hardwareConcurrency ?? 4
+    const dpr = window.devicePixelRatio ?? 1
+    if (concurrency <= 2 || dpr > 3) {
       return false
     }
     return true
@@ -30,58 +28,10 @@ export function isWebGLAvailable(): boolean {
   }
 }
 
-// Generate parametric 3D heart point cloud (~1500 points)
-function generateHeartPoints(count = 1500) {
-  const points: number[] = []
-  const colors: number[] = []
-
-  const color1 = new THREE.Color('#FFF8F5') // white-cream
-  const color2 = new THREE.Color('#F9D5DE') // blush
-  const color3 = new THREE.Color('#E56B8A') // rose
-  const tempColor = new THREE.Color()
-
-  for (let i = 0; i < count; i++) {
-    // Heart parametric equations
-    const t = Math.PI * (Math.random() * 2 - 1)
-    const u = Math.PI * (Math.random() * 2 - 1)
-
-    // Standard 3D heart curves
-    const x = 16 * Math.pow(Math.sin(t), 3)
-    const y =
-      13 * Math.cos(t) -
-      5 * Math.cos(2 * t) -
-      2 * Math.cos(3 * t) -
-      Math.cos(4 * t)
-    const z = u * 4 * Math.sin(t)
-
-    // Jitter for volume
-    const jitter = 0.8 * (Math.random() - 0.5)
-    points.push(
-      (x + jitter) * 0.12,
-      (y + jitter) * 0.12,
-      (z + jitter) * 0.12
-    )
-
-    // Color gradient based on height
-    const ratio = (y + 16) / 32
-    if (ratio < 0.5) {
-      tempColor.lerpColors(color3, color2, ratio * 2)
-    } else {
-      tempColor.lerpColors(color2, color1, (ratio - 0.5) * 2)
-    }
-
-    colors.push(tempColor.r, tempColor.g, tempColor.b)
-  }
-
-  return {
-    positions: new Float32Array(points),
-    colors: new Float32Array(colors),
-  }
-}
-
-// Pure Three.js Canvas component (lightweight, zero bundle bloat, zero SSR issue)
-export default function CrystalHeartCanvas({ pulsing }: { pulsing: boolean }) {
+export default function CrystalHeartCanvas({ pulsing }: CrystalHeartCanvasProps) {
   const mountRef = useRef<HTMLDivElement>(null)
+  const pulsingRef = useRef(pulsing)
+  pulsingRef.current = pulsing
 
   useEffect(() => {
     const mount = mountRef.current
@@ -90,11 +40,12 @@ export default function CrystalHeartCanvas({ pulsing }: { pulsing: boolean }) {
     const width = mount.clientWidth || 320
     const height = mount.clientHeight || 360
 
-    // Scene, Camera, Renderer
+    // 1. Scene, Camera (fixed at z=6, fov=45)
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000)
-    camera.position.z = 4.5
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100)
+    camera.position.set(0, 0, 6)
 
+    // 2. Renderer (capped at dpr 2 for performance)
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
@@ -102,87 +53,155 @@ export default function CrystalHeartCanvas({ pulsing }: { pulsing: boolean }) {
     })
     renderer.setSize(width, height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+    renderer.toneMapping = THREE.ACESFilmicToneMapping
+    renderer.toneMappingExposure = 1.1
     mount.appendChild(renderer.domElement)
 
-    // Heart Particle Cloud
-    const { positions, colors } = generateHeartPoints(1600)
-    const geometry = new THREE.BufferGeometry()
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+    // 3. Heart Geometry using THREE.Shape with Bezier curves
+    const shape = new THREE.Shape()
+    // Top center dip
+    shape.moveTo(0, 0.42)
+    // Left upper lobe
+    shape.bezierCurveTo(-0.12, 0.8, -0.65, 0.9, -0.9, 0.52)
+    // Left bottom tip
+    shape.bezierCurveTo(-1.12, 0.15, -0.82, -0.42, 0, -1.15)
+    // Right bottom tip to right lobe
+    shape.bezierCurveTo(0.82, -0.42, 1.12, 0.15, 0.9, 0.52)
+    // Right upper lobe to top dip
+    shape.bezierCurveTo(0.65, 0.9, 0.12, 0.8, 0, 0.42)
 
-    // Glowing particle texture
-    const canvas = document.createElement('canvas')
-    canvas.width = 32
-    canvas.height = 32
-    const ctx = canvas.getContext('2d')
+    const extrudeSettings: THREE.ExtrudeGeometryOptions = {
+      depth: 0.48,
+      bevelEnabled: true,
+      bevelSegments: 3,
+      steps: 1,
+      bevelSize: 0.08,
+      bevelThickness: 0.08,
+    }
+
+    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
+    // Critical: center the heart so rotation is around geometric centroid
+    geometry.center()
+
+    // 4. Faceted Crystal Material
+    const material = new THREE.MeshPhysicalMaterial({
+      color: 0xE56B8A,
+      emissive: 0x4A1020,
+      emissiveIntensity: 0.35,
+      roughness: 0.12,
+      metalness: 0.08,
+      transmission: 0.65,
+      ior: 1.52,
+      reflectivity: 0.9,
+      flatShading: true, // Crystal faceted look
+      clearcoat: 0.3,
+      clearcoatRoughness: 0.1,
+    })
+
+    const heartMesh = new THREE.Mesh(geometry, material)
+    // Fitted scale for 60dvh container with camera at z=6
+    heartMesh.scale.set(1.45, 1.45, 1.45)
+    scene.add(heartMesh)
+
+    // 5. 800 - 1000 Sparkle Points surrounding the heart
+    const sparkleCount = 900
+    const sparklePositions = new Float32Array(sparkleCount * 3)
+    const sparkleOriginalRadii = new Float32Array(sparkleCount)
+    const sparkleAngles = new Float32Array(sparkleCount)
+    const sparkleSpeeds = new Float32Array(sparkleCount)
+
+    for (let i = 0; i < sparkleCount; i++) {
+      const radius = 1.6 + Math.random() * 1.8
+      const angle = Math.random() * Math.PI * 2
+      const y = (Math.random() - 0.5) * 2.8
+      const z = (Math.random() - 0.5) * 2.2
+
+      sparklePositions[i * 3] = Math.cos(angle) * radius
+      sparklePositions[i * 3 + 1] = y
+      sparklePositions[i * 3 + 2] = z
+
+      sparkleOriginalRadii[i] = radius
+      sparkleAngles[i] = angle
+      sparkleSpeeds[i] = 0.2 + Math.random() * 0.4
+    }
+
+    const sparkleGeom = new THREE.BufferGeometry()
+    sparkleGeom.setAttribute('position', new THREE.BufferAttribute(sparklePositions, 3))
+
+    // Sparkle texture
+    const sparkleCanvas = document.createElement('canvas')
+    sparkleCanvas.width = 32
+    sparkleCanvas.height = 32
+    const ctx = sparkleCanvas.getContext('2d')
     if (ctx) {
-      const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16)
-      grad.addColorStop(0, 'rgba(255, 255, 255, 1)')
-      grad.addColorStop(0.3, 'rgba(249, 213, 222, 0.8)')
-      grad.addColorStop(0.7, 'rgba(229, 107, 138, 0.4)')
-      grad.addColorStop(1, 'rgba(229, 107, 138, 0)')
-      ctx.fillStyle = grad
+      const radGrad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16)
+      radGrad.addColorStop(0, 'rgba(255, 255, 255, 1)')
+      radGrad.addColorStop(0.3, 'rgba(249, 213, 222, 0.9)')
+      radGrad.addColorStop(0.7, 'rgba(232, 194, 122, 0.4)')
+      radGrad.addColorStop(1, 'rgba(229, 107, 138, 0)')
+      ctx.fillStyle = radGrad
       ctx.fillRect(0, 0, 32, 32)
     }
-    const texture = new THREE.CanvasTexture(canvas)
+    const sparkleTex = new THREE.CanvasTexture(sparkleCanvas)
 
-    const material = new THREE.PointsMaterial({
-      size: 0.14,
-      vertexColors: true,
-      map: texture,
+    const sparkleMat = new THREE.PointsMaterial({
+      size: 0.12,
+      map: sparkleTex,
       transparent: true,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     })
 
-    const heartParticles = new THREE.Points(geometry, material)
-    scene.add(heartParticles)
+    const sparkles = new THREE.Points(sparkleGeom, sparkleMat)
+    scene.add(sparkles)
 
-    // Outer Shimmering Halo / Ring
-    const haloGeom = new THREE.BufferGeometry()
-    const haloPoints: number[] = []
-    for (let i = 0; i < 200; i++) {
-      const angle = (i / 200) * Math.PI * 2
-      const radius = 2.4 + (Math.random() - 0.5) * 0.3
-      haloPoints.push(Math.cos(angle) * radius, Math.sin(angle) * radius * 0.4, (Math.random() - 0.5) * 0.5)
-    }
-    haloGeom.setAttribute('position', new THREE.Float32BufferAttribute(haloPoints, 3))
-    const haloMat = new THREE.PointsMaterial({
-      size: 0.08,
-      color: 0xffb7c5,
-      transparent: true,
-      opacity: 0.6,
-      blending: THREE.AdditiveBlending,
-    })
-    const halo = new THREE.Points(haloGeom, haloMat)
-    scene.add(halo)
+    // 6. Lighting
+    const ambientLight = new THREE.AmbientLight(0xfff8f5, 1.2)
+    scene.add(ambientLight)
 
-    // Animation Loop
+    const mainLight = new THREE.DirectionalLight(0xffffff, 2.0)
+    mainLight.position.set(3, 4, 5)
+    scene.add(mainLight)
+
+    const pinkFillLight = new THREE.PointLight(0xE56B8A, 2.5, 10)
+    pinkFillLight.position.set(-2, -1, 3)
+    scene.add(pinkFillLight)
+
+    const goldAccentLight = new THREE.PointLight(0xE8C27A, 1.5, 8)
+    goldAccentLight.position.set(2, 2, -1)
+    scene.add(goldAccentLight)
+
+    // 7. Animation loop with pendulum swing (NEVER full 360 spin)
     let reqId: number
-    let clock = new THREE.Clock()
+    const clock = new THREE.Clock()
+    let currentScale = 1.45
+
+    const maxSwingRad = (32 * Math.PI) / 180 // +-32 degrees swing
 
     const animate = () => {
       reqId = requestAnimationFrame(animate)
       const elapsed = clock.getElapsedTime()
 
-      // Smooth slow rotation
-      heartParticles.rotation.y = elapsed * 0.5
-      heartParticles.rotation.x = Math.sin(elapsed * 0.3) * 0.15
+      // Swing gently around Y (+- 32 deg) so the heart is ALWAYS facing front and never a line!
+      heartMesh.rotation.y = Math.sin(elapsed * 0.75) * maxSwingRad
+      heartMesh.rotation.x = Math.sin(elapsed * 0.4) * 0.08
+      heartMesh.rotation.z = Math.cos(elapsed * 0.5) * 0.04
 
-      halo.rotation.z = elapsed * 0.2
-      halo.rotation.x = Math.PI / 4 + Math.sin(elapsed * 0.4) * 0.1
+      // Gentle continuous breathing + tap pulse
+      const isTapPulsing = pulsingRef.current
+      const targetScale = isTapPulsing ? 1.85 : 1.45 + Math.sin(elapsed * 2.2) * 0.05
+      currentScale += (targetScale - currentScale) * 0.15
+      heartMesh.scale.set(currentScale, currentScale, currentScale)
 
-      // Pulse scaling
-      const basePulse = 1 + Math.sin(elapsed * 2.5) * 0.04
-      const pulseScale = pulsing ? 1.25 : basePulse
-      heartParticles.scale.set(pulseScale, pulseScale, pulseScale)
+      // Orbit sparkles gently
+      sparkles.rotation.y = elapsed * 0.18
 
       renderer.render(scene, camera)
     }
 
     animate()
 
-    // Resize Handler
+    // 8. Resize handler
     const handleResize = () => {
       if (!mount) return
       const w = mount.clientWidth
@@ -198,16 +217,21 @@ export default function CrystalHeartCanvas({ pulsing }: { pulsing: boolean }) {
       window.removeEventListener('resize', handleResize)
       geometry.dispose()
       material.dispose()
-      haloGeom.dispose()
-      haloMat.dispose()
-      texture.dispose()
+      sparkleGeom.dispose()
+      sparkleMat.dispose()
+      sparkleTex.dispose()
       renderer.dispose()
       if (mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement)
       }
     }
-  }, [pulsing])
+  }, [])
 
-  return <div ref={mountRef} className="w-full h-full min-h-[340px]" />
+  return (
+    <div
+      ref={mountRef}
+      className="w-full h-full"
+      style={{ minHeight: 'min(55dvh, 380px)', width: '100%' }}
+    />
+  )
 }
-
