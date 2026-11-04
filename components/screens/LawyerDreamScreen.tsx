@@ -81,7 +81,7 @@ export default function LawyerDreamScreen({
               className="text-xs text-deep-rose font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Law Library 📚
+              Law Library
             </p>
           </div>
 
@@ -102,7 +102,7 @@ export default function LawyerDreamScreen({
               className="text-xs text-deep-rose font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              The Courthouse 🏛️
+              The Courthouse
             </p>
           </div>
         </motion.div>

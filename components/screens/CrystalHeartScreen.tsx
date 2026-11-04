@@ -51,7 +51,7 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
   }
 
   return (
-    <ScreenShell theme="blush" showAmbient={true} contentClassName="justify-between">
+    <ScreenShell theme="blush" showAmbient={true} contentClassName="justify-between py-2">
       {/* Dynamic tap sparkles */}
       <AnimatePresence>
         {sparkles.map((s) => (
@@ -69,70 +69,46 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
         ))}
       </AnimatePresence>
 
-      {/* Top Header */}
-      <div className="w-full flex flex-col items-center pt-3 text-center z-10">
-        <span
-          className="text-xs tracking-widest uppercase font-bold text-rose-500 opacity-90"
-          style={{ fontFamily: 'var(--font-baloo)' }}
-        >
-          A piece of my heart
-        </span>
-        <h2
-          className="heading-fluid leading-tight text-deep-rose mt-1"
-          style={{
-            fontFamily: 'var(--font-dancing)',
-            textShadow: '0 2px 10px rgba(229,107,138,0.2)',
-          }}
-        >
-          For you, Maria
-        </h2>
-        <p
-          className="text-xs sm:text-sm text-rose-700/80 font-medium mt-0.5"
-          style={{ fontFamily: 'var(--font-caveat)' }}
-        >
-          (Dil pe tap karo aur dekho ✨)
-        </p>
-      </div>
+      {/* Top: Gold Script "25" Badge ABOVE the heart, clearly separated */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="w-full flex justify-center pt-2 z-10"
+      >
+        <div className="inline-flex items-center gap-2 px-5 py-1.5 rounded-full border border-[#D4AF37]/50 shadow-md bg-white/95 backdrop-blur-md">
+          <SparkleIcon size={16} color="#D4AF37" />
+          <span
+            className="text-2xl sm:text-3xl font-bold tracking-wider"
+            style={{
+              fontFamily: 'var(--font-dancing)',
+              background: 'linear-gradient(135deg, #B8405E 0%, #E56B8A 40%, #D4AF37 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            25
+          </span>
+          <SparkleIcon size={16} color="#D4AF37" />
+        </div>
+      </motion.div>
 
-      {/* Center 3D Crystal Heart Area with glowing soft vignette */}
+      {/* Center: Exactly 60dvh Canvas Room for 3D Crystal Heart */}
       <div
         onClick={triggerPulse}
-        className="relative w-full flex-1 flex flex-col items-center justify-center my-auto cursor-pointer select-none"
-        style={{ minHeight: 'min(58dvh, 410px)', maxHeight: '420px' }}
+        className="relative w-full flex flex-col items-center justify-center my-auto cursor-pointer select-none"
+        style={{ height: '56dvh', minHeight: '340px', maxHeight: '480px' }}
       >
         {/* Soft glowing ambient light pool behind the crystal heart */}
         <div
           className="absolute w-72 h-72 rounded-full pointer-events-none filter blur-2xl"
           style={{
-            background: 'radial-gradient(circle, rgba(249,213,222,0.85) 0%, rgba(229,107,138,0.2) 50%, transparent 70%)',
+            background:
+              'radial-gradient(circle, rgba(249,213,222,0.85) 0%, rgba(229,107,138,0.25) 50%, transparent 70%)',
           }}
         />
 
-        {/* Elegant "25" Badge ABOVE the heart with clear spacing, NO "25 years/saal" text */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mb-1 z-20 pointer-events-none"
-        >
-          <div className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full border border-rose-300 shadow-md bg-white/95 backdrop-blur-md">
-            <SparkleIcon size={14} color="#D4AF37" />
-            <span
-              className="text-xl sm:text-2xl font-bold tracking-wider"
-              style={{
-                fontFamily: 'var(--font-dancing)',
-                background: 'linear-gradient(135deg, #B8405E 0%, #E56B8A 50%, #D4AF37 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              25
-            </span>
-            <SparkleIcon size={14} color="#D4AF37" />
-          </div>
-        </motion.div>
-
-        {/* Canvas or Fallback */}
+        {/* 3D Heart or Graceful Fallback */}
         <div className="relative w-full h-full flex items-center justify-center">
           {use3D ? (
             <CrystalHeartCanvas pulsing={pulsing} />
@@ -171,41 +147,45 @@ export default function CrystalHeartScreen({ onNext }: CrystalHeartScreenProps) 
           )}
         </div>
 
-        {/* Short caption UNDER the heart */}
+        {/* Text "For you, Maria" under the heart */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-lg text-deep-rose font-bold tracking-wide mt-1 pointer-events-none"
-          style={{ fontFamily: 'var(--font-dancing)' }}
+          className="text-2xl sm:text-3xl font-bold text-deep-rose tracking-wide mt-1 pointer-events-none"
+          style={{
+            fontFamily: 'var(--font-dancing)',
+            textShadow: '0 2px 10px rgba(229,107,138,0.25)',
+          }}
         >
-          Maria 🤍
+          For you, Maria 🤍
         </motion.p>
       </div>
 
-      {/* Bottom CTA to Hub */}
+      {/* Bottom CTA: Full-width rose button + One-line caption in 14px */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="w-full max-w-sm px-2 pb-2 z-20 flex flex-col items-center gap-2"
+        className="w-full px-2 pb-3 z-20 flex flex-col items-center gap-2"
         onClick={(e) => e.stopPropagation()}
       >
         <motion.button
           whileTap={{ scale: 0.95 }}
-          whileHover={{ scale: 1.03 }}
+          whileHover={{ scale: 1.02 }}
           onClick={onNext}
           className="btn-primary w-full flex items-center justify-center gap-2 shadow-xl"
         >
           <span>Kuch cheezein khol ke dekho</span>
           <ArrowRightIcon size={18} color="#FFFFFF" />
         </motion.button>
-        <span
-          className="text-xs text-charcoal/70 text-center font-medium"
+
+        <p
+          className="text-[14px] text-charcoal/80 text-center font-medium"
           style={{ fontFamily: 'var(--font-caveat)' }}
         >
-          3 surprises tumhara intezar kar rahe hain
-        </span>
+          Yeh dil tumhare liye dharakta hai
+        </p>
       </motion.div>
     </ScreenShell>
   )

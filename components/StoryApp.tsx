@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import AppFrame from '@/components/AppFrame'
 import GateScreen from '@/components/screens/GateScreen'
 import OpenerScreen from '@/components/screens/OpenerScreen'
 import BirthdayScreen from '@/components/screens/BirthdayScreen'
@@ -110,40 +111,43 @@ export default function StoryApp({
   // Gate Screen if locked
   if (!unlocked) {
     return (
-      <GateScreen
-        onUnlocked={() => setUnlocked(true)}
-        unlockAt={unlockAt}
-        bypassDate={bypassDate}
-      />
+      <AppFrame>
+        <GateScreen
+          onUnlocked={() => setUnlocked(true)}
+          unlockAt={unlockAt}
+          bypassDate={bypassDate}
+        />
+      </AppFrame>
     )
   }
 
   const songSource = content.songUrl || '/api/audio'
 
   return (
-    <div className="w-full min-h-[100dvh] relative overflow-x-hidden bg-[#FFF6F8] flex flex-col items-center">
-      {/* Single Shared Audio Instance across all screens */}
-      <audio
-        ref={audioRef}
-        src={songSource}
-        preload="auto"
-        playsInline
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={() => setIsAudioPlaying(false)}
-        onError={() => {
-          if (isAudioPlaying) {
-            setIsAudioPlaying(false)
-            const isDev = process.env.NODE_ENV !== 'production'
-            setAudioError(
-              isDev
-                ? 'Song file nahi mila (place our-song.mp3 in /assets-private/audio/)'
-                : 'Audio unavailable'
-            )
-          }
-        }}
-      />
+    <AppFrame>
+      <div className="w-full min-h-[100dvh] relative overflow-x-hidden flex flex-col items-center">
+        {/* Single Shared Audio Instance across all screens */}
+        <audio
+          ref={audioRef}
+          src={songSource}
+          preload="auto"
+          playsInline
+          onTimeUpdate={handleTimeUpdate}
+          onEnded={() => setIsAudioPlaying(false)}
+          onError={() => {
+            if (isAudioPlaying) {
+              setIsAudioPlaying(false)
+              const isDev = process.env.NODE_ENV !== 'production'
+              setAudioError(
+                isDev
+                  ? 'Song file nahi mila (place our-song.mp3 in /assets-private/audio/)'
+                  : 'Audio unavailable'
+              )
+            }
+          }}
+        />
 
-      <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait">
         {/* Screen 1: Opener */}
         {currentScreen === 1 && (
           <motion.div
@@ -296,6 +300,7 @@ export default function StoryApp({
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+      </div>
+    </AppFrame>
   )
 }

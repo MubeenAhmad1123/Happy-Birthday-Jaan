@@ -81,7 +81,7 @@ export default function FreedomScreen({
               className="text-xs text-emerald-700 font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Khuli Hawa 🌾
+              Khuli Hawa
             </p>
           </div>
 
@@ -102,7 +102,7 @@ export default function FreedomScreen({
               className="text-xs text-deep-rose font-bold mt-1.5 text-center"
               style={{ fontFamily: 'var(--font-baloo)' }}
             >
-              Nayi Subah 🌅
+              Nayi Subah
             </p>
           </div>
         </motion.div>

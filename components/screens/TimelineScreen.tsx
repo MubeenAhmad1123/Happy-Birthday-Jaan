@@ -40,7 +40,7 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
             textShadow: '0 2px 10px rgba(229,107,138,0.2)',
           }}
         >
-          Hamari Kahani 📖
+          Hamari Kahani
         </h1>
         <p
           className="text-sm text-charcoal/80 mt-0.5"
