@@ -305,3 +305,4 @@ export default function GiftBox({
     </motion.button>
   )
 }
+

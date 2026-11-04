@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./birthday-animation.css";
 
 /* ── Design-system tokens (Unified Romantic Luxury Theme) ────────── */
 :root {
