@@ -149,9 +149,10 @@ export default function FinaleScreen({
             onBackToHub()
           }}
           className="btn-secondary flex-1 text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-md"
+          style={{ color: '#FFFFFF' }}
         >
           <HeartIcon size={16} color="var(--rose)" />
-          <span>Back to Hub</span>
+          <span style={{ color: '#FFFFFF', fontWeight: 600 }}>Back to Hub</span>
         </motion.button>
       </motion.div>
     </ScreenShell>

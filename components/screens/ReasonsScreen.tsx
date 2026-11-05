@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import ScreenShell from '@/components/ScreenShell'
+import BackButton from '@/components/BackButton'
 import { ReasonItem } from '@/lib/contentData'
 import {
   HeartIcon,
@@ -104,19 +105,7 @@ export default function ReasonsScreen({
       {/* ── TOP HEADER ── */}
       <div className="w-full flex items-center justify-between z-20 pt-1 pb-1 px-1">
         {onBack ? (
-          <motion.button
-            whileTap={{ scale: 0.94 }}
-            onClick={() => {
-              buzz(10)
-              onBack()
-            }}
-            className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-1.5 bg-white/15 text-white border border-white/25 hover:bg-white/25 shadow-md transition-all cursor-pointer"
-            style={{ fontFamily: 'var(--font-baloo)' }}
-            aria-label="Back to Hub"
-          >
-            <ArrowLeftIcon size={14} color="#FFFFFF" />
-            <span>Back</span>
-          </motion.button>
+          <BackButton onClick={onBack} aria-label="Back to Hub" />
         ) : (
           <div className="w-16" />
         )}

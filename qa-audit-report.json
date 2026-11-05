@@ -1,0 +1,205 @@
+{
+  "viewportsTested": [],
+  "screensTested": [],
+  "overflowIssues": [
+    {
+      "vp": "320px_small_mobile",
+      "screen": "BirthdayScreen",
+      "hasOverflow": true,
+      "docWidth": 320,
+      "bodyWidth": 320,
+      "vw": 320,
+      "overflowingElements": [
+        {
+          "tagName": "IMG",
+          "className": "flag__right",
+          "width": 144,
+          "right": 339,
+          "vw": 320
+        },
+        {
+          "tagName": "H1",
+          "className": "birthday",
+          "width": 322,
+          "right": 321,
+          "vw": 320
+        }
+      ]
+    },
+    {
+      "vp": "360px_android_mobile",
+      "screen": "BirthdayScreen",
+      "hasOverflow": true,
+      "docWidth": 360,
+      "bodyWidth": 360,
+      "vw": 360,
+      "overflowingElements": [
+        {
+          "tagName": "IMG",
+          "className": "flag__right",
+          "width": 156,
+          "right": 379,
+          "vw": 360
+        }
+      ]
+    },
+    {
+      "vp": "375px_small_iphone",
+      "screen": "BirthdayScreen",
+      "hasOverflow": true,
+      "docWidth": 375,
+      "bodyWidth": 375,
+      "vw": 375,
+      "overflowingElements": [
+        {
+          "tagName": "IMG",
+          "className": "flag__right",
+          "width": 162,
+          "right": 394,
+          "vw": 375
+        }
+      ]
+    },
+    {
+      "vp": "390px_modern_iphone",
+      "screen": "BirthdayScreen",
+      "hasOverflow": true,
+      "docWidth": 390,
+      "bodyWidth": 390,
+      "vw": 390,
+      "overflowingElements": [
+        {
+          "tagName": "IMG",
+          "className": "flag__right",
+          "width": 169,
+          "right": 409,
+          "vw": 390
+        }
+      ]
+    },
+    {
+      "vp": "430px_large_mobile",
+      "screen": "BirthdayScreen",
+      "hasOverflow": true,
+      "docWidth": 430,
+      "bodyWidth": 430,
+      "vw": 430,
+      "overflowingElements": [
+        {
+          "tagName": "IMG",
+          "className": "flag__right",
+          "width": 186,
+          "right": 450,
+          "vw": 430
+        }
+      ]
+    },
+    {
+      "vp": "768px_tablet_portrait",
+      "screen": "BirthdayScreen",
+      "hasOverflow": true,
+      "docWidth": 768,
+      "bodyWidth": 768,
+      "vw": 768,
+      "overflowingElements": [
+        {
+          "tagName": "IMG",
+          "className": "flag__right",
+          "width": 247,
+          "right": 789,
+          "vw": 768
+        }
+      ]
+    },
+    {
+      "vp": "1024px_tablet_landscape",
+      "screen": "BirthdayScreen",
+      "hasOverflow": true,
+      "docWidth": 1024,
+      "bodyWidth": 1024,
+      "vw": 1024,
+      "overflowingElements": [
+        {
+          "tagName": "IMG",
+          "className": "flag__right",
+          "width": 247,
+          "right": 1045,
+          "vw": 1024
+        }
+      ]
+    },
+    {
+      "vp": "1280px_laptop",
+      "screen": "BirthdayScreen",
+      "hasOverflow": true,
+      "docWidth": 1280,
+      "bodyWidth": 1280,
+      "vw": 1280,
+      "overflowingElements": [
+        {
+          "tagName": "IMG",
+          "className": "flag__right",
+          "width": 247,
+          "right": 1301,
+          "vw": 1280
+        }
+      ]
+    },
+    {
+      "vp": "1440px_desktop",
+      "screen": "BirthdayScreen",
+      "hasOverflow": true,
+      "docWidth": 1440,
+      "bodyWidth": 1440,
+      "vw": 1440,
+      "overflowingElements": [
+        {
+          "tagName": "IMG",
+          "className": "flag__right",
+          "width": 247,
+          "right": 1461,
+          "vw": 1440
+        }
+      ]
+    }
+  ],
+  "consoleErrors": [
+    {
+      "vp": "320px_small_mobile",
+      "text": "Creating a worker from 'blob:https://happy-birthday-jaan-three.vercel.app/28ad5b00-565f-40d0-bd71-d34d2b9579b2' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com\". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+    },
+    {
+      "vp": "360px_android_mobile",
+      "text": "Creating a worker from 'blob:https://happy-birthday-jaan-three.vercel.app/378a1332-c63f-4f55-9cf5-1b402e5bb868' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com\". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+    },
+    {
+      "vp": "375px_small_iphone",
+      "text": "Creating a worker from 'blob:https://happy-birthday-jaan-three.vercel.app/ba3b48d6-6c46-42b8-a48c-b587ee76f95a' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com\". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+    },
+    {
+      "vp": "390px_modern_iphone",
+      "text": "Creating a worker from 'blob:https://happy-birthday-jaan-three.vercel.app/87a98940-380a-429e-a71b-8a96adf745f3' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com\". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+    },
+    {
+      "vp": "430px_large_mobile",
+      "text": "Creating a worker from 'blob:https://happy-birthday-jaan-three.vercel.app/1fb2e92f-d21c-4264-9f17-ea4a2c5385bb' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com\". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+    },
+    {
+      "vp": "768px_tablet_portrait",
+      "text": "Creating a worker from 'blob:https://happy-birthday-jaan-three.vercel.app/93e6ac47-0f3f-4cd2-96ba-510dc273c39d' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com\". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+    },
+    {
+      "vp": "1024px_tablet_landscape",
+      "text": "Creating a worker from 'blob:https://happy-birthday-jaan-three.vercel.app/d866eb5d-2362-47f2-9b23-bb76fba77e37' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com\". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+    },
+    {
+      "vp": "1280px_laptop",
+      "text": "Creating a worker from 'blob:https://happy-birthday-jaan-three.vercel.app/3745a472-89a1-45eb-b87b-be3c0dafffd5' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com\". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+    },
+    {
+      "vp": "1440px_desktop",
+      "text": "Creating a worker from 'blob:https://happy-birthday-jaan-three.vercel.app/88200950-52c3-4c5b-953f-fa08018cb30f' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com\". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked."
+    }
+  ],
+  "functionalChecks": []
+}

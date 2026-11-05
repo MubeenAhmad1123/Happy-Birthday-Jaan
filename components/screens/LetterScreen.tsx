@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import ScreenShell from '@/components/ScreenShell'
+import BackButton from '@/components/BackButton'
 import { ArrowLeftIcon, LetterIcon, FlowerIcon, HeartIcon } from '@/components/Icons'
 import { buzz, softChime } from '@/lib/feedback'
 
@@ -83,19 +84,7 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
     >
       {/* Top Header */}
       <div className="w-full flex items-center justify-between z-20 pt-1 pb-2">
-        <motion.button
-          whileTap={{ scale: 0.94 }}
-          onClick={() => {
-            buzz(10)
-            onBack()
-          }}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 shadow-sm text-white border border-white/20 hover:bg-white/20 transition-all cursor-pointer"
-          style={{ fontFamily: 'var(--font-baloo)' }}
-          aria-label="Back to Hub"
-        >
-          <ArrowLeftIcon size={16} color="currentColor" />
-          <span>Back</span>
-        </motion.button>
+        <BackButton onClick={onBack} aria-label="Back to Hub" />
 
         <div className="flex items-center gap-1.5">
           <LetterIcon size={18} color="#FF7597" />

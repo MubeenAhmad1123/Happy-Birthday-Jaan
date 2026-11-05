@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import ScreenShell from '@/components/ScreenShell'
+import BackButton from '@/components/BackButton'
 import AnimatedSticker from '@/components/AnimatedSticker'
 import { ArrowLeftIcon, ArrowRightIcon, ScaleIcon } from '@/components/Icons'
 import { buzz } from '@/lib/feedback'
@@ -24,19 +25,7 @@ export default function LawyerDreamScreen({
     >
       {/* Top Header */}
       <div className="w-full max-w-sm mx-auto flex items-center justify-between z-10 pt-1">
-        <motion.button
-          whileTap={{ scale: 0.94 }}
-          onClick={() => {
-            buzz(10)
-            onBack()
-          }}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-[#1E1A20] shadow-md text-white border border-rose-300/40 hover:bg-black active:scale-95 transition-all cursor-pointer"
-          style={{ fontFamily: 'var(--font-baloo)' }}
-          aria-label="Back to Reasons"
-        >
-          <ArrowLeftIcon size={16} color="#FFFFFF" />
-          <span>Back</span>
-        </motion.button>
+        <BackButton onClick={onBack} aria-label="Back to Reasons" />
 
         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white shadow-sm border border-rose-200">
           <ScaleIcon size={16} color="var(--deep-rose)" />

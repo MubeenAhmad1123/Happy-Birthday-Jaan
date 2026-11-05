@@ -35,6 +35,9 @@
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
   pointer-events: none;
@@ -50,13 +53,15 @@
 }
 
 .birthday-animation-container .flag__birthday .flag__left {
-  width: clamp(140px, 42vw, 240px);
-  transform: rotate(-10deg) translate(-20px, 15px);
+  width: clamp(120px, 38vw, 220px);
+  max-width: 48vw;
+  transform: rotate(-10deg) translate(0px, 15px);
 }
 
 .birthday-animation-container .flag__birthday .flag__right {
-  width: clamp(140px, 42vw, 240px);
-  transform: rotate(10deg) translate(20px, 15px) scaleX(-1);
+  width: clamp(120px, 38vw, 220px);
+  max-width: 48vw;
+  transform: rotate(10deg) translate(0px, 15px) scaleX(-1);
 }
 
 /* ── Main Content Area ── */
@@ -70,18 +75,20 @@
   z-index: 5;
   margin: auto 0;
   padding-top: 3.5rem;
+  overflow-x: hidden;
 }
 
 /* ── Bouncy "Happy Birthday" Title ── */
 .birthday-animation-container .bday_title {
   position: relative;
   width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: 'Titan One', sans-serif;
-  font-size: clamp(2rem, 9vw, 2.7rem);
-  letter-spacing: 2px;
+  font-size: clamp(1.5rem, 7.2vw, 2.5rem);
+  letter-spacing: 1px;
   line-height: 1.15;
   perspective: 1000px;
 }
