@@ -34,6 +34,12 @@ export default function ReasonsScreen({
   const [currentPage, setCurrentPage] = useState(1)
   // Map of card index -> isFlipped
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({})
+  // Full-screen photo lightbox zoom
+  const [zoomedPhoto, setZoomedPhoto] = useState<{
+    url: string
+    number: number
+    text: string
+  } | null>(null)
 
   // Slice cards for the active page
   const startIndex = (currentPage - 1) * CARDS_PER_PAGE
@@ -167,8 +173,8 @@ export default function ReasonsScreen({
                   onClick={() => handleCardClick(globalIndex)}
                   className={`relative select-none cursor-pointer focus:outline-none touch-manipulation transition-transform ${
                     isSpecial25 && isFinalPage
-                      ? 'w-full max-w-[320px] h-[220px] sm:h-[240px]'
-                      : 'w-full h-[162px] sm:h-[178px]'
+                      ? 'w-full max-w-[320px] h-[240px] sm:h-[260px]'
+                      : 'w-full h-[184px] sm:h-[198px]'
                   }`}
                   style={{
                     perspective: '1000px',
@@ -204,6 +210,12 @@ export default function ReasonsScreen({
                           : '0 8px 24px rgba(0,0,0,0.5)',
                       }}
                     >
+                      {/* Subtle Romantic Photo Silhouette on Front */}
+                      <div
+                        className="absolute inset-0 bg-cover bg-center opacity-15 filter blur-xs scale-105 pointer-events-none"
+                        style={{ backgroundImage: `url(${photoUrl})` }}
+                      />
+
                       {/* Romantic Glow Aura */}
                       <div
                         className="absolute inset-0 pointer-events-none opacity-40 filter blur-md"
@@ -297,19 +309,29 @@ export default function ReasonsScreen({
                         boxShadow: '0 12px 32px rgba(0, 0, 0, 0.7)',
                       }}
                     >
-                      {/* Top Photo Thumbnail */}
+                      {/* Top Photo Thumbnail with Tap to Enlarge */}
                       <div
-                        className={`relative w-full rounded-xl overflow-hidden border border-white/35 shadow-md shrink-0 ${
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          buzz(12)
+                          setZoomedPhoto({
+                            url: photoUrl,
+                            number: cardNumber,
+                            text: item.text,
+                          })
+                        }}
+                        className={`relative w-full rounded-xl overflow-hidden border border-white/40 shadow-md shrink-0 cursor-zoom-in group ${
                           isSpecial25 && isFinalPage
-                            ? 'h-[110px] sm:h-[125px]'
-                            : 'h-[74px] sm:h-[82px]'
+                            ? 'h-[135px] sm:h-[155px]'
+                            : 'h-[96px] sm:h-[106px]'
                         }`}
+                        title="Tap to see full photo"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={photoUrl}
                           alt={`Memory #${cardNumber}`}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-[center_18%] group-hover:scale-105 transition-transform duration-300"
                           loading="lazy"
                         />
                         {/* Gradient tint so card blends seamlessly */}
@@ -323,6 +345,11 @@ export default function ReasonsScreen({
                           >
                             #{cardNumber}
                           </span>
+                        </div>
+
+                        {/* Zoom Pill on Photo */}
+                        <div className="absolute top-1 right-1 px-1.5 py-0.5 rounded-md bg-black/60 backdrop-blur-sm border border-white/20 flex items-center gap-0.5">
+                          <span className="text-[10px] leading-none">🔍</span>
                         </div>
                       </div>
 
@@ -459,6 +486,80 @@ export default function ReasonsScreen({
           </div>
         )}
       </div>
+      {/* ── 📸 FULL-SCREEN PHOTO LIGHTBOX MODAL ── */}
+      <AnimatePresence>
+        {zoomedPhoto && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setZoomedPhoto(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md select-none touch-manipulation"
+          >
+            <motion.div
+              initial={{ scale: 0.88, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.88, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-[380px] max-h-[92vh] rounded-3xl p-3.5 sm:p-4 flex flex-col items-center gap-3 overflow-hidden border shadow-2xl"
+              style={{
+                background: 'linear-gradient(155deg, #221422 0%, #140C16 100%)',
+                borderColor: 'rgba(255, 117, 151, 0.45)',
+                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(229,107,138,0.25)',
+              }}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setZoomedPhoto(null)}
+                className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white font-bold flex items-center justify-center border border-white/30 transition-colors cursor-pointer"
+                aria-label="Close photo"
+              >
+                ✕
+              </button>
+
+              {/* Photo Badge */}
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-[#FFD97D]/50 shadow-sm mt-0.5">
+                <SparkleIcon size={12} color="#FFD97D" />
+                <span
+                  className="text-xs font-bold uppercase tracking-widest text-[#FFD97D]"
+                  style={{ fontFamily: 'var(--font-baloo)' }}
+                >
+                  Reason #{zoomedPhoto.number} 🤍
+                </span>
+                <SparkleIcon size={12} color="#FFD97D" />
+              </div>
+
+              {/* Uncropped High-Res Photo Container */}
+              <div className="relative w-full flex items-center justify-center overflow-hidden rounded-2xl border border-white/25 shadow-lg bg-black/40 max-h-[56vh]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={zoomedPhoto.url}
+                  alt={`Reason #${zoomedPhoto.number}`}
+                  className="max-h-[55vh] w-auto max-w-full object-contain rounded-xl"
+                />
+              </div>
+
+              {/* Reason Text in Full */}
+              <div className="w-full text-center px-2 py-1 overflow-y-auto max-h-[22vh]">
+                <p
+                  className="text-lg sm:text-xl font-bold text-white leading-relaxed"
+                  style={{ fontFamily: 'var(--font-caveat)' }}
+                >
+                  {zoomedPhoto.text}
+                </p>
+              </div>
+
+              <span
+                className="text-[11px] text-rose-300/70 font-medium"
+                style={{ fontFamily: 'var(--font-baloo)' }}
+              >
+                Tap anywhere to close
+              </span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </ScreenShell>
   )
 }

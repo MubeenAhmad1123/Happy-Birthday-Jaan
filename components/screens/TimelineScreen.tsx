@@ -83,7 +83,33 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
               {/* Date node icon circle */}
               <div className="w-9 h-9 rounded-full bg-white border-2 border-rose-400 flex items-center justify-center text-sm shadow-md z-10 shrink-0 text-rose-500">
                 <SparkleIcon size={16} color="var(--rose)" />
-              </div>
+                {/* Rose Garden Walk Couple Highlight (spare-21) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative flex flex-col items-center p-3 rounded-3xl bg-white border-2 border-rose-200 shadow-xl my-2 text-center"
+        >
+          <div className="w-full h-44 rounded-2xl overflow-hidden relative shadow-md">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/spare-21-rose-garden-couple.jpg"
+              alt="Maria and Mubeen in Rose Garden"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-2 inset-x-2 text-center text-xs font-bold text-white drop-shadow">
+              Hamara Rose Garden Lamha 🤍
+            </div>
+          </div>
+          <p
+            className="text-base text-deep-rose font-bold mt-2"
+            style={{ fontFamily: 'var(--font-caveat)' }}
+          >
+            Yeh muskurahat hamesha qaim rahe…
+          </p>
+        </motion.div>
+      </div>
 
               {/* Card Content */}
               <div
@@ -97,7 +123,33 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
                     {item.date}
                   </span>
                   <HeartIcon size={14} color="var(--rose)" />
-                </div>
+                  {/* Rose Garden Walk Couple Highlight (spare-21) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative flex flex-col items-center p-3 rounded-3xl bg-white border-2 border-rose-200 shadow-xl my-2 text-center"
+        >
+          <div className="w-full h-44 rounded-2xl overflow-hidden relative shadow-md">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/spare-21-rose-garden-couple.jpg"
+              alt="Maria and Mubeen in Rose Garden"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-2 inset-x-2 text-center text-xs font-bold text-white drop-shadow">
+              Hamara Rose Garden Lamha 🤍
+            </div>
+          </div>
+          <p
+            className="text-base text-deep-rose font-bold mt-2"
+            style={{ fontFamily: 'var(--font-caveat)' }}
+          >
+            Yeh muskurahat hamesha qaim rahe…
+          </p>
+        </motion.div>
+      </div>
 
                 <p
                   className="text-base sm:text-lg leading-snug mb-3 text-[#2D2329]"
@@ -114,12 +166,90 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
                     size={92}
                     animation="float"
                   />
-                </div>
-              </div>
+                  {/* Rose Garden Walk Couple Highlight (spare-21) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative flex flex-col items-center p-3 rounded-3xl bg-white border-2 border-rose-200 shadow-xl my-2 text-center"
+        >
+          <div className="w-full h-44 rounded-2xl overflow-hidden relative shadow-md">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/spare-21-rose-garden-couple.jpg"
+              alt="Maria and Mubeen in Rose Garden"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-2 inset-x-2 text-center text-xs font-bold text-white drop-shadow">
+              Hamara Rose Garden Lamha 🤍
+            </div>
+          </div>
+          <p
+            className="text-base text-deep-rose font-bold mt-2"
+            style={{ fontFamily: 'var(--font-caveat)' }}
+          >
+            Yeh muskurahat hamesha qaim rahe…
+          </p>
+        </motion.div>
+      </div>
+                {/* Rose Garden Walk Couple Highlight (spare-21) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative flex flex-col items-center p-3 rounded-3xl bg-white border-2 border-rose-200 shadow-xl my-2 text-center"
+        >
+          <div className="w-full h-44 rounded-2xl overflow-hidden relative shadow-md">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/spare-21-rose-garden-couple.jpg"
+              alt="Maria and Mubeen in Rose Garden"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-2 inset-x-2 text-center text-xs font-bold text-white drop-shadow">
+              Hamara Rose Garden Lamha 🤍
+            </div>
+          </div>
+          <p
+            className="text-base text-deep-rose font-bold mt-2"
+            style={{ fontFamily: 'var(--font-caveat)' }}
+          >
+            Yeh muskurahat hamesha qaim rahe…
+          </p>
+        </motion.div>
+      </div>
             </motion.div>
           )
         })}
 
+        {/* Rose Garden Walk Couple Highlight (spare-21) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative flex flex-col items-center p-3 rounded-3xl bg-white border-2 border-rose-200 shadow-xl my-2 text-center"
+        >
+          <div className="w-full h-44 rounded-2xl overflow-hidden relative shadow-md">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/spare-21-rose-garden-couple.jpg"
+              alt="Maria and Mubeen in Rose Garden"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-2 inset-x-2 text-center text-xs font-bold text-white drop-shadow">
+              Hamara Rose Garden Lamha 🤍
+            </div>
+          </div>
+          <p
+            className="text-base text-deep-rose font-bold mt-2"
+            style={{ fontFamily: 'var(--font-caveat)' }}
+          >
+            Yeh muskurahat hamesha qaim rahe…
+          </p>
+        </motion.div>
         {/* Rose Garden Walk Couple Highlight (spare-21) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}

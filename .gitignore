@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+qa-screenshots/
+qa-audit-report.json
 
 # next.js
 /.next/
