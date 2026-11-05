@@ -357,7 +357,7 @@ export default function HubScreen({
       <div className="w-full my-auto z-10 px-1 py-3 flex flex-col items-center">
         {/* Subtle romantic back glow */}
         <div
-          className="w-full max-w-[390px] p-4 sm:p-5 rounded-[32px] border border-white/15 shadow-2xl relative overflow-hidden backdrop-blur-sm"
+          className="w-full max-w-[425px] p-3.5 sm:p-4 px-2 sm:px-3 rounded-[32px] border border-white/15 shadow-2xl relative overflow-hidden backdrop-blur-sm"
           style={{
             background: 'linear-gradient(155deg, rgba(34, 22, 36, 0.85) 0%, rgba(18, 14, 20, 0.95) 100%)',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
@@ -372,7 +372,7 @@ export default function HubScreen({
             }}
           />
 
-          <div className="relative z-10 flex items-end justify-center gap-2.5 sm:gap-4.5 w-full">
+          <div className="relative z-10 flex items-end justify-center gap-2 sm:gap-3 w-full">
             {/* Gift 1: Pink Box */}
             <GiftBox
               variant="pink"
@@ -423,23 +423,23 @@ export default function HubScreen({
         </div>
       </div>
 
-      {/* ── BOTTOM SECTION: Cute Character with Speech Bubble ("i love you!") ── */}
+      {/* ── BOTTOM SECTION: Cute Hugging Characters with Speech Bubble ("i love you!") ── */}
       <div className="w-full flex flex-col items-center z-20 px-2 mt-auto pb-1">
         <div className="w-full flex items-center justify-center gap-3">
-          {/* Tappable Bubu Character */}
+          {/* Tappable Dudu-Bubu Hugging Character */}
           <motion.div
-            animate={isBouncing ? { scale: [1, 1.2, 1] } : { scale: 1 }}
+            animate={isBouncing ? { scale: [1, 1.18, 1] } : { scale: 1 }}
             transition={{ duration: 0.25 }}
             onClick={handleBubuTap}
             className="cursor-pointer select-none p-1 rounded-full touch-manipulation shrink-0"
             role="button"
-            aria-label="Bubu se baat karo"
+            aria-label="Bubu & Dudu se baat karo"
             tabIndex={0}
           >
             <AnimatedSticker
-              name="bubu-maria-base"
+              name="dudu-bubu-hug"
               fallbackType="dudu-bubu-hug"
-              size={64}
+              size={84}
               priority={true}
               animation="bounce"
             />

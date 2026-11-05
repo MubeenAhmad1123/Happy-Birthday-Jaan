@@ -101,8 +101,8 @@ export default function FinaleScreen({
         <AnimatedSticker
           name="dudu-bubu-hug"
           fallbackType="dudu-bubu-hug"
-          size={165}
-          animation="float"
+          size={185}
+          animation="breathe"
         />
 
         {/* Message Card */}

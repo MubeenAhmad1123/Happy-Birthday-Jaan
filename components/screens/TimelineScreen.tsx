@@ -111,7 +111,7 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
                   <AnimatedSticker
                     name={charType}
                     fallbackType={charType}
-                    size={75}
+                    size={92}
                     animation="float"
                   />
                 </div>

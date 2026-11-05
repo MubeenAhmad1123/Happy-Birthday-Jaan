@@ -37,6 +37,7 @@ interface CharacterStickerProps {
 
 // Stickers that are currently generated as full-resolution transparent PNGs
 const REAL_PNG_TYPES = new Set([
+  'dudu-bubu-hug',
   'dudu-bubu-box',
   'bubu-sad',
   'dudu-bubu-chai',
