@@ -6,6 +6,9 @@ import path from 'path'
 
 export const dynamic = 'force-dynamic'
 
+// High-speed in-memory buffer cache to eliminate disk I/O on repeat requests
+const photoCache = new Map<string, Buffer>()
+
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -30,24 +33,30 @@ export async function GET(
     cleanId = `${cleanId}.webp`
   }
 
-  // Look for photo across possible execution root directories
-  const candidatePaths = [
-    path.resolve(process.cwd(), 'assets-private', 'assets', 'photos', cleanId),
-    path.resolve(process.cwd(), 'birthday-site', 'assets-private', 'assets', 'photos', cleanId),
-    path.join(__dirname, '..', '..', '..', '..', 'assets-private', 'assets', 'photos', cleanId),
-    path.join(__dirname, '..', '..', '..', '..', '..', 'assets-private', 'assets', 'photos', cleanId),
-    path.resolve(process.cwd(), '.next', 'server', 'assets-private', 'assets', 'photos', cleanId),
-  ]
+  // 1. Fast in-memory cache hit
+  let fileBuffer = photoCache.get(cleanId) || null
 
-  let fileBuffer: Buffer | null = null
-  for (const p of candidatePaths) {
-    try {
-      fileBuffer = await fs.readFile(/* turbopackIgnore: true */ p)
-      if (fileBuffer && fileBuffer.length > 0) {
-        break
+  if (!fileBuffer) {
+    // Look for photo across possible execution root directories
+    const candidatePaths = [
+      path.resolve(process.cwd(), 'assets-private', 'assets', 'photos', cleanId),
+      path.resolve(process.cwd(), 'birthday-site', 'assets-private', 'assets', 'photos', cleanId),
+      path.join(__dirname, '..', '..', '..', '..', 'assets-private', 'assets', 'photos', cleanId),
+      path.join(__dirname, '..', '..', '..', '..', '..', 'assets-private', 'assets', 'photos', cleanId),
+      path.resolve(process.cwd(), '.next', 'server', 'assets-private', 'assets', 'photos', cleanId),
+    ]
+
+    for (const p of candidatePaths) {
+      try {
+        const buf = await fs.readFile(/* turbopackIgnore: true */ p)
+        if (buf && buf.length > 0) {
+          fileBuffer = buf
+          photoCache.set(cleanId, buf)
+          break
+        }
+      } catch {
+        // try next candidate
       }
-    } catch {
-      // try next candidate
     }
   }
 
@@ -56,7 +65,7 @@ export async function GET(
       status: 200,
       headers: {
         'Content-Type': 'image/webp',
-        'Cache-Control': 'private, max-age=3600, stale-while-revalidate=86400',
+        'Cache-Control': 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400',
       },
     })
   }

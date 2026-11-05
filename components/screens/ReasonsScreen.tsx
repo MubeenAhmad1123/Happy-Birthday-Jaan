@@ -137,18 +137,18 @@ export default function ReasonsScreen({
       </div>
 
       {/* ── 2 COLUMNS × 3 ROWS GRID (Total 6 Cards Per Screen) ── */}
-      <div className="w-full my-auto z-10 px-1 py-1 flex flex-col items-center">
+      <div className="w-full max-w-[430px] my-auto z-10 px-1 py-1 flex flex-col items-center overflow-x-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={`page-${currentPage}`}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.28, ease: 'easeOut' }}
-            className={`w-full max-w-[420px] mx-auto ${
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.97 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className={`w-full max-w-[420px] mx-auto min-w-0 ${
               isFinalPage && activePageReasons.length === 1
                 ? 'flex flex-col items-center justify-center'
-                : 'grid grid-cols-2 gap-2.5 sm:gap-3'
+                : 'grid grid-cols-2 gap-2 sm:gap-2.5'
             }`}
           >
             {activePageReasons.map((item, idx) => {

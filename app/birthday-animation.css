@@ -1,6 +1,4 @@
 /* ── Birthday Gift Animation Styles (Scoped under .birthday-animation-container) ── */
-@import url('https://fonts.googleapis.com/css2?family=Coiny&family=Nerko+One&family=Sriracha&family=Titan+One&display=swap');
-
 .birthday-animation-container {
   --color-pink: #FEECEA;
   --color-white: #FFFFFF;

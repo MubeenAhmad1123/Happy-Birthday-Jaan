@@ -181,6 +181,19 @@ export default function HubScreen({
     }, 25)
   }
 
+  // Proactive background preloading of photos during Hub screen idle time
+  useEffect(() => {
+    const preloadPhotos = () => {
+      for (let i = 1; i <= 25; i++) {
+        const num = String(i).padStart(2, '0')
+        const img = new Image()
+        img.src = `/api/photos/${num}`
+      }
+    }
+    const timer = setTimeout(preloadPhotos, 1000)
+    return () => clearTimeout(timer)
+  }, [])
+
   useEffect(() => {
     return () => {
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current)

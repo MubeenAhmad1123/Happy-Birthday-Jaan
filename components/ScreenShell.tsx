@@ -80,10 +80,10 @@ export default function ScreenShell({
       style={{
         ...themeStyle,
         boxSizing: 'border-box',
-        paddingLeft: 'max(20px, env(safe-area-inset-left, 0px))',
-        paddingRight: 'max(20px, env(safe-area-inset-right, 0px))',
-        paddingTop: 'max(20px, env(safe-area-inset-top, 0px))',
-        paddingBottom: 'max(24px, env(safe-area-inset-bottom, 0px))',
+        paddingLeft: 'max(14px, env(safe-area-inset-left, 0px))',
+        paddingRight: 'max(14px, env(safe-area-inset-right, 0px))',
+        paddingTop: 'max(16px, env(safe-area-inset-top, 0px))',
+        paddingBottom: 'max(20px, env(safe-area-inset-bottom, 0px))',
       }}
     >
       {/* Subtle floating ambient particles */}

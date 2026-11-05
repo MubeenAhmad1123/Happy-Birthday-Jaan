@@ -34,6 +34,19 @@ async function checkOverflow(page, screenName, vp) {
       if (rect.right > vw + 1.5 || rect.width > vw + 1.5) {
         // filter out svg defs or hidden templates
         if (el.tagName === 'DEFS' || el.tagName === 'defs' || el.offsetParent === null) return;
+        // ignore intentional horizontal scroll containers like thumbnail strips
+        let p = el.parentElement;
+        let isScrollChild = false;
+        while (p && p !== document.body) {
+          const s = window.getComputedStyle(p);
+          if (s.overflowX === 'auto' || s.overflowX === 'scroll') {
+            isScrollChild = true;
+            break;
+          }
+          p = p.parentElement;
+        }
+        if (isScrollChild) return;
+
         overflowingElements.push({
           tagName: el.tagName,
           className: el.className?.toString?.() || '',
@@ -142,11 +155,11 @@ async function runQA() {
       }
       await page.screenshot({ path: path.join(SCREENSHOT_DIR, `${vp.name}_2_birthday.png`) });
 
-      // Click Proceed button ("Aage Chalo" or "Tap karo")
-      const tapKaroBtn = await page.getByRole('button', { name: /Aage Chalo|Tap karo|Click here/i }).first();
+      // Click Proceed button ("Aage Chalo")
+      const tapKaroBtn = await page.getByRole('button', { name: /Aage Chalo/i }).first();
       if (tapKaroBtn) {
         await tapKaroBtn.click();
-        await page.waitForTimeout(1200);
+        await page.waitForTimeout(1500);
       }
 
       // ── SCREEN 3: CRYSTAL HEART SCREEN ──
@@ -293,7 +306,7 @@ async function runQA() {
       ov = await checkOverflow(page, 'LawyerDreamScreen', vp);
       console.log(`    ⚖️ LawyerDreamScreen: overflow=${ov.hasOverflow}`);
       await page.screenshot({ path: path.join(SCREENSHOT_DIR, `${vp.name}_6_lawyer.png`) });
-      const nextLawyerBtn = await page.getByRole('button', { name: /Ek aur baat|Aage/i }).first();
+      const nextLawyerBtn = await page.getByRole('button', { name: /Azaadi ki roshni dekho|Azaadi|Ek aur baat|Aage/i }).first();
       if (nextLawyerBtn) {
         await nextLawyerBtn.click();
         await page.waitForTimeout(1000);
@@ -304,7 +317,7 @@ async function runQA() {
       ov = await checkOverflow(page, 'FreedomScreen', vp);
       console.log(`    🕊️ FreedomScreen: overflow=${ov.hasOverflow}`);
       await page.screenshot({ path: path.join(SCREENSHOT_DIR, `${vp.name}_7_freedom.png`) });
-      const nextFreedomBtn = await page.getByRole('button', { name: /Hamari kahani|Aage/i }).first();
+      const nextFreedomBtn = await page.getByRole('button', { name: /Hamari kahani dekho|Hamari kahani|Aage/i }).first();
       if (nextFreedomBtn) {
         await nextFreedomBtn.click();
         await page.waitForTimeout(1000);
@@ -315,7 +328,7 @@ async function runQA() {
       ov = await checkOverflow(page, 'TimelineScreen', vp);
       console.log(`    📅 TimelineScreen: overflow=${ov.hasOverflow}`);
       await page.screenshot({ path: path.join(SCREENSHOT_DIR, `${vp.name}_8_timeline.png`) });
-      const nextTimelineBtn = await page.getByRole('button', { name: /Aakhri Paighaam|Aage/i }).first();
+      const nextTimelineBtn = await page.getByRole('button', { name: /Aakhri paighaam dekho|Aakhri Paighaam|Aakhri|Aage/i }).first();
       if (nextTimelineBtn) {
         await nextTimelineBtn.click();
         await page.waitForTimeout(1000);
