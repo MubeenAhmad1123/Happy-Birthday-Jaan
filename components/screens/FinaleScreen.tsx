@@ -151,7 +151,7 @@ export default function FinaleScreen({
           className="btn-secondary flex-1 text-sm sm:text-base flex items-center justify-center gap-1.5 shadow-md"
         >
           <HeartIcon size={16} color="var(--rose)" />
-          <span>Wapas Hub</span>
+          <span>Back to Hub</span>
         </motion.button>
       </motion.div>
     </ScreenShell>

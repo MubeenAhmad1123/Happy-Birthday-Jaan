@@ -44,10 +44,10 @@ export default function CassetteScreen({
           }}
           className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 shadow-sm text-white border border-white/20 hover:bg-white/20 transition-all cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
-          aria-label="Wapas Hub"
+          aria-label="Back to Hub"
         >
           <ArrowLeftIcon size={16} color="currentColor" />
-          <span>Wapas</span>
+          <span>Back</span>
         </motion.button>
 
         <div className="flex items-center gap-1.5">

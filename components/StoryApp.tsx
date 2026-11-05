@@ -187,6 +187,7 @@ export default function StoryApp({
               <ReasonsScreen
                 reasons={content.reasons}
                 onNext={() => setCurrentScreen(6)}
+                onBack={() => setCurrentScreen(4)}
               />
             </motion.div>
           )}

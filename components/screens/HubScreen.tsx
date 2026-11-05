@@ -372,7 +372,7 @@ export default function HubScreen({
             }}
           />
 
-          <div className="relative z-10 flex items-end justify-center gap-2 sm:gap-3 w-full">
+          <div className="relative z-10 flex flex-row flex-nowrap items-end justify-center gap-1.5 sm:gap-3 w-full">
             {/* Gift 1: Pink Box */}
             <GiftBox
               variant="pink"
@@ -493,20 +493,7 @@ export default function HubScreen({
                 <span>One last thing (25 Reasons)</span>
                 <ArrowRightIcon size={18} color="#FFFFFF" />
               </motion.button>
-            ) : (
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.8 }}
-                onClick={() => {
-                  buzz(10)
-                  onProceedToReasons()
-                }}
-                className="text-xs underline font-bold cursor-pointer transition-colors"
-                style={{ fontFamily: 'var(--font-baloo)', color: '#FFD97D' }}
-              >
-                (Ya seedha 25 Reasons dekho)
-              </motion.button>
-            )}
+            ) : null}
           </AnimatePresence>
         </div>
       </div>

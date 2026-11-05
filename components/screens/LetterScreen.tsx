@@ -91,10 +91,10 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
           }}
           className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white/10 shadow-sm text-white border border-white/20 hover:bg-white/20 transition-all cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
-          aria-label="Wapas Hub"
+          aria-label="Back to Hub"
         >
           <ArrowLeftIcon size={16} color="currentColor" />
-          <span>Wapas</span>
+          <span>Back</span>
         </motion.button>
 
         <div className="flex items-center gap-1.5">
@@ -228,16 +228,6 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
                 maxHeight: 'calc(78dvh - 50px)',
               }}
             >
-              {/* Romantic Bubu & Dudu Letter Card Image */}
-              <div className="w-full mb-3 rounded-2xl overflow-hidden border border-rose-200/90 shadow-md">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/characters/hub-letter-card.jpg"
-                  alt="Bubu my love"
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-
               <div
                 className="whitespace-pre-wrap text-[#2D2329]"
                 style={{

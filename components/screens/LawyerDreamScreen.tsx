@@ -30,12 +30,12 @@ export default function LawyerDreamScreen({
             buzz(10)
             onBack()
           }}
-          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-white shadow-sm text-deep-rose border border-rose-200/80 cursor-pointer"
+          className="px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 bg-[#1E1A20] shadow-md text-white border border-rose-300/40 hover:bg-black active:scale-95 transition-all cursor-pointer"
           style={{ fontFamily: 'var(--font-baloo)' }}
-          aria-label="Wapas reasons pe jao"
+          aria-label="Back to Reasons"
         >
-          <ArrowLeftIcon size={16} color="currentColor" />
-          <span>Wapas</span>
+          <ArrowLeftIcon size={16} color="#FFFFFF" />
+          <span>Back</span>
         </motion.button>
 
         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white shadow-sm border border-rose-200">
