@@ -68,10 +68,10 @@ export default function OpenerScreen({ onYes }: OpenerScreenProps) {
               transition={{ duration: 0.35 }}
               className="flex flex-col items-center gap-6 w-full max-w-sm text-center"
             >
-              {/* Panda peeking from box */}
+              {/* Forehead kiss & sweet embrace sticker */}
               <AnimatedSticker
-                name="dudu-bubu-box"
-                fallbackType="dudu-bubu-box"
+                name="dudu-bubu-kiss"
+                fallbackType="dudu-bubu-kiss"
                 size={160}
                 priority={true}
                 animation="float"

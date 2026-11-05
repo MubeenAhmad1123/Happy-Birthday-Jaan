@@ -371,6 +371,16 @@ export default function ReasonsScreen({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             className="w-full flex flex-col items-center gap-2"
           >
+            {/* Playful Dudu-Bubu Celebration Sticker */}
+            <div className="flex items-center justify-center -mb-1">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/characters/dudu-bubu-playful.png"
+                alt="25 Reasons Completed"
+                className="w-20 sm:w-24 h-auto object-contain filter drop-shadow-md animate-bounce"
+              />
+            </div>
+
             <motion.button
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.02 }}

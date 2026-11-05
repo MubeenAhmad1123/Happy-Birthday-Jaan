@@ -60,15 +60,15 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
           const charType: CharacterType =
             (item.character as CharacterType) ||
             (idx === 0
-              ? 'dudu-bubu-box'
+              ? 'dudu-bubu-hands'
               : idx === 1
-              ? 'dudu-bubu-nashta'
+              ? 'dudu-bubu-cafe-date'
               : idx === 2
               ? 'dudu-bubu-flowers'
-              : idx === 5
-              ? 'bubu-sad'
-              : idx === 7
-              ? 'dudu-bubu-bday'
+              : idx === 3
+              ? 'dudu-bubu-couch-kiss'
+              : idx === 4
+              ? 'dudu-bubu-stargazing'
               : 'dudu-bubu-hug')
 
           return (
@@ -119,6 +119,33 @@ export default function TimelineScreen({ timeline, onNext }: TimelineScreenProps
             </motion.div>
           )
         })}
+
+        {/* Rose Garden Walk Couple Highlight (spare-21) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative flex flex-col items-center p-3 rounded-3xl bg-white border-2 border-rose-200 shadow-xl my-2 text-center"
+        >
+          <div className="w-full h-44 rounded-2xl overflow-hidden relative shadow-md">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/spare-21-rose-garden-couple.jpg"
+              alt="Maria and Mubeen in Rose Garden"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-2 inset-x-2 text-center text-xs font-bold text-white drop-shadow">
+              Hamara Rose Garden Lamha 🤍
+            </div>
+          </div>
+          <p
+            className="text-base text-deep-rose font-bold mt-2"
+            style={{ fontFamily: 'var(--font-caveat)' }}
+          >
+            Yeh muskurahat hamesha qaim rahe…
+          </p>
+        </motion.div>
       </div>
 
       {/* Bottom Button to Finale */}

@@ -42,61 +42,32 @@ export default function FreedomScreen({
 
       {/* Main Content */}
       <div className="w-full max-w-sm mx-auto flex flex-col items-center my-auto gap-4 text-center py-2 z-10">
-        {/* Animated Freedom Sticker */}
+        {/* Animated Freedom Sticker - Authentic Dudu & Bubu Nature Picnic */}
         <AnimatedSticker
-          name="dudu-bubu-freedom"
-          fallbackType="dudu-bubu-freedom"
-          size={135}
+          name="dudu-bubu-nature-picnic"
+          fallbackType="dudu-bubu-nature-picnic"
+          size={130}
           animation="float"
         />
 
-        {/* Photos 18 & 19 Side-by-Side Polaroids */}
+        {/* Hand-in-Hand Garden Walk Hero Card (spare-20-garden-walk) */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.15, duration: 0.4 }}
-          className="grid grid-cols-2 gap-3 w-full"
+          className="w-full p-2 bg-white border border-emerald-200 shadow-lg rounded-2xl"
         >
-          {/* Photo 18 (Meadow) */}
-          <div className="p-2.5 bg-white border border-emerald-200 shadow-md rounded-2xl transform -rotate-2 hover:rotate-0 transition-transform">
-            <div className="w-full h-36 rounded-xl overflow-hidden bg-emerald-50 flex items-center justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/api/photos/18"
-                alt="Green Meadow Freedom"
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.currentTarget as HTMLElement).style.display = 'none'
-                }}
-              />
+          <div className="w-full h-44 rounded-xl overflow-hidden bg-emerald-50 relative">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/characters/spare-20-garden-walk.jpg"
+              alt="Maria & Mubeen walking hand-in-hand"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-1.5 inset-x-2 text-center text-xs font-bold text-white drop-shadow">
+              Saath Saath • Har Raste Pe 🤍
             </div>
-            <p
-              className="text-xs text-emerald-700 font-bold mt-1.5 text-center"
-              style={{ fontFamily: 'var(--font-baloo)' }}
-            >
-              Khuli Hawa
-            </p>
-          </div>
-
-          {/* Photo 19 (Sunrise Dupatta) */}
-          <div className="p-2.5 bg-white border border-rose-200 shadow-md rounded-2xl transform rotate-2 hover:rotate-0 transition-transform">
-            <div className="w-full h-36 rounded-xl overflow-hidden bg-rose-50 flex items-center justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/api/photos/19"
-                alt="Sunrise Flight"
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.currentTarget as HTMLElement).style.display = 'none'
-                }}
-              />
-            </div>
-            <p
-              className="text-xs text-deep-rose font-bold mt-1.5 text-center"
-              style={{ fontFamily: 'var(--font-baloo)' }}
-            >
-              Nayi Subah
-            </p>
           </div>
         </motion.div>
 

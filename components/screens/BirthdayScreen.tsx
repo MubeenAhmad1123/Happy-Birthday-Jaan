@@ -313,22 +313,13 @@ export default function BirthdayScreen({
               <div className="letter">
                 <div className="title__letter">To Maria 🤍</div>
                 <div className="content__letter">
-                  {/* Cute Gifs / Cat */}
-                  <div className="flex items-center justify-center gap-2">
+                  {/* Authentic Dudu wishing Bubu with Birthday Roses */}
+                  <div className="flex flex-col items-center justify-center mb-3">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="/birthday-gift/love.png"
-                      alt="Love"
-                      className="love-gif"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none'
-                      }}
-                    />
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      id="mewmew"
-                      src="/birthday-gift/mewmew.gif"
-                      alt="Cute cat"
+                      src="/characters/dudu-bubu-flowers-real.jpg"
+                      alt="Dudu wishing Bubu with fresh roses"
+                      className="w-36 h-36 sm:w-40 sm:h-40 object-cover rounded-2xl shadow-lg border-2 border-rose-300"
                     />
                   </div>
 

@@ -28,6 +28,17 @@ export type CharacterType =
   | 'dudu-bubu-letter'
   | 'dudu-bubu-cassette'
   | 'dudu-bubu-music'
+  | 'dudu-bubu-playful'
+  | 'dudu-bubu-kiss'
+  | 'dudu-bubu-blanket'
+  | 'dudu-bubu-hands'
+  | 'dudu-bubu-night-cuddle'
+  | 'dudu-bubu-nature-picnic'
+  | 'dudu-bubu-cafe-date'
+  | 'dudu-bubu-stargazing'
+  | 'dudu-bubu-music-earphones'
+  | 'dudu-bubu-couch-kiss'
+  | 'dudu-bubu-journey-strip'
 
 interface CharacterStickerProps {
   type: CharacterType
@@ -35,16 +46,30 @@ interface CharacterStickerProps {
   className?: string
 }
 
-// Stickers that are currently generated as full-resolution transparent PNGs
-const REAL_PNG_TYPES = new Set([
-  'dudu-bubu-hug',
-  'dudu-bubu-box',
-  'bubu-sad',
-  'dudu-bubu-chai',
-  'bubu-maria-base',
-  'dudu-mubi-base',
-  'dudu-bubu-box-alt',
-])
+// Full-resolution authentic images & transparent stickers
+const REAL_IMAGE_MAP: Record<string, string> = {
+  'dudu-bubu-hug': '/characters/dudu-bubu-hug.png',
+  'dudu-bubu-box': '/characters/dudu-bubu-box.png',
+  'bubu-sad': '/characters/bubu-sad.png',
+  'dudu-bubu-chai': '/characters/dudu-bubu-chai.png',
+  'bubu-maria-base': '/characters/bubu-maria-base.png',
+  'dudu-mubi-base': '/characters/dudu-mubi-base.png',
+  'dudu-bubu-box-alt': '/characters/dudu-bubu-box-alt.png',
+  'dudu-bubu-lawyer': '/characters/dudu-bubu-lawyer.png',
+  'panda-lawyer': '/characters/dudu-bubu-lawyer.png',
+  'dudu-bubu-playful': '/characters/dudu-bubu-playful.png',
+  'dudu-bubu-kiss': '/characters/dudu-bubu-kiss.png',
+  'dudu-bubu-blanket': '/characters/dudu-bubu-blanket.png',
+  'dudu-bubu-hands': '/characters/dudu-bubu-hands.png',
+  'dudu-bubu-flowers': '/characters/dudu-bubu-flowers-real.jpg',
+  'dudu-bubu-night-cuddle': '/characters/dudu-bubu-night-cuddle.jpg',
+  'dudu-bubu-nature-picnic': '/characters/dudu-bubu-nature-picnic.jpg',
+  'dudu-bubu-cafe-date': '/characters/dudu-bubu-cafe-date.jpg',
+  'dudu-bubu-stargazing': '/characters/dudu-bubu-stargazing.jpg',
+  'dudu-bubu-music-earphones': '/characters/dudu-bubu-music-earphones.jpg',
+  'dudu-bubu-couch-kiss': '/characters/dudu-bubu-couch-kiss.jpg',
+  'dudu-bubu-journey-strip': '/characters/dudu-bubu-journey-strip.jpg',
+}
 
 export default function CharacterSticker({
   type,
@@ -55,20 +80,18 @@ export default function CharacterSticker({
 
   // Map aliases
   const canonicalType = type === 'dudu-bubu-lawyer' ? 'panda-lawyer' : type
-  const pngFileName = type === 'panda-lawyer' ? 'dudu-bubu-lawyer' : type
-
-  const hasRealPng = REAL_PNG_TYPES.has(type)
+  const realSrc = REAL_IMAGE_MAP[type] || REAL_IMAGE_MAP[canonicalType]
 
   return (
     <div
       className={`relative inline-flex items-center justify-center select-none ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* If a real PNG exists and has not errored, render it */}
-      {hasRealPng && !imageError ? (
+      {/* If a real asset exists and has not errored, render it */}
+      {realSrc && !imageError ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={`/characters/${pngFileName}.png`}
+          src={realSrc}
           alt={type}
           width={size}
           height={size}

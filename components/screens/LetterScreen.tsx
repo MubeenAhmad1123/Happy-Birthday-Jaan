@@ -246,7 +246,7 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="mt-6 pt-3 border-t border-rose-200/60 text-right"
+                  className="mt-6 pt-3 border-t border-rose-200/60 flex flex-col items-end"
                 >
                   <p
                     className="text-2xl sm:text-3xl font-bold"
@@ -266,6 +266,15 @@ export default function LetterScreen({ letterText, onBack }: LetterScreenProps) 
                   >
                     (Mera Shehzada)
                   </p>
+                  {/* Cozy Blanket Snuggle Sticker */}
+                  <div className="mt-3 flex justify-center w-full">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/characters/dudu-bubu-blanket.png"
+                      alt="Dudu & Bubu blanket snuggle"
+                      className="w-36 sm:w-44 h-auto object-contain filter drop-shadow-md"
+                    />
+                  </div>
                 </motion.div>
               )}
             </div>
